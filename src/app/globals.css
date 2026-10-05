@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Roboto Condensed', sans-serif;
+}
+
+.font-roboto-condensed {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-optical-sizing: auto;
+}
+
+:root {
+  --hero-deep: #080B22;
+  --hero-navy: #12184B;
+  --cobalt: #2948FF;
+  --royal-indigo: #4338CA;
+  --ambient-glow: #6366F1;
+  --lavender-mist: #C7D2FE;
+  --aurora-fade: #EEF2FF;
+  --emerald-mint: #10B981;
+  --body-white: #FFFFFF;
+  --surface-slate: #F8FAFC;
+  --card-border: #E2E8F0;
+  --dark-slate: #0F172A;
+  --muted-slate: #64748B;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-optical-sizing: auto;
+  background-color: var(--body-white);
+  color: var(--dark-slate);
+}
+
+body {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-optical-sizing: auto;
+  overflow-x: hidden;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: #FFFFFF;
+}
+
+.font-editorial {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* 3-Tiered Concentric Semi-Circle Dome Gradient (Top Dark -> Mid Light Purple -> Bottom Very Light) */
+.hero-aurora-bg {
+  background-color: #FFFFFF;
+  background-image: 
+    radial-gradient(ellipse 95% 100% at 50% 0%, 
+      /* Tier 1: Top is Dark Midnight Indigo */
+      #090B26 0%, 
+      #0D113B 32%, 
+      /* Tier 2: Middle is a little bit lighter (Electric Purple & Violet Arc) */
+      #4C1D95 45%, 
+      #7C3AED 55%, 
+      #9333EA 63%, 
+      #A855F7 70%, 
+      /* Tier 3: 3rd layer is very light (Luminous Lavender & Lilac Mist) */
+      #C4B5FD 78%, 
+      #DDD6FE 85%, 
+      #EDE9FE 92%, 
+      /* Seamless transition into pure white */
+      #FFFFFF 100%
+    );
+}
+
+/* Subtle Hero Dot-Grid Texture */
+.hero-dot-pattern {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.10) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Soft Lavender-Violet Dissolution to Pure White */
+.hero-fade-to-white {
+  background: linear-gradient(180deg, 
+    rgba(11, 13, 42, 0) 0%, 
+    rgba(196, 181, 253, 0.25) 45%, 
+    rgba(237, 233, 254, 0.75) 75%, 
+    #FFFFFF 100%
+  );
+}
+
+.glass-pill-nav {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+}
+
+.glass-pill-nav-light {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+}
+
+.iridescent-3d {
+  background: linear-gradient(135deg, #FF6584 0%, #7C5CFC 50%, #43BFFF 100%);
+  box-shadow: 0 20px 40px -10px rgba(124, 92, 252, 0.45);
+}
+
+.card-soft-shadow {
+  box-shadow: 0 20px 45px -15px rgba(15, 23, 42, 0.06), 0 0 1px 1px rgba(15, 23, 42, 0.04);
+}
+
+.card-hover-shadow {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-hover-shadow:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 30px 60px -20px rgba(41, 72, 255, 0.12), 0 0 1px 1px rgba(41, 72, 255, 0.1);
+}
+
+/* Animations */
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(3deg);
+  }
+}
+
+.animate-float {
+  animation: floatGentle 5s ease-in-out infinite;
+}
+
+@keyframes marquee-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-marquee-left {
+  display: flex;
+  width: max-content;
+  animation: marquee-left 32s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-right {
+  display: flex;
+  width: max-content;
+  animation: marquee-right 32s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-left 35s linear infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
