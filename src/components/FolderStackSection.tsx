@@ -2,372 +2,248 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, CheckCircle2, Sparkles, Layers, Terminal, Zap } from "lucide-react";
 
-interface FolderItem {
+interface FolderTab {
+  id: string;
+  label: string;
+  color: string;
+  textColor?: string;
+  type: "left" | "mid" | "right";
+  offset?: string; // Margin left offset to position across the bar
+}
+
+interface FolderRow {
   id: string;
   code: string;
-  tabTitle: string;
-  tabPosition: "left" | "mid-left" | "center" | "mid-right" | "right";
-  bg: string;
-  accentText: string;
-  isDarkText?: boolean;
+  primaryColor: string;
+  tabs: FolderTab[];
+  note: string;
+  secondaryNote?: string;
   date: string;
-  headline: string;
-  summary: string;
-  tags: string[];
-  metrics: { label: string; value: string }[];
 }
 
 export const FolderStackSection = () => {
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
-  const [activeId, setActiveId] = useState<string>("folder-0");
+  // Default to Folder 4 ("Subject Drift") being open, exactly matching the reference screenshot
+  const [activeFolderId, setActiveFolderId] = useState<string>("folder-4");
 
-  const folders: FolderItem[] = [
+  const folderRows: FolderRow[] = [
+    // Row 1: Lexical Interruptions | Ink Displacement | Referent Ghosts
     {
       id: "folder-0",
-      code: "16A",
-      tabTitle: "Lexical Kinetics",
-      tabPosition: "left",
-      bg: "#701A75", // Deep Plum / Magenta
-      accentText: "#F5D0FE",
-      date: "Q4 2025 // PROD",
-      headline: "Aura Headless Storefront & Instant Cart Physics",
-      summary:
-        "Kinetic retail architecture engineered with Next.js 15, optimistic client-side mutations, sub-50ms Stripe checkout, and zero-jank 60 FPS transitions.",
-      tags: ["Next.js 15", "TailwindCSS", "Stripe API", "Redis", "Framer Motion"],
-      metrics: [
-        { label: "Checkout Velocity", value: "3.4x Faster" },
-        { label: "Cart Mutation Latency", value: "< 42ms" },
-        { label: "Core Web Vitals", value: "100 / 100" },
+      code: "15A",
+      primaryColor: "#7B1842", // Deep Plum / Berry
+      tabs: [
+        { id: "tab-0-1", label: "Lexical Interruptions", color: "#7B1842", textColor: "#FFFFFF", type: "left" },
+        { id: "tab-0-2", label: "Ink Displacement", color: "#2563EB", textColor: "#FFFFFF", type: "mid", offset: "ml-6 sm:ml-12" },
+        { id: "tab-0-3", label: "Referent Ghosts", color: "#111111", textColor: "#FFFFFF", type: "right", offset: "ml-auto mr-12 sm:mr-16" },
       ],
+      note: "Fragment extracted from primary typography index. Linguistic permutations cataloged under ledger volume IV. Structural continuity verified.",
+      date: "Oct 14, 1954",
     },
+
+    // Row 2: Concord Variants
     {
       id: "folder-1",
-      code: "16B",
-      tabTitle: "Concord Variants",
-      tabPosition: "mid-left",
-      bg: "#EA580C", // Tangerine Orange
-      accentText: "#FFEDD5",
-      date: "Q1 2026 // DEPLOYED",
-      headline: "Quantum Telemetry & Edge Event Stream Engine",
-      summary:
-        "High-frequency telemetry pipeline handling 250,000+ daily events with sub-15ms query resolution, automated zstd compression, and real-time WebGL canvas shaders.",
-      tags: ["TypeScript", "ClickHouse", "Docker", "WebGL", "Node.js"],
-      metrics: [
-        { label: "Daily Event Ingestion", value: "250K+ Events" },
-        { label: "Telemetry Latency", value: "< 15ms" },
-        { label: "System Uptime SLA", value: "99.99%" },
+      code: "15B",
+      primaryColor: "#EA580C", // Tangerine Orange
+      tabs: [
+        { id: "tab-1-1", label: "Concord Variants", color: "#EA580C", textColor: "#FFFFFF", type: "left" },
       ],
+      note: "Cross-referenced telemetry matrices. Edge mutation latency benchmarks recorded under sub-15ms threshold across distributed cluster nodes.",
+      date: "Nov 02, 1955",
     },
+
+    // Row 3: Unanchored Statements
     {
       id: "folder-2",
-      code: "16C",
-      tabTitle: "Unanchored Statements",
-      tabPosition: "center",
-      bg: "#047857", // Forest Emerald
-      accentText: "#A7F3D0",
-      date: "Q2 2026 // ACTIVE",
-      headline: "Vertex LLM Multi-Agent Autonomous Orchestrator",
-      summary:
-        "Production-grade generative AI orchestration mesh coordinating multi-step agent graphs, self-healing execution trees, and localized vector memory embeddings.",
-      tags: ["Python 3.12", "FastAPI", "LangGraph", "Supabase", "pgvector"],
-      metrics: [
-        { label: "Agent Execution Speed", value: "12x Velocity" },
-        { label: "Token Cost Efficiency", value: "-68% Waste" },
-        { label: "Reliability Rate", value: "99.8%" },
+      code: "15C",
+      primaryColor: "#047857", // Forest Emerald Teal
+      tabs: [
+        { id: "tab-2-1", label: "Unanchored Statements", color: "#047857", textColor: "#FFFFFF", type: "left" },
       ],
+      note: "Autonomous multi-agent execution graphs. Self-healing state tree validated with zero unhandled exceptions across 250,000 synthetic test cycles.",
+      date: "Jan 18, 1956",
     },
+
+    // Row 4: Varnell Collection | Peripheral Entry
     {
       id: "folder-3",
-      code: "16D",
-      tabTitle: "Varnell Collection",
-      tabPosition: "mid-right",
-      bg: "#DC2626", // Crimson Red
-      accentText: "#FECACA",
-      date: "Q3 2026 // VERIFIED",
-      headline: "Pulse 60 FPS Fluid Mobile Engine (iOS & Android)",
-      summary:
-        "High-velocity cross-platform Flutter application engineered with customized Skia graphics shaders, native gesture physics, and instant offline-first synchronization.",
-      tags: ["Flutter 3.24", "Dart", "Firebase", "SQLite", "Clean Architecture"],
-      metrics: [
-        { label: "Frame Budget", value: "60 FPS Locked" },
-        { label: "App Cold-Start", value: "< 280ms" },
-        { label: "App Store Rating", value: "4.9 / 5.0" },
+      code: "15D",
+      primaryColor: "#DC2626", // Crimson Red
+      tabs: [
+        { id: "tab-3-1", label: "Varnell Collection", color: "#DC2626", textColor: "#FFFFFF", type: "left" },
+        { id: "tab-3-2", label: "Peripheral Entry", color: "#2563EB", textColor: "#FFFFFF", type: "mid", offset: "ml-8 sm:ml-16" },
       ],
+      note: "Hardware-accelerated Skia shaders cataloged for native cross-platform deployment. Frame budget locked at steady 60 FPS under heavy gesture physics.",
+      date: "Aug 29, 1956",
     },
+
+    // Row 5: Subject Drift | Duplicated Silence | Margin Events (The primary open folder in reference screenshot)
     {
       id: "folder-4",
-      code: "16E",
-      tabTitle: "Subject Drift",
-      tabPosition: "right",
-      bg: "#6D28D9", // Deep Royal Violet
-      accentText: "#DDD6FE",
-      date: "Q4 2026 // CERTIFIED",
-      headline: "Cypher Cryptographic Zero-Trust API Mesh",
-      summary:
-        "Ultra-secure distributed API gateway featuring automated key rotations, payload integrity verification, and sub-millisecond edge authentication tokens across global regions.",
-      tags: ["PostgreSQL", "Rust", "AWS Lambda", "OAuth2", "Zero-Trust"],
-      metrics: [
-        { label: "Security Audit Score", value: "100 / 100" },
-        { label: "Edge Verification", value: "< 8ms" },
-        { label: "Payload Encryption", value: "AES-256 GCM" },
+      code: "16A",
+      primaryColor: "#581C87", // Deep Purple / Violet
+      tabs: [
+        { id: "tab-4-1", label: "Subject Drift", color: "#581C87", textColor: "#FFFFFF", type: "left" },
+        { id: "tab-4-2", label: "Duplicated Silence", color: "#DC2626", textColor: "#FFFFFF", type: "mid", offset: "ml-4 sm:ml-8" },
+        { id: "tab-4-3", label: "Margin Events", color: "#FACC15", textColor: "#0F172A", type: "right", offset: "ml-auto mr-8 sm:mr-14" },
       ],
+      note: "Provenance unclear. Part of unidentified collection. Further context unavailable.",
+      secondaryNote: "Ref. Agent unknown. Source pending.",
+      date: "Dec 13, 1956",
     },
+
+    // Row 6: Reverse Index
     {
       id: "folder-5",
-      code: "16F",
-      tabTitle: "Margin Events",
-      tabPosition: "left",
-      bg: "#EAB308", // Golden Canary Yellow
-      accentText: "#713F12",
-      isDarkText: true,
-      date: "CURRENT // LIVE",
-      headline: "Nexus Kinetic UI Design System & Component Library",
-      summary:
-        "Enterprise-grade design system crafted with WCAG AAA accessibility, fluid micro-interactions, typed tokens, and high-performance React 19 component primitives.",
-      tags: ["React 19", "Tailwind CSS", "Framer Motion", "Figma Tokens"],
-      metrics: [
-        { label: "WCAG Accessibility", value: "AAA Level" },
-        { label: "Input Response", value: "< 4ms" },
-        { label: "Component Reusability", value: "96% Common" },
+      code: "16B",
+      primaryColor: "#2563EB", // Cobalt Blue
+      tabs: [
+        { id: "tab-5-1", label: "Reverse Index", color: "#2563EB", textColor: "#FFFFFF", type: "left" },
       ],
+      note: "Inverted cryptographic registry verified. Key-rotation schedule executed with zero downtime across multi-tenant database clusters.",
+      date: "May 04, 1961",
+    },
+
+    // Row 7: Obscured Provenance | Undated Persuasions
+    {
+      id: "folder-6",
+      code: "16C",
+      primaryColor: "#DB2777", // Rose Pink
+      tabs: [
+        { id: "tab-6-1", label: "Obscured Provenance", color: "#DB2777", textColor: "#FFFFFF", type: "left" },
+        { id: "tab-6-2", label: "Undated Persuasions", color: "#FACC15", textColor: "#0F172A", type: "right", offset: "ml-auto mr-16 sm:mr-28" },
+      ],
+      note: "Believed to be part of a larger set. No other parts located. Referent unknown. Source pending.",
+      date: "Mar 18, 1966",
+    },
+
+    // Row 8: No Verified
+    {
+      id: "folder-7",
+      code: "16D",
+      primaryColor: "#1D4ED8", // Electric Blue
+      tabs: [
+        { id: "tab-7-1", label: "No Verified", color: "#1D4ED8", textColor: "#FFFFFF", type: "left" },
+      ],
+      note: "System operational parameters verified under stress testing. Production artifacts frozen for distribution.",
+      date: "Jul 22, 1968",
     },
   ];
 
   return (
-    <section className="w-full bg-[#0D0F14] text-white py-24 sm:py-32 px-4 sm:px-6 relative overflow-hidden">
-      {/* Subtle Background Radial Atmosphere */}
-      <div 
-        aria-hidden="true" 
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(109,40,217,0.18)_0%,rgba(13,15,20,0)_80%)]" 
-      />
-
-      <div className="w-full max-w-[1280px] mx-auto relative z-10">
-        {/* Archival Header Section (Exact matching reference style) */}
-        <div className="mb-14 sm:mb-20 max-w-3xl">
-          <p className="text-xs sm:text-sm font-mono tracking-widest uppercase text-slate-400 mb-3 flex items-center gap-2">
+    <section className="w-full bg-[#111215] text-white py-16 sm:py-24 px-4 sm:px-6 relative overflow-hidden select-none">
+      <div className="w-full max-w-5xl mx-auto">
+        {/* Archival Header - Matching Reference Screenshot */}
+        <div className="mb-8 sm:mb-10">
+          <p className="text-xs sm:text-sm font-mono tracking-wider text-slate-400 mb-2">
             <span>Unindexed Materials</span>
-            <span className="text-slate-600">/</span>
+            <span className="mx-2 text-slate-600">/</span>
             <span>Recovered Entries</span>
           </p>
-          <h2 className="font-editorial text-4xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-white/95 leading-[1.08] not-italic">
+          <h2 className="font-editorial text-4xl sm:text-6xl text-white/95 font-normal tracking-tight not-italic">
             Fragments 15–20
           </h2>
-          <p className="text-sm sm:text-base text-slate-400 font-roboto-condensed mt-4 max-w-xl leading-relaxed">
-            Curated engineering records and case study dossiers. Hover over any folder to inspect its architecture, metrics, and technical artifacts.
-          </p>
         </div>
 
-        {/* FOLDER STACK CONTAINER */}
-        <div className="w-full relative min-h-[660px] sm:min-h-[720px] pb-24">
-          {folders.map((folder, index) => {
-            const isHovered = hoveredId === folder.id;
-            const isSelected = activeId === folder.id;
-            const isElevated = isHovered || isSelected;
-
-            // Base vertical step down for each folder tab in the stack
-            const baseTop = index * 52;
+        {/* TIGHTLY PACKED ARCHIVAL FILING FOLDER STACK */}
+        <div className="w-full flex flex-col shadow-2xl rounded-xl overflow-hidden border border-white/5">
+          {folderRows.map((folder) => {
+            const isOpen = activeFolderId === folder.id;
 
             return (
-              <motion.div
+              <div
                 key={folder.id}
-                onMouseEnter={() => setHoveredId(folder.id)}
-                onMouseLeave={() => setHoveredId(null)}
-                onClick={() => setActiveId(folder.id)}
-                animate={{
-                  y: isElevated ? -38 : 0,
-                  scale: isElevated ? 1.015 : 1,
-                  zIndex: isElevated ? 50 : index + 1,
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 30,
-                }}
-                style={{
-                  top: `${baseTop}px`,
-                  zIndex: isElevated ? 50 : index + 1,
-                }}
-                className="absolute inset-x-0 cursor-pointer select-none origin-bottom will-change-transform"
+                onMouseEnter={() => setActiveFolderId(folder.id)}
+                className="w-full flex flex-col cursor-pointer transition-colors duration-150"
               >
-                {/* SVG FOLDER HEADER WITH STAGGERED CUT-OUT TAB */}
-                <div className="w-full relative -mb-[1px]">
-                  <FolderTabSvg
-                    position={folder.tabPosition}
-                    color={folder.bg}
-                  />
-
-                  {/* Tab Title Content Placed Precisely Over the Tab Cut-Out */}
-                  <div
-                    className={`absolute top-0 h-11 sm:h-12 flex items-center px-4 sm:px-6 pointer-events-none ${
-                      folder.tabPosition === "left"
-                        ? "left-0 sm:left-2"
-                        : folder.tabPosition === "mid-left"
-                        ? "left-[18%] sm:left-[20%]"
-                        : folder.tabPosition === "center"
-                        ? "left-[36%] sm:left-[39%]"
-                        : folder.tabPosition === "mid-right"
-                        ? "left-[55%] sm:left-[59%]"
-                        : "left-[72%] sm:left-[76%]"
-                    }`}
-                  >
-                    <span
-                      className={`text-xs sm:text-sm font-bold font-roboto-condensed tracking-tight truncate max-w-[180px] sm:max-w-[240px] ${
-                        folder.isDarkText ? "text-slate-950 font-black" : "text-white/95"
-                      }`}
-                    >
-                      {folder.tabTitle}
-                    </span>
-                  </div>
-                </div>
-
-                {/* FOLDER BODY CONTAINER */}
+                {/* Horizontal Solid Colored Folder Bar with Elevated Beveled Tabs */}
                 <div
-                  style={{
-                    backgroundColor: folder.bg,
-                    boxShadow: isElevated
-                      ? "0 30px 60px -12px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.15) inset"
-                      : "0 10px 25px -5px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08) inset",
-                  }}
-                  className={`w-full rounded-b-[24px] sm:rounded-b-[32px] p-6 sm:p-10 transition-shadow duration-200 ${
-                    folder.isDarkText ? "text-slate-950" : "text-white"
-                  }`}
+                  className="w-full relative flex items-end h-[38px] sm:h-[42px] px-2 sm:px-4"
+                  style={{ backgroundColor: folder.primaryColor }}
                 >
-                  {/* Top Dossier Metadata Bar */}
-                  <div className="flex items-center justify-between border-b pb-4 mb-6 opacity-75 text-xs sm:text-sm font-mono tracking-wider"
-                    style={{ borderColor: folder.isDarkText ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.18)" }}
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="font-bold">{folder.code}</span>
-                      <span>•</span>
-                      <span className="truncate max-w-[280px] sm:max-w-none">Provenance verified // Antigravity Core</span>
-                    </div>
-                    <span className="shrink-0">{folder.date}</span>
-                  </div>
+                  {/* Tabs Cluster */}
+                  <div className="flex items-end h-full w-full">
+                    {folder.tabs.map((tab) => {
+                      const isYellow = tab.color === "#FACC15";
 
-                  {/* Main Content Area */}
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                    {/* Left Summary & Headline */}
-                    <div className="lg:col-span-8">
-                      <h3 className="text-xl sm:text-3xl lg:text-4xl font-black font-roboto-condensed tracking-tight leading-tight">
-                        {folder.headline}
-                      </h3>
-                      <p
-                        className={`text-sm sm:text-base font-roboto-condensed mt-3 leading-relaxed max-w-3xl ${
-                          folder.isDarkText ? "text-slate-900/85" : "text-white/85"
-                        }`}
-                      >
-                        {folder.summary}
-                      </p>
+                      // Trapezoid angled cuts matching authentic filing folder tabs:
+                      // Left tab: straight left, 45-degree slope on right
+                      // Mid tab: 45-degree slope on left, 45-degree slope on right
+                      // Right tab: 45-degree slope on left, straight or 45-degree slope on right
+                      let clipPathStyle = "polygon(0 0, calc(100% - 16px) 0, 100% 100%, 0 100%)";
+                      if (tab.type === "mid" || tab.type === "right") {
+                        clipPathStyle = "polygon(16px 0, calc(100% - 16px) 0, 100% 100%, 0 100%)";
+                      }
 
-                      {/* Tech Badges */}
-                      <div className="flex flex-wrap gap-2 mt-5">
-                        {folder.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className={`px-3 py-1 rounded-full text-xs font-bold font-roboto-condensed ${
-                              folder.isDarkText
-                                ? "bg-black/10 text-slate-950 border border-black/10"
-                                : "bg-white/15 text-white border border-white/20"
-                            }`}
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Right Metrics & Action Pill */}
-                    <div className="lg:col-span-4 flex flex-col gap-3.5 w-full">
-                      {folder.metrics.map((m, idx) => (
+                      return (
                         <div
-                          key={idx}
-                          className={`p-3.5 rounded-xl flex items-center justify-between ${
-                            folder.isDarkText
-                              ? "bg-black/8 border border-black/10"
-                              : "bg-white/10 border border-white/15 backdrop-blur-xs"
-                          }`}
+                          key={tab.id}
+                          style={{
+                            backgroundColor: tab.color,
+                            clipPath: clipPathStyle,
+                          }}
+                          className={`h-full flex items-center justify-center px-6 sm:px-8 relative text-xs sm:text-sm font-semibold tracking-tight transition-transform duration-150 ${
+                            tab.offset || ""
+                          } ${isYellow ? "text-slate-950 font-black" : "text-white font-medium"}`}
                         >
-                          <span
-                            className={`text-xs font-medium font-roboto-condensed ${
-                              folder.isDarkText ? "text-slate-800" : "text-white/70"
-                            }`}
-                          >
-                            {m.label}
-                          </span>
-                          <span className="text-sm font-black font-roboto-condensed">
-                            {m.value}
+                          <span className="truncate max-w-[160px] sm:max-w-[240px] whitespace-nowrap px-1">
+                            {tab.label}
                           </span>
                         </div>
-                      ))}
+                      );
+                    })}
+                  </div>
+                </div>
 
-                      {/* Hover Indicator Action */}
-                      <div
-                        className={`mt-2 py-2.5 px-4 rounded-xl flex items-center justify-between text-xs font-bold font-roboto-condensed transition-all duration-200 ${
-                          folder.isDarkText
-                            ? "bg-slate-950 text-white hover:bg-slate-800"
-                            : "bg-white text-slate-950 hover:bg-slate-100"
-                        }`}
-                      >
-                        <span>Inspect Full Dossier</span>
-                        <ArrowUpRight className="w-4 h-4" />
+                {/* EXPANDABLE ARCHIVAL FOLDER BODY */}
+                <motion.div
+                  initial={false}
+                  animate={{
+                    height: isOpen ? "auto" : 0,
+                    opacity: isOpen ? 1 : 0,
+                  }}
+                  transition={{
+                    duration: 0.32,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  className="w-full overflow-hidden"
+                  style={{
+                    backgroundColor: folder.primaryColor,
+                  }}
+                >
+                  <div className="px-6 sm:px-12 py-10 sm:py-12 text-white flex flex-col justify-between min-h-[160px] sm:min-h-[190px]">
+                    {/* Archival Content Row: Code (left) | Note (center) | Date (right) */}
+                    <div className="grid grid-cols-12 gap-4 items-start font-mono text-xs sm:text-sm text-white/90">
+                      {/* Left Index Code (e.g. 16A, 15C) */}
+                      <div className="col-span-2 sm:col-span-1 font-bold text-white tracking-wider">
+                        {folder.code}
+                      </div>
+
+                      {/* Center Archival Entry Note */}
+                      <div className="col-span-7 sm:col-span-8 pr-4">
+                        <p className="leading-relaxed max-w-xl text-white/95">
+                          {folder.note}
+                        </p>
+                        {folder.secondaryNote && (
+                          <p className="mt-4 text-xs text-white/70 leading-relaxed font-mono">
+                            {folder.secondaryNote}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Right Date */}
+                      <div className="col-span-3 sm:col-span-3 text-right font-medium text-white/80 whitespace-nowrap">
+                        {folder.date}
                       </div>
                     </div>
                   </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              </div>
             );
           })}
         </div>
       </div>
     </section>
-  );
-};
-
-// Reusable SVG Folder Tab with Angled Trapezoid / Cut-Out Geometry Matching Reference Image
-const FolderTabSvg = ({
-  position,
-  color,
-}: {
-  position: "left" | "mid-left" | "center" | "mid-right" | "right";
-  color: string;
-}) => {
-  // Generate authentic folder cut-out path based on tab horizontal position
-  // ViewBox: 1000 x 48 (48px high tab with rounded corners and angled 40-degree shoulder)
-  let pathD = "";
-
-  if (position === "left") {
-    // Tab from 0 to 280
-    pathD =
-      "M 0,48 L 0,16 Q 0,0 16,0 L 240,0 Q 256,0 268,14 L 296,44 Q 302,48 316,48 L 1000,48 L 1000,48 L 0,48 Z";
-  } else if (position === "mid-left") {
-    // Tab from 190 to 470
-    pathD =
-      "M 0,48 L 180,48 Q 192,48 200,42 L 226,12 Q 236,0 252,0 L 440,0 Q 456,0 466,14 L 492,44 Q 498,48 512,48 L 1000,48 L 0,48 Z";
-  } else if (position === "center") {
-    // Tab from 370 to 650
-    pathD =
-      "M 0,48 L 360,48 Q 372,48 380,42 L 406,12 Q 416,0 432,0 L 620,0 Q 636,0 646,14 L 672,44 Q 678,48 692,48 L 1000,48 L 0,48 Z";
-  } else if (position === "mid-right") {
-    // Tab from 560 to 840
-    pathD =
-      "M 0,48 L 550,48 Q 562,48 570,42 L 596,12 Q 606,0 622,0 L 810,0 Q 826,0 836,14 L 862,44 Q 868,48 882,48 L 1000,48 L 0,48 Z";
-  } else {
-    // Tab on the right side from 730 to 990
-    pathD =
-      "M 0,48 L 720,48 Q 732,48 740,42 L 766,12 Q 776,0 792,0 L 980,0 Q 996,0 1000,16 L 1000,48 L 0,48 Z";
-  }
-
-  return (
-    <svg
-      viewBox="0 0 1000 48"
-      fill={color}
-      xmlns="http://www.w3.org/2000/svg"
-      className="w-full h-11 sm:h-12 block"
-      preserveAspectRatio="none"
-    >
-      <path d={pathD} fill={color} />
-    </svg>
   );
 };
