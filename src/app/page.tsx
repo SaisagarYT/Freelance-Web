@@ -5,6 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { TrustStatementSection } from "@/components/TrustStatementSection";
 import { TechArsenalSection } from "@/components/TechArsenalSection";
+import { FolderStackSection } from "@/components/FolderStackSection";
 
 export default function Home() {
   const scrollToContact = () => {
@@ -31,6 +32,9 @@ export default function Home() {
 
       {/* Section 3: Modern Technology Arsenal Section (Bidirectional Moving Marquee with Foggy Blur) */}
       <TechArsenalSection onContactClick={scrollToContact} />
+
+      {/* Section 4: Archival Folder Stack Dossier (Hover to Elevate Folder) */}
+      <FolderStackSection />
     </main>
   );
 }
