@@ -53,7 +53,7 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
                 key={link.name}
                 href={link.href}
                 onMouseEnter={() => setHoveredIdx(idx)}
-                className="relative px-3.5 py-1.5 text-xs sm:text-sm font-medium tracking-tight text-slate-600 hover:text-slate-950 transition-colors duration-200"
+                className="relative px-3.5 py-1.5 text-xs sm:text-sm font-medium tracking-tight text-slate-600 hover:text-slate-900 transition-colors duration-200"
               >
                 {/* Subtle Floating Hover Pill */}
                 {isHovered && (
@@ -92,7 +92,7 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
                 el?.scrollIntoView({ behavior: "smooth" });
               })
             }
-            className="group relative flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold bg-slate-950 text-white hover:bg-slate-800 transition-all duration-200 active:scale-95 shadow-sm cursor-pointer"
+            className="group relative flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-all duration-200 active:scale-95 shadow-sm cursor-pointer"
           >
             <span>Let&apos;s Connect</span>
             <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -101,7 +101,7 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
           {/* Mobile menu button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-1.5 rounded-full text-slate-700 hover:text-slate-950"
+            className="md:hidden p-1.5 rounded-full text-slate-700 hover:text-slate-900"
             aria-label="Toggle Navigation Menu"
           >
             {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}

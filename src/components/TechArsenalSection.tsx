@@ -71,7 +71,7 @@ export const TechArsenalSection = ({ onContactClick }: TechArsenalSectionProps) 
               <Sparkles className="w-3.5 h-3.5 text-purple-600" />
               <span>Modern Technology Arsenal</span>
             </div>
-            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black font-roboto-condensed tracking-tight text-slate-950 leading-tight">
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black font-roboto-condensed tracking-tight text-slate-900 leading-tight">
               Founders, scale-ups &amp; modern engineering teams partner with KIZEN SOLVES
             </h3>
             <p className="text-slate-500 text-sm sm:text-base mt-2 font-medium font-roboto-condensed">
@@ -82,7 +82,7 @@ export const TechArsenalSection = ({ onContactClick }: TechArsenalSectionProps) 
           <div className="shrink-0">
             <button
               onClick={onContactClick}
-              className="inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-slate-950 text-white hover:bg-slate-800 text-sm font-bold font-roboto-condensed transition-all duration-200 shadow-lg shadow-slate-950/20 active:scale-95 group cursor-pointer"
+              className="inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-slate-900 text-white hover:bg-slate-800 text-sm font-bold font-roboto-condensed transition-all duration-200 shadow-lg shadow-slate-900/20 active:scale-95 group cursor-pointer"
             >
               <span>Start a Project</span>
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_10px_#10B981]" />

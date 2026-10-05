@@ -59,7 +59,7 @@ export async function handleStream(event: TelemetryEvent) {
             description="Bespoke micro-interactions, scroll-driven timelines (GSAP, Motion, Anime.js), and hardware-accelerated shaders that make applications feel alive, responsive, and tactile."
             icon={<Sparkles className="w-5 h-5 text-blue-600" />}
             header={
-              <div className="w-full h-full min-h-[7rem] rounded-2xl bg-gradient-to-br from-blue-900 via-indigo-950 to-slate-950 p-4 flex flex-col justify-between text-white relative overflow-hidden border border-white/10">
+              <div className="w-full h-full min-h-[7rem] rounded-2xl bg-gradient-to-br from-blue-900 via-indigo-950 to-slate-900 p-4 flex flex-col justify-between text-white relative overflow-hidden border border-white/10">
                 <div className="flex items-center justify-between text-xs text-blue-300 font-mono">
                   <span>Engine: Motion + WebGL Canvas</span>
                   <span className="flex items-center gap-1 text-emerald-400">

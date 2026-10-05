@@ -75,7 +75,7 @@ export const HeroShowcaseCards = () => {
                 Revenue Growth
               </div>
               <div className="flex items-baseline gap-3 mt-1">
-                <span className="text-5xl sm:text-6xl font-black text-slate-950 tracking-tight">
+                <span className="text-5xl sm:text-6xl font-black text-slate-900 tracking-tight">
                   {current.stat}
                 </span>
                 <span className="text-xs font-bold text-emerald-600 flex items-center gap-1 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200/80">

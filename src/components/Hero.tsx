@@ -85,10 +85,10 @@ export const Hero = ({ onContactClick }: { onContactClick?: () => void }) => {
               const el = document.getElementById("contact");
               el?.scrollIntoView({ behavior: "smooth" });
             })}
-            className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-white text-slate-950 font-bold text-sm md:text-base flex items-center justify-center gap-3 transition-all duration-300 hover:bg-slate-100 hover:shadow-[0_0_35px_rgba(255,255,255,0.4)] active:scale-95 group cursor-pointer"
+            className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-white text-slate-900 font-bold text-sm md:text-base flex items-center justify-center gap-3 transition-all duration-300 hover:bg-slate-100 hover:shadow-[0_0_35px_rgba(255,255,255,0.4)] active:scale-95 group cursor-pointer"
           >
             <span>Let&apos;s Contact</span>
-            <div className="w-6 h-6 rounded-full bg-slate-950 text-white flex items-center justify-center group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200">
+            <div className="w-6 h-6 rounded-full bg-slate-900 text-white flex items-center justify-center group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200">
               <ArrowUpRight className="w-3.5 h-3.5" />
             </div>
           </button>
