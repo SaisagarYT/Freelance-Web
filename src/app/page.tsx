@@ -4,6 +4,7 @@ import React from "react";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { TrustStatementSection } from "@/components/TrustStatementSection";
+import { TechArsenalSection } from "@/components/TechArsenalSection";
 
 export default function Home() {
   const scrollToContact = () => {
@@ -27,6 +28,9 @@ export default function Home() {
 
       {/* Section 2: Full-Screen Core Philosophy Statement with 3-Edge Liquid Purple Fill */}
       <TrustStatementSection />
+
+      {/* Section 3: Modern Technology Arsenal Section (Bidirectional Moving Marquee with Foggy Blur) */}
+      <TechArsenalSection onContactClick={scrollToContact} />
     </main>
   );
 }
