@@ -2,345 +2,398 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, CheckCircle2, Sparkles, Terminal, Activity, Zap } from "lucide-react";
 
-interface FolderDossier {
+interface ArchivalTab {
+  label: string;
+  color: string;
+  textColor?: string;
+  // Canvas coordinates on 1000px coordinate system
+  startX: number;
+  topStartX: number;
+  topEndX: number;
+  endX: number;
+}
+
+interface ArchivalFolder {
   id: string;
   code: string;
-  tabTitle: string;
-  tabStartX: number; // SVG X position (out of 1000)
-  tabWidth: number;  // SVG Width (out of 1000)
-  gradient: string;
-  glowColor: string;
-  headline: string;
-  subtitle: string;
-  tags: string[];
-  metrics: { label: string; value: string }[];
+  primaryColor: string;
+  behindColor: string; // The color that shows through gaps and behind tabs
+  tabs: ArchivalTab[];
+  note: string;
+  date: string;
 }
 
 export const FolderStackSection = () => {
-  const [hoveredId, setHoveredId] = useState<string | null>("folder-0");
+  // Folder 4 ("Subject Drift") and Folder 7 ("No Verified") active to match the exact reference screenshot
+  const [activeId, setActiveId] = useState<string>("folder-4");
 
-  const dossiers: FolderDossier[] = [
+  const folders: ArchivalFolder[] = [
+    // 1. Lexical Interruptions (Plum #741743)
     {
       id: "folder-0",
-      code: "DOSSIER // 16A",
-      tabTitle: "01 // Headless E-Commerce",
-      tabStartX: 30,
-      tabWidth: 230,
-      gradient: "linear-gradient(145deg, #701A75 0%, #4A044E 100%)", // Deep Orchid / Plum
-      glowColor: "rgba(112, 26, 117, 0.4)",
-      headline: "Aura Storefront: 3.4x Checkout Velocity & Instant Cart Sync",
-      subtitle:
-        "High-performance headless retail architecture built with Next.js 15 App Router, sub-50ms Stripe webhook orchestration, and zero-jank 60 FPS page transitions.",
-      tags: ["Next.js 15", "Tailwind CSS", "Stripe API", "Redis", "Framer Motion"],
-      metrics: [
-        { label: "Checkout Conversion Lift", value: "+3.4x" },
-        { label: "Cart Mutation Latency", value: "< 42ms" },
-        { label: "Core Web Vitals Score", value: "100 / 100" },
+      code: "15A",
+      primaryColor: "#741743",
+      behindColor: "#741743",
+      tabs: [
+        {
+          label: "Lexical Interruptions",
+          color: "#741743",
+          startX: 0,
+          topStartX: 0,
+          topEndX: 220,
+          endX: 245,
+        },
       ],
+      note: "Displaced typography specimens recovered from cold storage. Inscription boundaries show thermal degradation along lower margin.",
+      date: "Oct 14, 1954",
     },
+
+    // 2. Concord Variants | Ink Displacement | Referent Ghosts (Orange #EA580C)
+    // Behind color is Plum (#741743) from Folder 1
     {
       id: "folder-1",
-      code: "DOSSIER // 16B",
-      tabTitle: "02 // Distributed Telemetry",
-      tabStartX: 275,
-      tabWidth: 235,
-      gradient: "linear-gradient(145deg, #EA580C 0%, #9A3412 100%)", // Rich Tangerine Terracotta
-      glowColor: "rgba(234, 88, 12, 0.4)",
-      headline: "Quantum Engine: Real-Time Edge Analytics & Event Ingestion",
-      subtitle:
-        "Ultra-low latency telemetry pipeline streaming 250,000+ daily events with sub-15ms query resolution, zstd compression, and real-time WebGL data visualizers.",
-      tags: ["TypeScript", "ClickHouse", "Docker", "WebGL", "Node.js"],
-      metrics: [
-        { label: "Daily Event Ingestion", value: "250K+ Events" },
-        { label: "Query Resolution", value: "< 15ms" },
-        { label: "System Uptime SLA", value: "99.99%" },
+      code: "15B",
+      primaryColor: "#EA580C",
+      behindColor: "#741743",
+      tabs: [
+        {
+          label: "Concord Variants",
+          color: "#EA580C",
+          startX: 0,
+          topStartX: 0,
+          topEndX: 210,
+          endX: 235,
+        },
+        {
+          label: "Ink Displacement",
+          color: "#1D4ED8", // Royal Blue
+          startX: 240,
+          topStartX: 265,
+          topEndX: 455,
+          endX: 480,
+        },
+        {
+          label: "Referent Ghosts",
+          color: "#171717", // Jet Black
+          startX: 525,
+          topStartX: 550,
+          topEndX: 735,
+          endX: 760,
+        },
       ],
+      note: "Cross-referenced telemetry matrices. Edge mutation latency benchmarks recorded under sub-15ms threshold across distributed clusters.",
+      date: "Nov 02, 1955",
     },
+
+    // 3. Unanchored Statements (Emerald Teal #047857)
+    // Behind color is Orange (#EA580C) from Folder 2
     {
       id: "folder-2",
-      code: "DOSSIER // 16C",
-      tabTitle: "03 // Autonomous AI Mesh",
-      tabStartX: 525,
-      tabWidth: 230,
-      gradient: "linear-gradient(145deg, #047857 0%, #064E3B 100%)", // Deep Emerald Mint
-      glowColor: "rgba(4, 120, 87, 0.4)",
-      headline: "Vertex AI: Multi-Agent Autonomous LLM Orchestration Mesh",
-      subtitle:
-        "Production-grade generative AI orchestration engine coordinating multi-step agent trees, self-healing execution graphs, and isolated vector memory embeddings.",
-      tags: ["Python 3.12", "FastAPI", "LangGraph", "Supabase", "pgvector"],
-      metrics: [
-        { label: "Agent Pipeline Velocity", value: "12x Faster" },
-        { label: "Token Cost Efficiency", value: "-68% Waste" },
-        { label: "Task Execution Reliability", value: "99.8%" },
+      code: "15C",
+      primaryColor: "#047857",
+      behindColor: "#EA580C",
+      tabs: [
+        {
+          label: "Unanchored Statements",
+          color: "#047857",
+          startX: 0,
+          topStartX: 0,
+          topEndX: 240,
+          endX: 265,
+        },
       ],
+      note: "Autonomous multi-agent execution graphs. Self-healing state tree validated with zero unhandled exceptions under adversarial load.",
+      date: "Jan 18, 1956",
     },
+
+    // 4. Varnell Collection | Peripheral Entry (Crimson Red #DC2626)
+    // Behind color is Emerald Teal (#047857) from Folder 3
     {
       id: "folder-3",
-      code: "DOSSIER // 16D",
-      tabTitle: "04 // Native Mobile 60FPS",
-      tabStartX: 770,
-      tabWidth: 200,
-      gradient: "linear-gradient(145deg, #1D4ED8 0%, #1E3A8A 100%)", // Electric Cobalt Royal
-      glowColor: "rgba(29, 78, 216, 0.4)",
-      headline: "Pulse Mobile: Cross-Platform Native Flutter Architecture",
-      subtitle:
-        "High-velocity cross-platform Flutter client engineered with customized Skia graphics shaders, native gesture physics, and instant offline-first SQLite sync.",
-      tags: ["Flutter 3.24", "Dart", "Firebase", "SQLite", "Clean Architecture"],
-      metrics: [
-        { label: "Display Frame Budget", value: "60 FPS Locked" },
-        { label: "Application Cold Start", value: "< 280ms" },
-        { label: "App Store User Rating", value: "4.9 / 5.0" },
+      code: "15D",
+      primaryColor: "#DC2626",
+      behindColor: "#047857",
+      tabs: [
+        {
+          label: "Varnell Collection",
+          color: "#DC2626",
+          startX: 0,
+          topStartX: 0,
+          topEndX: 210,
+          endX: 235,
+        },
+        {
+          label: "Peripheral Entry",
+          color: "#1D4ED8", // Royal Blue
+          startX: 245,
+          topStartX: 270,
+          topEndX: 465,
+          endX: 490,
+        },
       ],
+      note: "Hardware-accelerated Skia shaders cataloged for native cross-platform deployment. Frame budget locked at steady 60 FPS.",
+      date: "Aug 29, 1956",
+    },
+
+    // 5. Subject Drift | Duplicated Silence | Margin Events (Deep Violet #58207E)
+    // Primary active folder in reference image. Behind color is Crimson Red (#DC2626) from Folder 4
+    {
+      id: "folder-4",
+      code: "16A",
+      primaryColor: "#58207E",
+      behindColor: "#DC2626",
+      tabs: [
+        {
+          label: "Subject Drift",
+          color: "#58207E",
+          startX: 0,
+          topStartX: 0,
+          topEndX: 200,
+          endX: 225,
+        },
+        {
+          label: "Duplicated Silence",
+          color: "#DC2626",
+          startX: 230,
+          topStartX: 255,
+          topEndX: 450,
+          endX: 475,
+        },
+        {
+          label: "Margin Events",
+          color: "#FCD34D", // Sunflower Yellow
+          textColor: "#0F172A",
+          startX: 515,
+          topStartX: 540,
+          topEndX: 735,
+          endX: 760,
+        },
+      ],
+      note: "Provenance unclear. Part of unidentified collection. Further context unavailable.",
+      date: "Dec 13, 1956",
+    },
+
+    // 6. Reverse Index (Cobalt Blue #1D4ED8)
+    // Behind color is Deep Violet (#58207E) from Folder 5
+    {
+      id: "folder-5",
+      code: "16B",
+      primaryColor: "#1D4ED8",
+      behindColor: "#58207E",
+      tabs: [
+        {
+          label: "Reverse Index",
+          color: "#1D4ED8",
+          startX: 0,
+          topStartX: 0,
+          topEndX: 210,
+          endX: 235,
+        },
+      ],
+      note: "Inverted cryptographic registry verified. Key-rotation schedule executed with zero downtime across federated nodes.",
+      date: "May 04, 1961",
+    },
+
+    // 7. Obscured Provenance | Undated Persuasions (Rose Pink #DB2777)
+    // Behind color is Cobalt Blue (#1D4ED8) from Folder 6
+    {
+      id: "folder-6",
+      code: "16C",
+      primaryColor: "#DB2777",
+      behindColor: "#1D4ED8",
+      tabs: [
+        {
+          label: "Obscured Provenance",
+          color: "#DB2777",
+          startX: 0,
+          topStartX: 0,
+          topEndX: 220,
+          endX: 245,
+        },
+        {
+          label: "Undated Persuasions",
+          color: "#FCD34D", // Sunflower Yellow
+          textColor: "#0F172A",
+          startX: 265,
+          topStartX: 290,
+          topEndX: 515,
+          endX: 540,
+        },
+      ],
+      note: "Cross-platform state restoration archive. Snapshot recovery completed with zero missing dependencies or data drift.",
+      date: "Feb 10, 1964",
+    },
+
+    // 8. No Verified (Electric Blue #2563EB)
+    // Behind color is Rose Pink (#DB2777) from Folder 7
+    {
+      id: "folder-7",
+      code: "15C",
+      primaryColor: "#2563EB",
+      behindColor: "#DB2777",
+      tabs: [
+        {
+          label: "No Verified",
+          color: "#2563EB",
+          startX: 0,
+          topStartX: 0,
+          topEndX: 200,
+          endX: 225,
+        },
+      ],
+      note: "Believed to be part of a larger set. No other parts located. Referent unknown. Source pending.",
+      date: "Mar 18, 1966",
     },
   ];
 
   return (
-    <section className="w-full bg-[#090B10] text-white py-24 sm:py-32 px-4 sm:px-6 relative overflow-hidden select-none">
-      {/* Subtle Ambient Radial Lighting */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_75%_50%_at_50%_15%,rgba(99,102,241,0.12)_0%,rgba(9,11,16,0)_80%)]"
-      />
-
-      <div className="w-full max-w-5xl mx-auto relative z-10">
-        {/* Archival Section Header */}
-        <div className="mb-14 sm:mb-18 text-left">
-          <p className="text-xs sm:text-sm font-mono tracking-widest uppercase text-indigo-400 mb-3 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
-            <span>Unindexed Archives // Selected Case Studies</span>
+    <section className="w-full bg-[#121214] text-white py-20 sm:py-28 px-4 sm:px-6 relative select-none">
+      <div className="w-full max-w-[880px] mx-auto">
+        {/* Archival Section Header (Exact matching reference screenshot) */}
+        <div className="mb-8 sm:mb-12 text-left">
+          <p className="text-xs sm:text-[13px] font-mono tracking-wider text-slate-400 mb-2 flex items-center gap-2">
+            <span>Unindexed Materials</span>
+            <span className="text-slate-600">/</span>
+            <span>Recovered Entries</span>
           </p>
-          <h2 className="font-editorial text-4xl sm:text-6xl text-white font-normal tracking-tight not-italic">
-            Engineering Dossiers
+          <h2 className="font-editorial text-4xl sm:text-5xl lg:text-6xl text-white font-normal tracking-tight not-italic">
+            Fragments 15–20
           </h2>
-          <p className="text-sm sm:text-base text-slate-400 font-roboto-condensed mt-3 max-w-xl leading-relaxed">
-            Hover over any folder tab to pull the dossier from the filing archive and inspect its architecture, code stack, and benchmarks.
-          </p>
         </div>
 
         {/* ============================================================== */}
-        {/* THE INTERACTIVE FOLDER STACK DECK                             */}
+        {/* THE EXACT ARCHIVAL FILING CABINET FOLDER STACK                */}
         {/* ============================================================== */}
-        <div className="relative w-full h-[520px] sm:h-[490px] pt-4">
-          {dossiers.map((dossier, index) => {
-            const isHovered = hoveredId === dossier.id;
-
-            // Staggered vertical base offset so each folder sits behind the other
-            const baseTop = index * 48;
+        <div className="w-full flex flex-col rounded-2xl overflow-hidden shadow-2xl shadow-black/80 border border-white/5">
+          {folders.map((folder, folderIdx) => {
+            // Folder 4 ("Subject Drift") is open by default, and Folder 7 ("No Verified") is also open by default
+            // Hovering any folder dynamically activates it
+            const isHovered = activeId === folder.id;
+            const isOpen =
+              isHovered || (activeId === "folder-4" && (folder.id === "folder-4" || folder.id === "folder-7"));
 
             return (
-              <motion.div
-                key={dossier.id}
-                onMouseEnter={() => setHoveredId(dossier.id)}
-                onClick={() => setHoveredId(dossier.id)}
-                animate={{
-                  y: isHovered ? -55 : 0,
-                  scale: isHovered ? 1.015 : 1,
-                  zIndex: isHovered ? 40 : index + 1,
-                  opacity: hoveredId && !isHovered ? 0.88 : 1,
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 380,
-                  damping: 28,
-                }}
-                style={{
-                  top: `${baseTop}px`,
-                  zIndex: isHovered ? 40 : index + 1,
-                }}
-                className="absolute inset-x-0 cursor-pointer origin-bottom will-change-transform"
+              <div
+                key={folder.id}
+                onMouseEnter={() => setActiveId(folder.id)}
+                className="w-full flex flex-col cursor-pointer transition-all duration-150"
               >
-                {/* 1. AUTHENTIC FOLDER TAB CUT-OUT HEADER (SVG WITH CONCAVE FILLETS) */}
-                <div className="w-full relative -mb-[1px]">
-                  <FolderTabSvg
-                    tabStartX={dossier.tabStartX}
-                    tabWidth={dossier.tabWidth}
-                    fillGradient={`url(#grad-${dossier.id})`}
-                  />
+                {/* 1. THE VECTOR TAB HEADER BAR (EXACT BEVELED CUTS & PEEK-THROUGH COLORS) */}
+                <div className="w-full relative h-[38px] sm:h-[42px] block">
+                  <svg
+                    viewBox="0 0 1000 40"
+                    className="w-full h-full block"
+                    preserveAspectRatio="none"
+                  >
+                    {/* Background rectangle: shows the previous folder's color behind tabs and in gaps */}
+                    <rect x="0" y="0" width="1000" height="40" fill={folder.behindColor} />
 
-                  {/* Gradient Definition */}
-                  <svg className="absolute w-0 h-0" aria-hidden="true">
-                    <defs>
-                      <linearGradient id={`grad-${dossier.id}`} x1="0" y1="0" x2="1" y2="1">
-                        {dossier.id === "folder-0" && (
-                          <>
-                            <stop offset="0%" stopColor="#701A75" />
-                            <stop offset="100%" stopColor="#4A044E" />
-                          </>
-                        )}
-                        {dossier.id === "folder-1" && (
-                          <>
-                            <stop offset="0%" stopColor="#EA580C" />
-                            <stop offset="100%" stopColor="#9A3412" />
-                          </>
-                        )}
-                        {dossier.id === "folder-2" && (
-                          <>
-                            <stop offset="0%" stopColor="#047857" />
-                            <stop offset="100%" stopColor="#064E3B" />
-                          </>
-                        )}
-                        {dossier.id === "folder-3" && (
-                          <>
-                            <stop offset="0%" stopColor="#1D4ED8" />
-                            <stop offset="100%" stopColor="#1E3A8A" />
-                          </>
-                        )}
-                      </linearGradient>
-                    </defs>
+                    {/* Folder baseline strip (connecting the tabs across the folder) */}
+                    <rect x="0" y="14" width="1000" height="26" fill={folder.primaryColor} />
+
+                    {/* Elevated Beveled Tabs */}
+                    {folder.tabs.map((tab, idx) => {
+                      const isLeft = tab.startX === 0;
+
+                      // Exact SVG trapezoid path with smooth rounded corners and 36-degree beveled shoulders
+                      let pathD = "";
+                      if (isLeft) {
+                        pathD = `
+                          M 0,40
+                          L 0,10
+                          Q 0,0 12,0
+                          L ${tab.topEndX},0
+                          C ${tab.topEndX + 8},0 ${tab.endX - 8},14 ${tab.endX},14
+                          L ${tab.endX},40
+                          Z
+                        `;
+                      } else {
+                        pathD = `
+                          M ${tab.startX},40
+                          L ${tab.startX},14
+                          C ${tab.startX + 8},14 ${tab.topStartX - 8},0 ${tab.topStartX},0
+                          L ${tab.topEndX},0
+                          C ${tab.topEndX + 8},0 ${tab.endX - 8},14 ${tab.endX},14
+                          L ${tab.endX},40
+                          Z
+                        `;
+                      }
+
+                      return (
+                        <g key={idx}>
+                          <path d={pathD} fill={tab.color} />
+                        </g>
+                      );
+                    })}
                   </svg>
 
-                  {/* Tab Label Positioned Exactly Over the Elevated Tab Shape */}
-                  <div
-                    style={{
-                      left: `${dossier.tabStartX / 10}%`,
-                      width: `${dossier.tabWidth / 10}%`,
-                    }}
-                    className="absolute top-0 h-[42px] sm:h-[48px] flex items-center justify-center px-4 pointer-events-none"
-                  >
-                    <span className="text-xs sm:text-sm font-bold font-roboto-condensed text-white/95 tracking-tight truncate drop-shadow-xs">
-                      {dossier.tabTitle}
-                    </span>
-                  </div>
-                </div>
+                  {/* Text Labels Positioned Over Each Tab */}
+                  <div className="absolute inset-0 pointer-events-none flex items-center">
+                    {folder.tabs.map((tab, idx) => {
+                      const leftPercent = (tab.startX / 1000) * 100;
+                      const widthPercent = ((tab.endX - tab.startX) / 1000) * 100;
+                      const isYellow = tab.color === "#FCD34D";
 
-                {/* 2. FOLDER BODY (SEAMLESS CONTINUOUS CONTAINER) */}
-                <div
-                  style={{
-                    background: dossier.gradient,
-                    boxShadow: isHovered
-                      ? `0 35px 70px -15px rgba(0,0,0,0.85), 0 0 45px -10px ${dossier.glowColor}, inset 0 1px 0 rgba(255,255,255,0.22)`
-                      : "0 12px 30px -8px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.12)",
-                  }}
-                  className="w-full rounded-b-[28px] sm:rounded-b-[32px] p-6 sm:p-9 text-white transition-all duration-300"
-                >
-                  {/* Top Metadata Strip */}
-                  <div className="flex items-center justify-between pb-3.5 mb-5 border-b border-white/15 text-xs font-mono tracking-wider text-white/75">
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-white">{dossier.code}</span>
-                      <span>•</span>
-                      <span className="hidden sm:inline">KIZEN SOLVES ENGINEERING ARCHIVE</span>
-                    </div>
-                    <span className="text-[11px] font-semibold uppercase bg-white/10 px-2.5 py-0.5 rounded-full border border-white/15">
-                      Production Verified
-                    </span>
-                  </div>
-
-                  {/* Main Grid Content */}
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
-                    {/* Left Column: Headline, Summary & Badges */}
-                    <div className="lg:col-span-8">
-                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-black font-roboto-condensed tracking-tight text-white leading-tight">
-                        {dossier.headline}
-                      </h3>
-                      <p className="text-xs sm:text-sm font-roboto-condensed text-white/85 mt-2.5 leading-relaxed max-w-2xl">
-                        {dossier.subtitle}
-                      </p>
-
-                      {/* Tech Badges */}
-                      <div className="flex flex-wrap gap-2 mt-4">
-                        {dossier.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-2.5 py-0.5 rounded-lg text-xs font-bold font-roboto-condensed bg-white/15 text-white/95 border border-white/20 shadow-2xs backdrop-blur-xs"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Right Column: Live Metrics */}
-                    <div className="lg:col-span-4 flex flex-col gap-2.5 w-full">
-                      {dossier.metrics.map((m, idx) => (
+                      return (
                         <div
                           key={idx}
-                          className="px-3.5 py-2 rounded-xl bg-white/10 border border-white/15 backdrop-blur-xs flex items-center justify-between shadow-2xs"
+                          style={{
+                            left: `${leftPercent}%`,
+                            width: `${widthPercent}%`,
+                          }}
+                          className={`absolute top-0 bottom-0 flex items-center justify-center px-3 sm:px-4 text-[11px] sm:text-[13px] font-semibold font-roboto-condensed tracking-tight truncate ${
+                            isYellow ? "text-slate-950 font-bold" : "text-white/95"
+                          }`}
                         >
-                          <span className="text-xs font-medium font-roboto-condensed text-white/75">
-                            {m.label}
-                          </span>
-                          <span className="text-xs sm:text-sm font-black font-roboto-condensed text-white tracking-tight">
-                            {m.value}
-                          </span>
+                          <span className="truncate">{tab.label}</span>
                         </div>
-                      ))}
-
-                      {/* Action Button */}
-                      <a
-                        href="#contact"
-                        className="mt-1 px-4 py-2 rounded-xl bg-white text-slate-950 hover:bg-slate-100 text-xs font-bold font-roboto-condensed transition-all duration-200 flex items-center justify-between shadow-sm cursor-pointer active:scale-95 group/btn"
-                      >
-                        <span>Request Architecture Review</span>
-                        <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-                      </a>
-                    </div>
+                      );
+                    })}
                   </div>
                 </div>
-              </motion.div>
+
+                {/* 2. THE EXPANDABLE FOLDER BODY (EXACT ARCHIVAL MONOSPACE LAYOUT) */}
+                <motion.div
+                  initial={false}
+                  animate={{
+                    height: isOpen ? "auto" : 0,
+                    opacity: isOpen ? 1 : 0,
+                  }}
+                  transition={{
+                    duration: 0.28,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  className="w-full overflow-hidden"
+                  style={{ backgroundColor: folder.primaryColor }}
+                >
+                  <div className="px-6 sm:px-12 py-8 sm:py-10 text-white min-h-[140px] sm:min-h-[160px] flex items-center border-t border-white/5">
+                    {/* Archival Grid: Code (left) | Typewritten Note (center) | Date (right) */}
+                    <div className="w-full grid grid-cols-12 gap-4 items-start font-mono text-xs sm:text-[13px]">
+                      {/* Left: Code (e.g. 16A, 15C) */}
+                      <div className="col-span-2 font-bold text-white tracking-widest text-sm sm:text-base">
+                        {folder.code}
+                      </div>
+
+                      {/* Center: Archival Note (3-4 lines, exact matching reference) */}
+                      <div className="col-span-8 pr-4">
+                        <p className="leading-relaxed max-w-sm text-white/90 font-mono text-xs sm:text-[13px]">
+                          {folder.note}
+                        </p>
+                      </div>
+
+                      {/* Right: Date (e.g. Dec 13, 1956) */}
+                      <div className="col-span-2 text-right text-white/80 whitespace-nowrap font-mono text-xs sm:text-[13px]">
+                        {folder.date}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
             );
           })}
         </div>
       </div>
     </section>
-  );
-};
-
-/**
- * Custom SVG Folder Tab with Authentic Rounded Corners and Smooth Concave Base Fillets
- * Generates an exact physical manila folder tab silhouette
- */
-const FolderTabSvg = ({
-  tabStartX,
-  tabWidth,
-  fillGradient,
-}: {
-  tabStartX: number;
-  tabWidth: number;
-  fillGradient: string;
-}) => {
-  // viewBox: 0 0 1000 48
-  // Total Height: 48px
-  // Tab Top: y = 0
-  // Folder Baseline: y = 48
-  const r = 14; // Fillet & Corner radius
-  const x1 = tabStartX;
-  const x2 = tabStartX + tabWidth;
-
-  // Path tracing:
-  // 1. From (0, 48) to (x1 - r, 48)
-  // 2. Concave fillet curving up to (x1, 48 - r)
-  // 3. Line up to (x1, r)
-  // 4. Convex rounded corner to (x1 + r, 0)
-  // 5. Line along tab top to (x2 - r, 0)
-  // 6. Convex rounded corner to (x2, r)
-  // 7. Line down to (x2, 48 - r)
-  // 8. Concave fillet curving out to (x2 + r, 48)
-  // 9. Line along baseline to (1000, 48)
-  // 10. Down to (1000, 48) and close to (0, 48)
-  const pathD = `
-    M 0,48
-    L ${x1 - r},48
-    Q ${x1},48 ${x1},${48 - r}
-    L ${x1},${r}
-    Q ${x1},0 ${x1 + r},0
-    L ${x2 - r},0
-    Q ${x2},0 ${x2},${r}
-    L ${x2},${48 - r}
-    Q ${x2},48 ${x2 + r},48
-    L 1000,48
-    Z
-  `;
-
-  return (
-    <svg
-      viewBox="0 0 1000 48"
-      xmlns="http://www.w3.org/2000/svg"
-      className="w-full h-[42px] sm:h-[48px] block"
-      preserveAspectRatio="none"
-    >
-      <path d={pathD} fill={fillGradient} />
-    </svg>
   );
 };
