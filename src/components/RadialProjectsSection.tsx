@@ -1,7 +1,14 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+  useMotionValueEvent,
+  AnimatePresence,
+} from "framer-motion";
 import { ChevronUp, ChevronDown, ExternalLink } from "lucide-react";
 
 interface BlankProject {
@@ -21,7 +28,6 @@ export const RadialProjectsSection = ({
 }: {
   onContactClick?: () => void;
 }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // 8 Curated Projects matching the KIZEN SOLVES Website Theme
@@ -124,29 +130,45 @@ export const RadialProjectsSection = ({
     },
   ];
 
-  const activeProject = projects[activeIndex];
-
-  // PINNED STICKY SCROLL:
-  // Tracks the scroll progress through the 380vh parent container.
-  // The screen stays 100% locked and fit to the viewport (sticky top-0 h-screen),
-  // while scrolling naturally advances through all project cards!
+  // ULTRA-SMOOTH CONTINUOUS SCROLL PHYSICS:
+  // 1. Raw scroll progress [0, 1] through the 400vh container
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    // Map scroll progress (0 to 1) evenly across the 8 project cards
-    const clamped = Math.min(0.999, Math.max(0, latest));
-    const targetIdx = Math.floor(clamped * projects.length);
-    if (targetIdx !== activeIndex) {
-      setActiveIndex(targetIdx);
-    }
+  // 2. Map [0, 1] to continuous project range [0, 7]
+  const rawProgress = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, projects.length - 1]
+  );
+
+  // 3. Luxurious inertia physics spring (stiffness: 85, damping: 26, mass: 0.6)
+  // Guarantees zero discrete jumping, buttery continuous gliding
+  const smoothProgress = useSpring(rawProgress, {
+    stiffness: 85,
+    damping: 26,
+    mass: 0.6,
+    restDelta: 0.001,
   });
 
-  // Smooth scroll to a specific project when clicked or button pressed
+  // 4. Continuous progress state driving real-time 120fps card coordinates
+  const [progressVal, setProgressVal] = useState(0);
+
+  useMotionValueEvent(smoothProgress, "change", (latest) => {
+    setProgressVal(latest);
+  });
+
+  // Active integer index for details
+  const activeIndex = Math.min(
+    projects.length - 1,
+    Math.max(0, Math.round(progressVal))
+  );
+  const activeProject = projects[activeIndex];
+
+  // Smooth scroll helper for clicks and chevrons
   const scrollToIndex = (idx: number) => {
-    setActiveIndex(idx);
     if (containerRef.current) {
       const rect = containerRef.current.getBoundingClientRect();
       const scrollTop = window.scrollY + rect.top;
@@ -164,14 +186,14 @@ export const RadialProjectsSection = ({
   const stepAngle = 13.5;
 
   return (
-    // 1. OUTER WRAPPER (Defines the scroll distance while sticky keeps the section fit to the screen)
+    // 1. OUTER WRAPPER (Generous 420vh scroll runway for luxurious pacing)
     <div
       ref={containerRef}
-      className="relative w-full h-[380vh] bg-white"
+      className="relative w-full h-[420vh] bg-white"
     >
-      {/* 2. STICKY VIEWPORT CONTAINER (Locked and 100% fit to the screen) */}
+      {/* 2. STICKY VIEWPORT CONTAINER (100% Fit to Screen, Never Jitters) */}
       <div className="sticky top-0 h-screen w-full flex items-center justify-center px-2 sm:px-4 py-2 sm:py-3 bg-white overflow-hidden z-20">
-        {/* 3. FRAMED DARK CONSOLE (Fits seamlessly inside the viewport) */}
+        {/* 3. FRAMED DARK CONSOLE */}
         <div className="w-full h-full max-h-[calc(100vh-16px)] sm:max-h-[calc(100vh-24px)] rounded-[28px] sm:rounded-[36px] bg-[#090D22] text-white p-5 sm:p-7 lg:p-8 relative overflow-hidden border border-slate-800 shadow-2xl shadow-indigo-950/40 flex flex-col justify-between">
           {/* Dynamic Ambient Website Theme Glow */}
           <div
@@ -229,7 +251,7 @@ export const RadialProjectsSection = ({
           {/* ============================================================== */}
           <div className="w-full flex-1 my-3 bg-[#0D122B]/90 border border-white/10 rounded-2xl shadow-xl shadow-black/80 backdrop-blur-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-0 relative z-10">
             {/* ============================================================ */}
-            {/* LEFT: CURVED ROTARY SCROLLER (BLANK CARDS ONLY, NO TEXT CLUTTER) */}
+            {/* LEFT: CONTINUOUS FLUID ROTARY SCROLLER (120FPS SILK PHYSICS) */}
             {/* ============================================================ */}
             <div className="lg:col-span-5 h-[260px] sm:h-[320px] lg:h-full relative overflow-hidden bg-[#080B1E]/95 border-b lg:border-b-0 lg:border-r border-white/10 flex items-center">
               {/* SVG Background: Full-Height Curved Track & Radial Rays */}
@@ -292,13 +314,15 @@ export const RadialProjectsSection = ({
                 />
               </svg>
 
-              {/* CURVED BLANK PROJECT CARDS REEL */}
+              {/* BUTTERY CONTINUOUS GLIDING CARDS REEL */}
               <div className="absolute inset-0 pointer-events-auto">
                 {projects.map((proj, idx) => {
-                  const offset = idx - activeIndex;
+                  // Continuous fractional offset from center (glides smoothly pixel by pixel)
+                  const offset = idx - progressVal;
                   const angle = offset * stepAngle;
-                  const isVisible = angle >= -45 && angle <= 45;
-                  const isActive = idx === activeIndex;
+                  const isVisible = angle >= -48 && angle <= 48;
+                  const dist = Math.abs(offset);
+                  const isNearest = Math.round(progressVal) === idx;
 
                   if (!isVisible) return null;
 
@@ -306,32 +330,29 @@ export const RadialProjectsSection = ({
                   const x = arcCenter.cx + arcRadius * Math.cos(rad);
                   const y = arcCenter.cy + arcRadius * Math.sin(rad);
 
+                  // Continuous organic scaling and opacity
+                  const scale = Math.max(0.85, 1.12 - dist * 0.22);
+                  const opacity = Math.max(0.3, 1 - dist * 0.28);
+
                   return (
-                    <motion.div
+                    <div
                       key={proj.id}
                       onClick={() => scrollToIndex(idx)}
-                      animate={{
+                      style={{
                         left: `${x}px`,
                         top: `${y}px`,
-                        rotate: angle,
-                        scale: isActive ? 1.12 : 0.88,
-                        opacity: isActive
-                          ? 1
-                          : Math.max(0.35, 1 - Math.abs(offset) * 0.2),
-                        zIndex: isActive ? 30 : 20 - Math.abs(offset),
+                        transform: `translate(-50%, -50%) rotate(${angle}deg) scale(${scale})`,
+                        opacity: opacity,
+                        zIndex: isNearest ? 30 : Math.max(1, 20 - Math.round(dist)),
+                        willChange: "transform, opacity",
                       }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 280,
-                        damping: 26,
-                      }}
-                      className="absolute cursor-pointer -translate-x-1/2 -translate-y-1/2"
+                      className="absolute cursor-pointer"
                     >
-                      {/* Clean Minimalist Blank Color Card in Website Theme */}
+                      {/* Clean Minimalist Blank Color Card */}
                       <div
                         style={{ backgroundColor: proj.color }}
-                        className={`w-[120px] h-[78px] sm:w-[135px] sm:h-[86px] rounded-2xl border relative overflow-hidden transition-all duration-300 p-2.5 sm:p-3 flex flex-col justify-between shadow-2xl ${
-                          isActive
+                        className={`w-[120px] h-[78px] sm:w-[135px] sm:h-[86px] rounded-2xl border relative overflow-hidden p-2.5 sm:p-3 flex flex-col justify-between shadow-2xl transition-shadow duration-300 ${
+                          isNearest
                             ? "border-indigo-400 ring-2 ring-indigo-400/60 shadow-[0_0_28px_rgba(99,102,241,0.5)]"
                             : "border-white/15 hover:border-white/40"
                         }`}
@@ -342,9 +363,9 @@ export const RadialProjectsSection = ({
                             // {proj.number}
                           </span>
                           <div
-                            className="w-2 h-2 rounded-full"
+                            className="w-2 h-2 rounded-full transition-colors duration-300"
                             style={{
-                              backgroundColor: isActive
+                              backgroundColor: isNearest
                                 ? "#818CF8"
                                 : "rgba(255,255,255,0.35)",
                             }}
@@ -356,7 +377,7 @@ export const RadialProjectsSection = ({
                           {proj.title.split(" ")[0]}
                         </div>
                       </div>
-                    </motion.div>
+                    </div>
                   );
                 })}
               </div>
@@ -371,32 +392,41 @@ export const RadialProjectsSection = ({
             {/* RIGHT: TITLE AT TOP, SAME BLANK CARD, SOME MATTER BELOW     */}
             {/* ============================================================ */}
             <div className="lg:col-span-7 p-5 sm:p-7 lg:p-8 flex flex-col justify-between bg-gradient-to-br from-[#0D122B] to-[#080B1E] overflow-y-auto">
-              {/* 1. TITLE AT TOP */}
+              {/* 1. TITLE AT TOP (Smooth Crossfade) */}
               <div className="pb-3 border-b border-white/10">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="font-mono text-xs text-indigo-400 tracking-wider uppercase">
-                    Project // {activeProject.number}
-                  </span>
-                  <span className="text-xs font-mono text-slate-400">
-                    {activeProject.year}
-                  </span>
-                </div>
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-white font-roboto-condensed">
-                  {activeProject.title}
-                </h3>
-                <p className="text-xs sm:text-sm font-mono text-indigo-300/80 mt-0.5">
-                  {activeProject.category}
-                </p>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeProject.id + "-title"}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="font-mono text-xs text-indigo-400 tracking-wider uppercase">
+                        Project // {activeProject.number}
+                      </span>
+                      <span className="text-xs font-mono text-slate-400">
+                        {activeProject.year}
+                      </span>
+                    </div>
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-white font-roboto-condensed">
+                      {activeProject.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm font-mono text-indigo-300/80 mt-0.5">
+                      {activeProject.category}
+                    </p>
+                  </motion.div>
+                </AnimatePresence>
               </div>
 
-              {/* 2. THE SAME BLANK CARD (Clean, Pure, Harmonious Theme Color) */}
+              {/* 2. THE SAME BLANK CARD (Smooth Liquid Color Transition) */}
               <div className="my-4 flex-1 flex items-center">
-                <motion.div
-                  key={activeProject.id}
-                  initial={{ opacity: 0.85, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.3 }}
-                  style={{ backgroundColor: activeProject.color }}
+                <div
+                  style={{
+                    backgroundColor: activeProject.color,
+                    transition: "background-color 0.45s cubic-bezier(0.16, 1, 0.3, 1)",
+                  }}
                   className="w-full aspect-[16/10] max-h-[260px] sm:max-h-[300px] rounded-2xl border border-white/15 shadow-2xl relative overflow-hidden flex items-end p-4 sm:p-5"
                 >
                   {/* Subtle Architectural Corner Markers */}
@@ -418,37 +448,48 @@ export const RadialProjectsSection = ({
                     <span>CANVAS // {activeProject.number}</span>
                     <span className="text-white/80 font-semibold">{activeProject.title}</span>
                   </div>
-                </motion.div>
+                </div>
               </div>
 
-              {/* 3. SOME MATTER BELOW */}
+              {/* 3. SOME MATTER BELOW (Smooth Crossfade) */}
               <div className="pt-3 border-t border-white/10 space-y-3">
-                {/* Project Description Matter */}
-                <p className="text-xs sm:text-sm text-slate-300 font-mono leading-relaxed">
-                  {activeProject.description}
-                </p>
-
-                {/* Technology Tags & Action Trigger */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
-                  <div className="flex flex-wrap gap-1.5">
-                    {activeProject.tags.map((tag, tIdx) => (
-                      <span
-                        key={tIdx}
-                        className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-indigo-500/15 text-indigo-300 border border-indigo-400/30"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <button
-                    onClick={onContactClick}
-                    className="inline-flex items-center justify-center gap-2 px-5 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-950 text-xs sm:text-sm font-semibold font-roboto-condensed tracking-tight transition-all active:scale-95 shadow-lg shadow-indigo-950/30 flex-shrink-0 cursor-pointer"
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeProject.id + "-matter"}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    className="space-y-3"
                   >
-                    <span>Request Details</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </button>
-                </div>
+                    {/* Project Description Matter */}
+                    <p className="text-xs sm:text-sm text-slate-300 font-mono leading-relaxed">
+                      {activeProject.description}
+                    </p>
+
+                    {/* Technology Tags & Action Trigger */}
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
+                      <div className="flex flex-wrap gap-1.5">
+                        {activeProject.tags.map((tag, tIdx) => (
+                          <span
+                            key={tIdx}
+                            className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-indigo-500/15 text-indigo-300 border border-indigo-400/30"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      <button
+                        onClick={onContactClick}
+                        className="inline-flex items-center justify-center gap-2 px-5 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-950 text-xs sm:text-sm font-semibold font-roboto-condensed tracking-tight transition-all active:scale-95 shadow-lg shadow-indigo-950/30 flex-shrink-0 cursor-pointer"
+                      >
+                        <span>Request Details</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </div>
           </div>
