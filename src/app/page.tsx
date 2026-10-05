@@ -5,6 +5,8 @@ import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { TrustStatementSection } from "@/components/TrustStatementSection";
 import { TechArsenalSection } from "@/components/TechArsenalSection";
+import { RadialProjectsSection } from "@/components/RadialProjectsSection";
+
 export default function Home() {
   const scrollToContact = () => {
     const contactElem = document.getElementById("contact");
@@ -30,6 +32,9 @@ export default function Home() {
 
       {/* Section 3: Modern Technology Arsenal Section (Bidirectional Moving Marquee with Foggy Blur) */}
       <TechArsenalSection onContactClick={scrollToContact} />
+
+      {/* Section 4: Radial Rotary Jog-Wheel Project Showcase with Blank Color Mockups */}
+      <RadialProjectsSection onContactClick={scrollToContact} />
     </main>
   );
 }
