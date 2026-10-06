@@ -61,7 +61,7 @@ export const TechArsenalSection = ({ onContactClick }: TechArsenalSectionProps) 
   return (
     <section
       id="tech-stack"
-      className="w-full min-h-screen h-screen py-8 sm:py-12 bg-white border-b border-slate-100 relative z-20 overflow-hidden flex flex-col justify-between"
+      className="w-full py-20 sm:py-28 bg-white border-b border-slate-100 relative z-20 overflow-hidden"
     >
       <div className="w-full max-w-[1360px] mx-auto px-4 sm:px-6">
         {/* Header Bar */}
@@ -91,9 +91,9 @@ export const TechArsenalSection = ({ onContactClick }: TechArsenalSectionProps) 
       {/* DUAL MOVING MARQUEE TRACKS WITH FOGGY BLURRED END BLENDS */}
       <div className="w-full relative mt-10 sm:mt-12 overflow-hidden py-4">
         {/* Ambient Subtle Center Glow Behind Marquee for Contrast & Depth */}
-        <div 
-          aria-hidden="true" 
-          className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-56 bg-gradient-to-r from-transparent via-purple-100/40 to-transparent blur-3xl pointer-events-none" 
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-56 bg-gradient-to-r from-transparent via-purple-100/40 to-transparent blur-3xl pointer-events-none"
         />
 
         {/* LEFT FOGGY BLURRED BLEND EFFECT */}

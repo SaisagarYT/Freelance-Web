@@ -82,7 +82,6 @@ export const TrustStatementSection = () => {
 
   return (
     <section
-      id="trust-statement"
       ref={containerRef}
       className="w-full min-h-screen h-screen relative overflow-hidden flex flex-col items-center justify-center px-4 sm:px-6 bg-white"
     >
@@ -190,11 +189,10 @@ const WordBlurPopItem = ({
         opacity,
         scale,
       }}
-      className={`inline-block transition-colors duration-150 origin-bottom font-roboto-condensed font-black tracking-tight ${
-        isHighlight
-          ? "text-purple-700 font-black"
-          : "text-slate-900 font-black"
-      }`}
+      className={`inline-block transition-colors duration-150 origin-bottom font-roboto-condensed font-black tracking-tight ${isHighlight
+        ? "text-purple-700 font-black"
+        : "text-slate-900 font-black"
+        }`}
     >
       {word}
     </motion.span>

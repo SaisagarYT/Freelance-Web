@@ -23,8 +23,6 @@
 # misc
 .DS_Store
 *.pem
-full_scroll_step_*.png
-test_*.mjs
 
 # debug
 npm-debug.log*
