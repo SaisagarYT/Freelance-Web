@@ -48,7 +48,7 @@ export const Hero = ({ onContactClick }: { onContactClick?: () => void }) => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mt-6 text-base sm:text-lg md:text-xl text-slate-300 max-w-2xl font-normal leading-relaxed"
         >
-          All project here is designed to deliver impact—not just impressions.
+          Every system here is engineered to deliver high-velocity impact—not just impressions.
           Full-stack mastery, fluid kinetic interfaces, and bespoke SaaS architectures.
         </motion.p>
 
@@ -95,7 +95,7 @@ export const Hero = ({ onContactClick }: { onContactClick?: () => void }) => {
 
           {/* Secondary Action Button (Translucent Glass Pill) */}
           <a
-            href="#projects"
+            href="/contact"
             className="w-full sm:w-auto px-6 py-3.5 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 backdrop-blur-md text-white font-medium text-sm md:text-base flex items-center justify-center gap-2 transition-all duration-200 hover:border-white/40 active:scale-95 cursor-pointer"
           >
             <span>Book a call</span>

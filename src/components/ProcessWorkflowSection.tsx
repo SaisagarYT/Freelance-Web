@@ -34,7 +34,7 @@ export const ProcessWorkflowSection: React.FC<ProcessWorkflowSectionProps> = ({
       id: "phase-01",
       number: "01",
       title: "DISCOVER",
-      tag: "[ WHERE EXPLORATION BEGINS ]",
+      tag: "WHERE EXPLORATION BEGINS",
       deliverables: [
         "Stakeholder & Founder Interviews",
         "Market Context & Competitive Analysis",
@@ -48,7 +48,7 @@ export const ProcessWorkflowSection: React.FC<ProcessWorkflowSectionProps> = ({
       id: "phase-02",
       number: "02",
       title: "DEFINE",
-      tag: "[ WHERE CLARITY MEETS CONCEPT ]",
+      tag: "WHERE CLARITY MEETS CONCEPT",
       deliverables: [
         "Brand Strategy & Architecture",
         "Messaging & Positioning Framework",
@@ -62,7 +62,7 @@ export const ProcessWorkflowSection: React.FC<ProcessWorkflowSectionProps> = ({
       id: "phase-03",
       number: "03",
       title: "DESIGN",
-      tag: "[ WHERE THE MAGIC CLICKS ]",
+      tag: "WHERE THE MAGIC CLICKS",
       deliverables: [
         "Distinctive Visual Identity",
         "High-Impact Logo & Asset Systems",
@@ -76,7 +76,7 @@ export const ProcessWorkflowSection: React.FC<ProcessWorkflowSectionProps> = ({
       id: "phase-04",
       number: "04",
       title: "DELIVER",
-      tag: "[ SCALABLE PRODUCTION SYSTEMS ]",
+      tag: "SCALABLE PRODUCTION SYSTEMS",
       deliverables: [
         "Production-Grade Next.js / React Code",
         "Modular Component Libraries & Design Tokens",
@@ -186,7 +186,7 @@ export const ProcessWorkflowSection: React.FC<ProcessWorkflowSectionProps> = ({
         <div className="text-right">
           <div className="flex items-center justify-end gap-2 text-purple-700 font-mono text-xs tracking-widest uppercase mb-2">
             <span className="w-2 h-2 rounded-full bg-purple-600 animate-pulse" />
-            <span>Section // 05</span>
+            <span>Execution Protocol</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 font-roboto-condensed uppercase">
             Methodology
@@ -232,7 +232,7 @@ export const ProcessWorkflowSection: React.FC<ProcessWorkflowSectionProps> = ({
                 >
                   <div className="flex items-center gap-4 sm:gap-6 lg:gap-8">
                     <span className="font-mono text-base sm:text-xl font-black text-purple-700 tracking-tight shrink-0">
-                      {phase.number} //
+                      {phase.number} •
                     </span>
                     <h3 className="text-lg sm:text-2xl font-black font-roboto-condensed tracking-tight text-slate-900 uppercase">
                       {phase.title}
@@ -301,7 +301,7 @@ export const ProcessWorkflowSection: React.FC<ProcessWorkflowSectionProps> = ({
                           <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-purple-300" />
                         </button>
                         <span className="font-mono text-xs text-slate-500">
-                          PHASE // 0{idx + 1} OF 04
+                          PHASE 0{idx + 1} OF 04
                         </span>
                       </div>
                     </div>
@@ -309,8 +309,8 @@ export const ProcessWorkflowSection: React.FC<ProcessWorkflowSectionProps> = ({
 
                   {/* Bottom Metadata Bar: Anchored neatly at the bottom of the card and viewport */}
                   <div className="w-full pt-4 mt-auto border-t border-[#E2DCF0]/60 flex items-center justify-between text-[11px] font-mono text-slate-400">
-                    <span>[ SYSTEM_METHODOLOGY_PROTOCOL ]</span>
-                    <span className="font-semibold text-slate-500">SYS // 2026</span>
+                    <span>SYSTEM METHODOLOGY PROTOCOL</span>
+                    <span className="font-semibold text-slate-500">SYS 2026</span>
                   </div>
                 </div>
               </motion.div>

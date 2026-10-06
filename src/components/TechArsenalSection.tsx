@@ -68,7 +68,7 @@ export const TechArsenalSection = ({ onContactClick }: TechArsenalSectionProps) 
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8 sm:pb-10 border-b border-slate-100">
           <div className="max-w-2xl">
             <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black font-roboto-condensed tracking-tight text-slate-900 leading-tight">
-              Founders, scale-ups &amp; modern engineering teams partner with KIZEN SOLVES
+              Founders, scale-ups &amp; modern engineering teams partner with KAIZEN SOLVES
             </h3>
             <p className="text-slate-500 text-sm sm:text-base mt-2 font-medium font-roboto-condensed">
               Battle-tested tools and frameworks we leverage to architect high-velocity digital products.
@@ -141,7 +141,7 @@ export const TechArsenalSection = ({ onContactClick }: TechArsenalSectionProps) 
       <div className="w-full max-w-[1360px] mx-auto px-4 sm:px-6">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pt-8 sm:pt-10 text-slate-700 text-sm border-t border-slate-100 mt-8 sm:mt-12">
           <p className="max-w-2xl font-medium font-roboto-condensed leading-relaxed text-slate-600 text-sm sm:text-base">
-            From high-velocity Flutter mobile applications to mission-critical Next.js cloud platforms, KIZEN SOLVES delivers end-to-end digital excellence modern founders can count on.
+            From high-velocity Flutter mobile applications to mission-critical Next.js cloud platforms, KAIZEN SOLVES delivers end-to-end digital excellence modern founders can count on.
           </p>
           <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm font-bold font-roboto-condensed text-slate-900 shrink-0">
             <div className="flex items-center gap-2">

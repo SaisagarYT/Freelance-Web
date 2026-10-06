@@ -6,18 +6,36 @@ import {
   animate,
   AnimatePresence,
 } from "framer-motion";
-import { ChevronDown, ExternalLink, Layers, Play, Pause } from "lucide-react";
+import { ChevronDown, ExternalLink, Layers, Play, Pause, Globe, Database, Cpu, Zap } from "lucide-react";
+
+interface ProjectMetric {
+  label: string;
+  value: string;
+  sub: string;
+}
+
+interface ProjectArchitecture {
+  ingress: { name: string; tag: string };
+  engine: { name: string; tag: string };
+  egress: { name: string; tag: string };
+  latency: string;
+  statusText: string;
+}
 
 interface BlankProject {
   id: string;
   number: string;
   title: string;
+  shortTag: string;
   category: string;
   year: string;
   color: string;
   accent: string;
   tags: string[];
   description: string;
+  hook: string;
+  metrics: ProjectMetric[];
+  architecture: ProjectArchitecture;
 }
 
 export interface RadialProjectsSectionProps {
@@ -29,103 +47,215 @@ export const RadialProjectsSection: React.FC<RadialProjectsSectionProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // 8 Curated Projects matching the KIZEN SOLVES Website Theme
+  // 8 Curated Projects matching the KAIZEN SOLVES Website Theme
   const projects: BlankProject[] = [
     {
       id: "project-01",
       number: "01",
       title: "AURORA ARCHITECTURE",
+      shortTag: "CLOUD",
       category: "Full-Stack Enterprise Cloud",
       year: "2026",
-      color: "#0F172A", // Deep Dark Slate
-      accent: "#6366F1", // Electric Indigo
+      color: "#0F172A",
+      accent: "#6366F1",
       tags: ["Next.js 15", "TypeScript", "Tailwind CSS", "PostgreSQL", "AWS"],
       description:
         "High-performance cloud architecture engineered for sub-second query latency, global multi-region state synchronization, and enterprise-grade reliability.",
+      hook: "Sub-50ms Global Query Latency • Multi-Region Resilient State Sync",
+      metrics: [
+        { label: "P99 LATENCY", value: "14ms", sub: "Global Edge" },
+        { label: "THROUGHPUT", value: "180k/s", sub: "Peak Traffic" },
+        { label: "UPTIME SLA", value: "99.999%", sub: "Multi-Region" },
+      ],
+      architecture: {
+        ingress: { name: "EDGE INGRESS", tag: "Cloudflare / CDN" },
+        engine: { name: "DISTRIBUTED MESH", tag: "Next.js 15 / Go" },
+        egress: { name: "SHARDED DB", tag: "Global PostgreSQL" },
+        latency: "14ms p99",
+        statusText: "US-EAST & EU-CENTRAL ACTIVE",
+      },
     },
     {
       id: "project-02",
       number: "02",
       title: "KINETIC TELEMETRY",
+      shortTag: "STREAM",
       category: "Real-Time Telemetry Engine",
       year: "2026",
-      color: "#12184B", // Hero Deep Navy
-      accent: "#4338CA", // Royal Indigo
+      color: "#12184B",
+      accent: "#4338CA",
       tags: ["WebSocket", "ClickHouse", "Redis Cluster", "Kafka", "Data Pipeline"],
       description:
         "Industrial-grade telemetry ingestion pipeline handling high-frequency data streams with real-time vector indexing and sub-2ms query processing.",
+      hook: "1.2M Streaming Events/Sec • Real-Time Vector Indexing with Zero Data Loss",
+      metrics: [
+        { label: "EVENT VELOCITY", value: "1.2M/s", sub: "Kafka Ingest" },
+        { label: "QUERY TIME", value: "1.8ms", sub: "ClickHouse" },
+        { label: "COMPRESSION", value: "8.4x", sub: "Zstandard" },
+      ],
+      architecture: {
+        ingress: { name: "STREAM INGEST", tag: "Kafka / Redis Cluster" },
+        engine: { name: "TELEMETRY ENGINE", tag: "ClickHouse Pipeline" },
+        egress: { name: "VECTOR CACHE", tag: "Sub-2ms Memory" },
+        latency: "1.8ms query",
+        statusText: "120 FPS STREAMING PIPELINE",
+      },
     },
     {
       id: "project-03",
       number: "03",
       title: "SYNAPSE AI MESH",
+      shortTag: "AI MESH",
       category: "Autonomous Systems",
       year: "2025",
-      color: "#1E1B4B", // Deep Purple Navy
-      accent: "#7C3AED", // Electric Purple
+      color: "#1E1B4B",
+      accent: "#7C3AED",
       tags: ["Python", "FastAPI", "Vector DB", "gRPC", "Docker"],
       description:
         "Self-governing agentic mesh network coordinating autonomous execution workflows, semantic memory retrieval, and self-healing cluster operations.",
+      hook: "Autonomous Agent Orchestration • Deterministic Tool Execution & Cognitive Memory",
+      metrics: [
+        { label: "ACTIVE AGENTS", value: "32 Nodes", sub: "Autonomous" },
+        { label: "INFERENCE P95", value: "110ms", sub: "vLLM Mesh" },
+        { label: "TASK ACCURACY", value: "99.8%", sub: "Evaluated" },
+      ],
+      architecture: {
+        ingress: { name: "COGNITIVE ROUTER", tag: "gRPC Gateway" },
+        engine: { name: "AGENTIC MESH", tag: "Multi-Agent Graph" },
+        egress: { name: "SEMANTIC RAG", tag: "Milvus / Vector DB" },
+        latency: "110ms p95",
+        statusText: "AUTONOMOUS CONSENSUS LOCKED",
+      },
     },
     {
       id: "project-04",
       number: "04",
       title: "PULSE MOBILE ENGINE",
+      shortTag: "MOBILE",
       category: "Mobile & Graphics Engine",
       year: "2025",
-      color: "#172554", // Deep Cobalt
-      accent: "#3B82F6", // Cobalt Blue
+      color: "#172554",
+      accent: "#3B82F6",
       tags: ["Flutter 3.24", "Dart", "Skia Shaders", "SQLite", "Firebase"],
       description:
         "Cross-platform native mobile client built with custom Skia graphics shaders, fluid 60fps gesture interactions, and instant offline-first SQLite synchronization.",
+      hook: "Buttery 60/120 FPS Native Fluidity • Offline-First Reactive SQLite Sync",
+      metrics: [
+        { label: "FRAME TIME", value: "8.3ms", sub: "120 FPS Native" },
+        { label: "COLD BOOT", value: "280ms", sub: "Instant Open" },
+        { label: "OFFLINE SYNC", value: "0ms", sub: "Local SQLite" },
+      ],
+      architecture: {
+        ingress: { name: "FLUTTER UI", tag: "Skia Graphics" },
+        engine: { name: "SHADER ENGINE", tag: "GPU Custom Pass" },
+        egress: { name: "REACTIVE WAL", tag: "SQLite + Cloud Sync" },
+        latency: "8.3ms frame",
+        statusText: "CROSS-PLATFORM SHADERS ACTIVE",
+      },
     },
     {
       id: "project-05",
       number: "05",
       title: "NEXUS PROTOCOL",
+      shortTag: "mTLS",
       category: "Zero-Trust Infrastructure",
       year: "2025",
-      color: "#2E1065", // Deep Royal Violet
-      accent: "#A855F7", // Violet Bloom
+      color: "#2E1065",
+      accent: "#A855F7",
       tags: ["Zero-Trust", "Kubernetes", "Go", "Docker", "Terraform"],
       description:
         "Zero-trust perimeter security gateway featuring automated cryptographic key rotation, strict mutual TLS authentication, and federated identity management.",
+      hook: "Military-Grade Zero-Trust • 60-Second Automated mTLS Key Rotation",
+      metrics: [
+        { label: "HANDSHAKE", value: "0.9ms", sub: "mTLS v1.3" },
+        { label: "KEY ROTATION", value: "60s", sub: "Automated KMS" },
+        { label: "THREAT AUDIT", value: "100%", sub: "Zero-Breach" },
+      ],
+      architecture: {
+        ingress: { name: "PERIMETER GATEWAY", tag: "Strict Mutual TLS" },
+        engine: { name: "ENCLAVE RUNTIME", tag: "Kubernetes / Go" },
+        egress: { name: "FEDERATED IAM", tag: "Encrypted KMS Vault" },
+        latency: "0.9ms tls",
+        statusText: "ENCLAVE VERIFIED • AIR-GAPPED",
+      },
     },
     {
       id: "project-06",
       number: "06",
       title: "CHRONO LEDGER",
+      shortTag: "FINTECH",
       category: "Fintech & Ledger",
       year: "2024",
-      color: "#1E293B", // Graphite Obsidian
-      accent: "#818CF8", // Indigo Mist
+      color: "#1E293B",
+      accent: "#818CF8",
       tags: ["Solidity", "Go", "Event Sourcing", "Ledger", "Cryptography"],
       description:
         "Deterministic distributed ledger engine for institutional asset clearing with sub-second execution guarantees and atomic state rollback prevention.",
+      hook: "Microsecond Institutional Settlement • Deterministic State Reversion Prevention",
+      metrics: [
+        { label: "CLEARING SPEED", value: "420μs", sub: "Atomic Execution" },
+        { label: "REVERSION RATE", value: "0.00%", sub: "Deterministic" },
+        { label: "TX FINALITY", value: "<1.0s", sub: "Consensus" },
+      ],
+      architecture: {
+        ingress: { name: "ORDER ROUTER", tag: "Low-Latency Ingress" },
+        engine: { name: "LEDGER ENGINE", tag: "Event Sourcing Go" },
+        egress: { name: "ATOMIC STATE", tag: "Immutable Log" },
+        latency: "420μs exec",
+        statusText: "CONSENSUS FINALIZED • AUDITED",
+      },
     },
     {
       id: "project-07",
       number: "07",
       title: "STRATA DESIGN SYSTEM",
+      shortTag: "TOKENS",
       category: "UI/UX Architecture",
       year: "2024",
-      color: "#132338", // Deep Slate Teal
-      accent: "#10B981", // Emerald Mint
+      color: "#132338",
+      accent: "#10B981",
       tags: ["Design System", "Figma Tokens", "Storybook", "WCAG AAA", "React"],
       description:
         "Comprehensive enterprise design system comprising over 140 accessible tokens, dynamic contrast validation, component libraries, and automated CI/CD token sync.",
+      hook: "Enterprise-Scale Token Sync • WCAG AAA Compliance Across 160+ Components",
+      metrics: [
+        { label: "COMPONENTS", value: "160+", sub: "Tested Tokens" },
+        { label: "ACCESSIBILITY", value: "AAA", sub: "WCAG Certified" },
+        { label: "DESIGN DEBT", value: "0 hrs", sub: "CI Auto-Sync" },
+      ],
+      architecture: {
+        ingress: { name: "FIGMA TOKENS", tag: "Dynamic Palette" },
+        engine: { name: "COMPILER PIPELINE", tag: "Tailwind / CSS Vars" },
+        egress: { name: "REACT / NATIVE", tag: "Storybook Production" },
+        latency: "100% sync",
+        statusText: "140+ DESIGN TOKENS SYNCED",
+      },
     },
     {
       id: "project-08",
       number: "08",
       title: "VORTEX 3D CANVAS",
+      shortTag: "3D GLSL",
       category: "Creative Technology",
       year: "2024",
-      color: "#1E1E38", // Midnight Indigo
-      accent: "#9333EA", // Luminous Purple
+      color: "#1E1E38",
+      accent: "#9333EA",
       tags: ["Three.js", "WebGL", "GLSL Shaders", "WebAudio", "GSAP"],
       description:
         "Interactive 3D WebGL soundstage driven by audio frequency shaders, generative particle flows, and buttery-smooth 60fps kinetic user interaction.",
+      hook: "Hardware-Accelerated WebGL 3D • 250,000 Reactive Audio Frequency Particles",
+      metrics: [
+        { label: "PARTICLES", value: "250k", sub: "GLSL Compute" },
+        { label: "GPU OVERHEAD", value: "18%", sub: "Metal / WebGL" },
+        { label: "TARGET FPS", value: "60 FPS", sub: "WebAudio FFT" },
+      ],
+      architecture: {
+        ingress: { name: "AUDIO FFT", tag: "Frequency WebAudio" },
+        engine: { name: "GLSL COMPUTE", tag: "Particle Shaders" },
+        egress: { name: "THREE.JS MESH", tag: "60 FPS Canvas" },
+        latency: "16.6ms 60fps",
+        statusText: "HARDWARE ACCELERATION ON",
+      },
     },
   ];
 
@@ -231,15 +361,15 @@ export const RadialProjectsSection: React.FC<RadialProjectsSectionProps> = ({
       <div className="w-full max-w-[1360px] mx-auto px-4 sm:px-6 pb-6 sm:pb-8 bg-white">
         <div className="pb-6 sm:pb-8 border-b border-slate-100 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2 text-indigo-600 font-roboto-condensed font-bold text-xs tracking-widest uppercase mb-2">
-              <span className="w-2 h-2 rounded-full bg-indigo-600 animate-ping" />
-              <span>Section // 04 • Selected Works</span>
+            <div className="flex items-center gap-2 text-purple-600 font-roboto-condensed font-bold text-xs tracking-widest uppercase mb-2">
+              <span className="w-2 h-2 rounded-full bg-purple-600 animate-ping" />
+              <span>Selected Works</span>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 font-roboto-condensed">
               Projects & Architecture
             </h2>
             <p className="text-slate-500 text-sm sm:text-base mt-2 font-medium font-roboto-condensed max-w-2xl">
-              High-performance architectural systems, cloud infrastructure, and client engines engineered by KIZEN SOLVES.
+              High-performance architectural systems, cloud infrastructure, and client engines engineered by KAIZEN SOLVES.
             </p>
           </div>
 
@@ -255,7 +385,7 @@ export const RadialProjectsSection: React.FC<RadialProjectsSectionProps> = ({
                   isPaused ? "bg-amber-500" : "bg-emerald-500 animate-pulse"
                 }`}
               />
-              <span className="tracking-wide">{isPaused ? "ROTATION PAUSED" : "AUTO-CYCLE [3s]"}</span>
+              <span className="tracking-wide">{isPaused ? "ROTATION PAUSED" : "AUTO-CYCLE • 3s"}</span>
               {isPaused ? (
                 <Play className="w-3 h-3 text-slate-600 fill-current" />
               ) : (
@@ -369,31 +499,47 @@ export const RadialProjectsSection: React.FC<RadialProjectsSectionProps> = ({
                         }}
                         className="absolute cursor-pointer"
                       >
-                        {/* Clean Minimalist White Card */}
+                        {/* Rich Engineered Dial Cartridge */}
                         <div
-                          className={`w-[126px] h-[82px] sm:w-[142px] sm:h-[90px] rounded-2xl bg-white border relative overflow-hidden p-2.5 sm:p-3 flex flex-col justify-between shadow-2xl transition-all duration-300 ${isNearest
-                            ? "border-indigo-500 ring-4 ring-indigo-500/25 shadow-[0_12px_40px_rgba(99,102,241,0.4),0_4px_16px_rgba(0,0,0,0.4)]"
-                            : "border-slate-200/80 shadow-lg shadow-black/20 hover:border-slate-300"
+                          className={`w-[130px] h-[86px] sm:w-[146px] sm:h-[94px] rounded-2xl bg-white border relative overflow-hidden p-2.5 sm:p-3 flex flex-col justify-between shadow-2xl transition-all duration-300 ${isNearest
+                            ? "border-purple-600 ring-4 ring-purple-600/25 shadow-[0_12px_40px_rgba(147,51,234,0.35),0_4px_16px_rgba(0,0,0,0.4)]"
+                            : "border-slate-200/90 shadow-lg shadow-black/20 hover:border-slate-300"
                             }`}
                         >
-                          {/* Top: Project Number & Active Pulse Dot */}
+                          {/* Top: Project Number & Short Category Badge & Active Pulse Dot */}
                           <div className="flex items-center justify-between">
-                            <span className="font-roboto-condensed text-xs font-black text-slate-900 tracking-wider">
-                            // {proj.number}
-                            </span>
+                            <div className="flex items-center gap-1.5">
+                              <span className="font-roboto-condensed text-xs font-black text-slate-900 tracking-wider">
+                                {proj.number}
+                              </span>
+                              <span className="px-1.5 py-0.2 rounded bg-purple-50 border border-purple-200/80 text-[8px] sm:text-[9px] font-roboto-condensed font-bold text-purple-700 uppercase tracking-wider">
+                                {proj.shortTag}
+                              </span>
+                            </div>
                             <div
                               className="w-2 h-2 rounded-full transition-colors duration-300"
                               style={{
                                 backgroundColor: isNearest
-                                  ? proj.accent || "#6366F1"
+                                  ? proj.accent || "#9333EA"
                                   : "rgba(148,163,184,0.6)",
                               }}
                             />
                           </div>
 
-                          {/* Bottom: Minimalist Project Identifier */}
-                          <div className="text-xs font-roboto-condensed font-bold text-slate-600 truncate uppercase tracking-wider">
-                            {proj.title.split(" ")[0]}
+                          {/* Middle: Prominent Hook Metric Pill */}
+                          <div className="flex items-center gap-1 my-0.5">
+                            <span className="text-[11px] sm:text-xs font-black font-roboto-condensed text-purple-700 tracking-tight">
+                              {proj.metrics[0].value}
+                            </span>
+                            <span className="text-[8px] sm:text-[9px] font-roboto-condensed font-semibold text-slate-500 uppercase tracking-tight truncate">
+                              {proj.metrics[0].label.split(" ")[0]}
+                            </span>
+                          </div>
+
+                          {/* Bottom: Minimalist Project Identifier & Year */}
+                          <div className="flex items-center justify-between text-xs font-roboto-condensed font-bold text-slate-600 truncate uppercase tracking-wider">
+                            <span className="text-slate-800 font-extrabold truncate">{proj.title.split(" ")[0]}</span>
+                            <span className="text-[10px] text-slate-400 font-bold">{proj.year}</span>
                           </div>
                         </div>
                       </div>
@@ -417,8 +563,8 @@ export const RadialProjectsSection: React.FC<RadialProjectsSectionProps> = ({
                       transition={{ duration: 0.25, ease: "easeOut" }}
                     >
                       <div className="flex items-center justify-between mb-1">
-                        <span className="font-roboto-condensed text-xs font-bold text-indigo-400 tracking-wider uppercase">
-                          Project // {activeProject.number}
+                        <span className="font-roboto-condensed text-xs font-bold text-purple-400 tracking-wider uppercase">
+                          Project {activeProject.number}
                         </span>
                         <span className="text-xs font-roboto-condensed font-bold text-slate-400">
                           {activeProject.year}
@@ -438,8 +584,167 @@ export const RadialProjectsSection: React.FC<RadialProjectsSectionProps> = ({
                 <div className="my-3 sm:my-4 flex-1 flex flex-col md:flex-row items-stretch gap-4 min-h-0">
                   {/* A. DESKTOP PROJECT FRAME COLUMN (White Card + Centered Stepper Button Below It) */}
                   <div className="w-full md:w-[62%] flex flex-col items-center justify-between gap-3">
-                    {/* The Right Side Card (Plain Blank White Card) */}
-                    <div className="w-full aspect-[16/10] max-h-[260px] sm:max-h-[275px] rounded-2xl bg-white border border-slate-200/90 shadow-2xl shadow-black/50 relative overflow-hidden transition-all duration-300" />
+                    {/* The Right Side Card (Interactive Architectural Blueprint & Live Telemetry) */}
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={activeProject.id + "-blueprint"}
+                        initial={{ opacity: 0, scale: 0.98 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.98 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                        className="w-full aspect-[16/10] max-h-[260px] sm:max-h-[275px] rounded-2xl bg-[#090D26]/95 border border-white/15 shadow-2xl shadow-black/60 relative overflow-hidden flex flex-col justify-between p-3 sm:p-3.5 select-none transition-all duration-300"
+                      >
+                        {/* Ambient Dynamic Accent Glow */}
+                        <div
+                          className="absolute -top-12 -right-12 w-48 h-48 rounded-full blur-3xl pointer-events-none opacity-30 transition-all duration-700"
+                          style={{ backgroundColor: activeProject.accent }}
+                        />
+
+                        {/* 1. Terminal Window Header */}
+                        <div className="flex items-center justify-between pb-2 border-b border-white/10 relative z-10 shrink-0">
+                          <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-1.5">
+                              <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80 shadow-[0_0_6px_rgba(244,63,94,0.4)]" />
+                              <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 shadow-[0_0_6px_rgba(245,158,11,0.4)]" />
+                              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 shadow-[0_0_6px_rgba(16,185,129,0.4)]" />
+                            </div>
+                            <span className="text-[10px] sm:text-[11px] font-mono text-slate-300 font-semibold tracking-tight truncate max-w-[150px] sm:max-w-[210px] pl-1">
+                              sys://{activeProject.id}.kaizensolves.mesh
+                            </span>
+                          </div>
+
+                          {/* Live Status Pill */}
+                          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/[0.08] border border-white/15">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full animate-ping"
+                              style={{ backgroundColor: activeProject.accent }}
+                            />
+                            <span className="text-[9px] sm:text-[10px] font-roboto-condensed font-bold text-slate-200 tracking-wider uppercase">
+                              LIVE BLUEPRINT
+                            </span>
+                            <span className="text-[9px] font-mono font-bold text-purple-300 pl-1 border-l border-white/15">
+                              {activeProject.architecture.latency}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* 2. Interactive 3-Node Connected Blueprint Flow */}
+                        <div className="py-2 sm:py-2.5 flex items-center justify-between gap-1.5 sm:gap-2 relative z-10 flex-1 min-h-0">
+                          {/* Node 1: Ingress Gateway */}
+                          <div className="flex-1 min-w-0 p-2 sm:p-2.5 rounded-xl bg-white/[0.04] border border-white/10 flex flex-col justify-between h-full hover:border-purple-400/40 transition-colors">
+                            <div className="flex items-center gap-1.5 text-slate-400">
+                              <Globe className="w-3 h-3 text-purple-400 shrink-0" />
+                              <span className="text-[9px] font-roboto-condensed font-bold uppercase tracking-wider text-slate-400 truncate">
+                                Ingress
+                              </span>
+                            </div>
+                            <div>
+                              <div className="text-[11px] sm:text-xs font-black font-roboto-condensed text-white truncate tracking-tight">
+                                {activeProject.architecture.ingress.name}
+                              </div>
+                              <div className="text-[9px] font-mono text-slate-400 truncate">
+                                {activeProject.architecture.ingress.tag}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Connection Track 1 with Traveling Glow Packet */}
+                          <div className="w-5 sm:w-8 h-1 bg-white/10 rounded-full relative overflow-hidden shrink-0 self-center">
+                            <motion.div
+                              animate={{ x: ["-100%", "200%"] }}
+                              transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
+                              className="w-4 h-full bg-gradient-to-r from-transparent via-purple-300 to-transparent"
+                            />
+                          </div>
+
+                          {/* Node 2: Core Processing / Neural Mesh (Prominent Node) */}
+                          <div
+                            className="flex-[1.15] min-w-0 p-2 sm:p-2.5 rounded-xl border flex flex-col justify-between h-full relative transition-all"
+                            style={{
+                              backgroundColor: "rgba(255,255,255,0.07)",
+                              borderColor: `${activeProject.accent}70`,
+                              boxShadow: `0 0 16px ${activeProject.accent}25`,
+                            }}
+                          >
+                            <div className="flex items-center justify-between gap-1 text-slate-300">
+                              <div className="flex items-center gap-1.5">
+                                <Cpu className="w-3 h-3 shrink-0" style={{ color: activeProject.accent }} />
+                                <span className="text-[9px] font-roboto-condensed font-bold uppercase tracking-wider text-purple-300 truncate">
+                                  Core Mesh
+                                </span>
+                              </div>
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                            </div>
+                            <div>
+                              <div className="text-[11px] sm:text-xs font-black font-roboto-condensed text-white truncate tracking-tight">
+                                {activeProject.architecture.engine.name}
+                              </div>
+                              <div className="text-[9px] font-mono text-purple-200 truncate font-semibold">
+                                {activeProject.architecture.engine.tag}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Connection Track 2 with Traveling Glow Packet */}
+                          <div className="w-5 sm:w-8 h-1 bg-white/10 rounded-full relative overflow-hidden shrink-0 self-center">
+                            <motion.div
+                              animate={{ x: ["-100%", "200%"] }}
+                              transition={{ repeat: Infinity, duration: 1.5, ease: "linear", delay: 0.75 }}
+                              className="w-4 h-full bg-gradient-to-r from-transparent via-purple-300 to-transparent"
+                            />
+                          </div>
+
+                          {/* Node 3: Resilient State / Storage / Delivery */}
+                          <div className="flex-1 min-w-0 p-2 sm:p-2.5 rounded-xl bg-white/[0.04] border border-white/10 flex flex-col justify-between h-full hover:border-purple-400/40 transition-colors">
+                            <div className="flex items-center gap-1.5 text-slate-400">
+                              <Database className="w-3 h-3 text-indigo-400 shrink-0" />
+                              <span className="text-[9px] font-roboto-condensed font-bold uppercase tracking-wider text-slate-400 truncate">
+                                State Store
+                              </span>
+                            </div>
+                            <div>
+                              <div className="text-[11px] sm:text-xs font-black font-roboto-condensed text-white truncate tracking-tight">
+                                {activeProject.architecture.egress.name}
+                              </div>
+                              <div className="text-[9px] font-mono text-slate-400 truncate">
+                                {activeProject.architecture.egress.tag}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* 3. Live Telemetry Metrics + Hook Banner */}
+                        <div className="pt-2 border-t border-white/10 relative z-10 shrink-0 space-y-1.5">
+                          {/* 3 Metrics Columns */}
+                          <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+                            {activeProject.metrics.map((metric, mIdx) => (
+                              <div
+                                key={mIdx}
+                                className="p-1.5 sm:p-2 rounded-lg bg-black/40 border border-white/10 flex flex-col items-center text-center"
+                              >
+                                <span className="text-xs sm:text-sm font-black font-roboto-condensed text-white tracking-tight">
+                                  {metric.value}
+                                </span>
+                                <span className="text-[8px] sm:text-[9px] font-roboto-condensed font-bold text-purple-300 uppercase tracking-tight truncate w-full">
+                                  {metric.label}
+                                </span>
+                                <span className="text-[7px] sm:text-[8px] font-mono text-slate-400 truncate w-full hidden sm:block">
+                                  {metric.sub}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+
+                          {/* Hook Banner */}
+                          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-purple-950/40 border border-purple-500/25 text-purple-200">
+                            <Zap className="w-3 h-3 text-purple-400 shrink-0 animate-pulse" />
+                            <span className="text-[10px] sm:text-[11px] font-roboto-condensed font-semibold tracking-wide truncate">
+                              {activeProject.hook}
+                            </span>
+                          </div>
+                        </div>
+                      </motion.div>
+                    </AnimatePresence>
 
                     {/* Centered single scroll button strictly below the white card */}
                     <div className="flex items-center justify-center">

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "KIZEN SOLVES — Engineering High-Performance Web Apps & Digital Products",
+  title: "KAIZEN SOLVES — Engineering High-Performance Web Apps & Digital Products",
   description: "Crafting high-performance web applications, fluid interactive systems, and SaaS-grade digital experiences.",
   keywords: ["Freelance Web Developer", "Creative Technologist", "Next.js", "React", "Full Stack Engineer", "UI/UX Designer"],
 };

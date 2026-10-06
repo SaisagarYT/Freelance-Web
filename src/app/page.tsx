@@ -6,7 +6,9 @@ import { Hero } from "@/components/Hero";
 import { TrustStatementSection } from "@/components/TrustStatementSection";
 import { TechArsenalSection } from "@/components/TechArsenalSection";
 import { RadialProjectsSection } from "@/components/RadialProjectsSection";
+import { ArchitectsSection } from "@/components/ArchitectsSection";
 import { ProcessWorkflowSection } from "@/components/ProcessWorkflowSection";
+import { Footer } from "@/components/Footer";
 
 export default function Home() {
   const scrollToContact = () => {
@@ -37,8 +39,14 @@ export default function Home() {
       {/* Section 4: Radial Rotary Jog-Wheel Project Showcase with Blank Color Mockups */}
       <RadialProjectsSection onContactClick={scrollToContact} />
 
-      {/* Section 5: Overlapping Methodology & Workflow Stacking Cards */}
+      {/* Section 5: Architects & Specialists (Reference 3-Card Studio Portrait Grid) */}
+      <ArchitectsSection onContactClick={scrollToContact} />
+
+      {/* Section 6: Overlapping Methodology & Workflow Stacking Cards */}
       <ProcessWorkflowSection onContactClick={scrollToContact} />
+
+      {/* Section 7: Brutalist Architectural Footer */}
+      <Footer onContactClick={scrollToContact} />
     </main>
   );
 }

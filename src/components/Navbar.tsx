@@ -2,17 +2,20 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 
 export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
+  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
   const navLinks = [
-    { name: "Projects", href: "#projects" },
-    { name: "Capabilities", href: "#capabilities" },
-    { name: "Tech Stack", href: "#tech-stack" },
-    { name: "Contact", href: "#contact" },
+    { name: "Work", href: "/work" },
+    { name: "Capabilities", href: "/capabilities" },
+    { name: "Architects", href: "/architects" },
+    { name: "Methodology", href: "/methodology" },
   ];
 
   return (
@@ -35,11 +38,11 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
         </div>
 
         {/* Brand Name */}
-        <a href="#" className="flex items-center group py-0.5">
+        <Link href="/" className="flex items-center group py-0.5">
           <span className="font-extrabold tracking-wider text-sm sm:text-base text-slate-900 uppercase group-hover:text-purple-600 transition-colors duration-200">
-            KIZEN SOLVES
+            KAIZEN SOLVES
           </span>
-        </a>
+        </Link>
 
         {/* Center Nav Links with Subtle Hover Interaction */}
         <div
@@ -48,15 +51,30 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
         >
           {navLinks.map((link, idx) => {
             const isHovered = hoveredIdx === idx;
+            const isActive = pathname === link.href;
+
             return (
-              <a
+              <Link
                 key={link.name}
                 href={link.href}
                 onMouseEnter={() => setHoveredIdx(idx)}
-                className="relative px-3.5 py-1.5 text-xs sm:text-sm font-medium tracking-tight text-slate-600 hover:text-slate-900 transition-colors duration-200"
+                className={`relative px-3.5 py-1.5 text-xs sm:text-sm font-semibold tracking-tight transition-colors duration-200 ${
+                  isActive
+                    ? "text-purple-700 font-bold"
+                    : "text-slate-600 hover:text-slate-900"
+                }`}
               >
+                {/* Active Underline Pill */}
+                {isActive && (
+                  <motion.div
+                    layoutId="activeNavIndicator"
+                    className="absolute bottom-0 inset-x-2 h-0.5 bg-purple-600 rounded-full"
+                    transition={{ type: "spring", stiffness: 500, damping: 35 }}
+                  />
+                )}
+
                 {/* Subtle Floating Hover Pill */}
-                {isHovered && (
+                {isHovered && !isActive && (
                   <motion.div
                     layoutId="notchedNavHover"
                     style={{ backgroundColor: "rgba(241, 245, 249, 0.9)" }}
@@ -77,26 +95,30 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
                 >
                   {link.name}
                 </motion.span>
-              </a>
+              </Link>
             );
           })}
         </div>
 
         {/* Right Action Button (High-Contrast Black Pill) */}
         <div className="flex items-center gap-2">
-          <button
-            onClick={
-              onContactClick ||
-              (() => {
-                const el = document.getElementById("contact");
-                el?.scrollIntoView({ behavior: "smooth" });
-              })
-            }
-            className="group relative flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-all duration-200 active:scale-95 shadow-sm cursor-pointer"
-          >
-            <span>Let&apos;s Connect</span>
-            <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </button>
+          {onContactClick ? (
+            <button
+              onClick={onContactClick}
+              className="group relative flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-all duration-200 active:scale-95 shadow-sm cursor-pointer"
+            >
+              <span>Start a Project</span>
+              <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-purple-300" />
+            </button>
+          ) : (
+            <Link
+              href="/contact"
+              className="group relative flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-all duration-200 active:scale-95 shadow-sm cursor-pointer"
+            >
+              <span>Start a Project</span>
+              <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-purple-300" />
+            </Link>
+          )}
 
           {/* Mobile menu button */}
           <button
@@ -112,16 +134,31 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
         <div className="absolute top-16 left-4 right-4 bg-white/95 backdrop-blur-2xl border border-slate-200 rounded-3xl p-5 flex flex-col gap-2 text-slate-900 shadow-2xl md:hidden z-50">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-sm font-semibold py-2.5 px-4 rounded-xl hover:bg-slate-100 transition-colors"
-            >
-              {link.name}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className={`text-sm font-semibold py-2.5 px-4 rounded-xl transition-colors ${
+                  isActive
+                    ? "bg-purple-50 text-purple-700 font-bold"
+                    : "text-slate-800 hover:bg-slate-100"
+                }`}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
+          <Link
+            href="/contact"
+            onClick={() => setMobileMenuOpen(false)}
+            className="text-sm font-bold py-2.5 px-4 rounded-xl bg-slate-900 text-white mt-2 flex items-center justify-between"
+          >
+            <span>Start a Project</span>
+            <ArrowUpRight className="w-4 h-4 text-purple-300" />
+          </Link>
         </div>
       )}
     </div>

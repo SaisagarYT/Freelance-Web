@@ -61,7 +61,7 @@ export const TrustStatementSection = () => {
 
   // Short, punchy statement
   const statementWords = [
-    "KIZEN",
+    "KAIZEN",
     "SOLVES",
     "architects",
     "scalable",
