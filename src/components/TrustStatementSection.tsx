@@ -134,8 +134,8 @@ export const TrustStatementSection = () => {
       />
 
       {/* FULL-SCREEN CENTERED STATEMENT */}
-      <div className="max-w-5xl mx-auto text-center relative z-10 px-4 py-8 flex flex-col items-center">
-        <p className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black font-roboto-condensed tracking-tight text-slate-900 leading-[1.14] flex flex-wrap justify-center gap-x-3.5 sm:gap-x-4.5 gap-y-2.5 sm:gap-y-3.5">
+      <div className="max-w-4xl mx-auto text-center relative z-10 px-4 py-8 flex flex-col items-center">
+        <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black font-roboto-condensed tracking-tight text-slate-900 leading-[1.25] flex flex-wrap justify-center gap-x-2.5 sm:gap-x-3.5 gap-y-2 sm:gap-y-2.5">
           {statementWords.map((word, index) => {
             const total = statementWords.length;
             // Distribute words smoothly across scroll progress [0.38, 0.96] in harmony with slower liquid background
@@ -167,10 +167,10 @@ const WordBlurPopItem = ({
   progress: MotionValue<number>;
   range: [number, number];
 }) => {
-  const y = useTransform(progress, range, [36, 0], { clamp: true });
-  const filter = useTransform(progress, range, ["blur(14px)", "blur(0px)"], { clamp: true });
+  const y = useTransform(progress, range, [22, 0], { clamp: true });
+  const filter = useTransform(progress, range, ["blur(10px)", "blur(0px)"], { clamp: true });
   const opacity = useTransform(progress, range, [0.12, 1], { clamp: true });
-  const scale = useTransform(progress, range, [0.86, 1], { clamp: true });
+  const scale = useTransform(progress, range, [0.88, 1], { clamp: true });
 
   const isHighlight =
     word === "scalable" ||
