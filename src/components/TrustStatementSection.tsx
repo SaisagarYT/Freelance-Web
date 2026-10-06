@@ -82,6 +82,7 @@ export const TrustStatementSection = () => {
 
   return (
     <section
+      id="trust-statement"
       ref={containerRef}
       className="w-full min-h-screen h-screen relative overflow-hidden flex flex-col items-center justify-center px-4 sm:px-6 bg-white"
     >

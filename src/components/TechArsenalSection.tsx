@@ -61,7 +61,7 @@ export const TechArsenalSection = ({ onContactClick }: TechArsenalSectionProps) 
   return (
     <section
       id="tech-stack"
-      className="w-full py-20 sm:py-28 bg-white border-b border-slate-100 relative z-20 overflow-hidden"
+      className="w-full min-h-screen h-screen py-8 sm:py-12 bg-white border-b border-slate-100 relative z-20 overflow-hidden flex flex-col justify-between"
     >
       <div className="w-full max-w-[1360px] mx-auto px-4 sm:px-6">
         {/* Header Bar */}
