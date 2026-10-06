@@ -59,26 +59,16 @@ export const TrustStatementSection = () => {
   // Seamless top white blend that dissolves away gradually as purple finishes blooming
   const topBlendOpacity = useTransform(scrollYProgress, [0.45, 0.92], [1, 0], { clamp: true });
 
-  // Short, punchy statement
-  const statementWords = [
-    "KAIZEN",
-    "SOLVES",
-    "architects",
-    "scalable",
-    "web",
-    "apps,",
-    "fluid",
-    "60",
-    "FPS",
-    "interfaces,",
-    "and",
-    "resilient",
-    "cloud",
-    "systems",
-    "that",
-    "drive",
-    "growth.",
+  // 5 Balanced, Rhythmic Lines
+  const statementLines = [
+    ["KAIZEN", "SOLVES", "architects"],
+    ["scalable", "web", "apps,"],
+    ["fluid", "60", "FPS", "interfaces,"],
+    ["and", "resilient", "cloud", "systems"],
+    ["that", "drive", "growth."],
   ];
+
+  const totalWords = statementLines.reduce((acc, line) => acc + line.length, 0);
 
   return (
     <section
@@ -133,25 +123,35 @@ export const TrustStatementSection = () => {
         className="absolute inset-0 bg-[#E2CEFE] pointer-events-none z-0"
       />
 
-      {/* FULL-SCREEN CENTERED STATEMENT */}
-      <div className="max-w-4xl mx-auto text-center relative z-10 px-4 py-8 flex flex-col items-center">
-        <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black font-roboto-condensed tracking-tight text-slate-900 leading-[1.25] flex flex-wrap justify-center gap-x-2.5 sm:gap-x-3.5 gap-y-2 sm:gap-y-2.5">
-          {statementWords.map((word, index) => {
-            const total = statementWords.length;
-            // Distribute words smoothly across scroll progress [0.38, 0.96] in harmony with slower liquid background
-            const start = 0.38 + (index / total) * 0.48;
-            const end = start + 0.10;
+      {/* FULL-SCREEN CENTERED STATEMENT (5 RHYTHMIC LINES) */}
+      <div className="max-w-4xl mx-auto text-center relative z-10 px-4 py-8 flex flex-col items-center justify-center space-y-2 sm:space-y-3 md:space-y-4">
+        {statementLines.map((lineWords, lineIdx) => {
+          const lineStartWordIdx = statementLines
+            .slice(0, lineIdx)
+            .reduce((acc, l) => acc + l.length, 0);
 
-            return (
-              <WordBlurPopItem
-                key={index}
-                word={word}
-                progress={scrollYProgress}
-                range={[start, end]}
-              />
-            );
-          })}
-        </p>
+          return (
+            <div
+              key={lineIdx}
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black font-roboto-condensed tracking-tight text-slate-900 leading-none flex flex-wrap justify-center items-center gap-x-2.5 sm:gap-x-3.5"
+            >
+              {lineWords.map((word, wordIdx) => {
+                const globalIdx = lineStartWordIdx + wordIdx;
+                const start = 0.38 + (globalIdx / totalWords) * 0.48;
+                const end = start + 0.10;
+
+                return (
+                  <WordBlurPopItem
+                    key={word + "-" + globalIdx}
+                    word={word}
+                    progress={scrollYProgress}
+                    range={[start, end]}
+                  />
+                );
+              })}
+            </div>
+          );
+        })}
       </div>
     </section>
   );
