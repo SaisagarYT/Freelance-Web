@@ -44,9 +44,18 @@ export const ContactSection = () => {
           {/* Left Column: Direct Info & Availability */}
           <div className="lg:col-span-5 space-y-8">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/80 mb-4">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span>Available for Select Client Projects</span>
+              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full text-xs font-medium bg-purple-50/80 text-purple-900 border border-purple-200/80 mb-4 shadow-xs">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-600" />
+                </span>
+                <span className="font-mono text-[11px] font-bold tracking-widest uppercase text-purple-700">
+                  ENGAGEMENT DESK
+                </span>
+                <span className="w-px h-3 bg-purple-200" />
+                <span className="font-roboto-condensed text-xs font-medium text-slate-700">
+                  Reviewing Inquiries for 2026
+                </span>
               </div>
               <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
                 Let&apos;s build something <span className="text-blue-600">extraordinary</span> together.

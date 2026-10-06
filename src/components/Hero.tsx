@@ -16,16 +16,40 @@ export const Hero = ({ onContactClick }: { onContactClick?: () => void }) => {
 
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10 flex flex-col items-center text-center">
-        {/* Availability Pill */}
-        <motion.div
-          initial={{ opacity: 0, y: -15 }}
+        {/* Editorial Studio Status Capsule */}
+        <motion.button
+          onClick={onContactClick || (() => {
+            const el = document.getElementById("contact");
+            el?.scrollIntoView({ behavior: "smooth" });
+          })}
+          initial={{ opacity: 0, y: -14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-8 text-xs sm:text-sm font-medium text-slate-300 shadow-inner"
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="group inline-flex items-center gap-2.5 sm:gap-3 px-3.5 sm:px-4 py-1.5 rounded-full border border-white/15 bg-white/[0.04] hover:bg-white/[0.08] hover:border-purple-300/40 backdrop-blur-xl mb-8 transition-all duration-300 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.18)] cursor-pointer select-none"
         >
-          <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#10B981]" />
-          <span>Available for High-Impact Projects &amp; Contracts</span>
-        </motion.div>
+          {/* Status Live Beacon */}
+          <div className="flex items-center gap-2">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-300 shadow-[0_0_8px_rgba(192,132,252,0.85)]" />
+            </span>
+            <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-widest uppercase text-purple-200/90">
+              COMMISSIONS OPEN
+            </span>
+          </div>
+
+          {/* Micro Hairline Divider */}
+          <span className="w-px h-3 bg-white/20" />
+
+          {/* Editorial Copy with Signature Typography */}
+          <span className="font-roboto-condensed text-xs sm:text-sm font-medium tracking-tight text-slate-200 flex items-center gap-1.5">
+            <span>Now Booking Select Projects</span>
+            <span className="font-editorial italic text-purple-200 text-sm sm:text-base font-normal">
+              for 2026
+            </span>
+            <ArrowUpRight className="w-3.5 h-3.5 text-purple-300/80 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </span>
+        </motion.button>
 
         {/* Hero Headline Matching Reference Composition */}
         <motion.h1
