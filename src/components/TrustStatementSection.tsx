@@ -189,10 +189,11 @@ const WordBlurPopItem = ({
         opacity,
         scale,
       }}
-      className={`inline-block transition-colors duration-150 origin-bottom font-roboto-condensed font-black tracking-tight ${isHighlight
-        ? "text-purple-700 font-black"
-        : "text-slate-900 font-black"
-        }`}
+      className={`inline-block transition-colors duration-150 origin-bottom ${
+        isHighlight
+          ? "font-editorial font-normal italic text-purple-700 tracking-normal px-1"
+          : "font-roboto-condensed font-black tracking-tight text-slate-900"
+      }`}
     >
       {word}
     </motion.span>

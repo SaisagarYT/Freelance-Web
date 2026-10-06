@@ -192,11 +192,10 @@ export const ArchitectsSection: React.FC<ArchitectsSectionProps> = ({ onContactC
                   key={specialist.id}
                   onMouseEnter={() => setActiveIndex(idx)}
                   onClick={() => setActiveIndex(idx)}
-                  className={`relative rounded-md overflow-hidden cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col justify-between border ${
-                    isActive
+                  className={`relative rounded-md overflow-hidden cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col justify-between border ${isActive
                       ? "flex-[3.2] sm:flex-[3.4] border-purple-600 shadow-2xl shadow-purple-950/25"
                       : "flex-[0.7] sm:flex-[0.8] border-slate-300 hover:border-slate-400 bg-slate-900 shadow-md"
-                  }`}
+                    }`}
                 >
                   {/* 1. Full Image Background */}
                   <div className="absolute inset-0 w-full h-full bg-[#0E0725]">
@@ -205,21 +204,19 @@ export const ArchitectsSection: React.FC<ArchitectsSectionProps> = ({ onContactC
                       alt={specialist.name}
                       fill
                       sizes="(max-width: 768px) 100vw, 50vw"
-                      className={`object-cover object-top transition-all duration-700 ${
-                        isActive
+                      className={`object-cover object-top transition-all duration-700 ${isActive
                           ? "scale-100 opacity-100"
                           : "scale-105 opacity-45 hover:opacity-65 grayscale-[25%]"
-                      }`}
+                        }`}
                       priority={idx === 0}
                     />
 
                     {/* Gradient overlay for readability */}
                     <div
-                      className={`absolute inset-0 transition-opacity duration-500 ${
-                        isActive
+                      className={`absolute inset-0 transition-opacity duration-500 ${isActive
                           ? "bg-gradient-to-t from-[#0E0725] via-[#0E0725]/30 to-transparent"
                           : "bg-black/50 hover:bg-black/30"
-                      }`}
+                        }`}
                     />
                   </div>
 

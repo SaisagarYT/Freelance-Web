@@ -381,9 +381,8 @@ export const RadialProjectsSection: React.FC<RadialProjectsSectionProps> = ({
               title={isPaused ? "Resume auto-scroll" : "Pause auto-scroll"}
             >
               <span
-                className={`w-2 h-2 rounded-full ${
-                  isPaused ? "bg-amber-500" : "bg-emerald-500 animate-pulse"
-                }`}
+                className={`w-2 h-2 rounded-full ${isPaused ? "bg-amber-500" : "bg-emerald-500 animate-pulse"
+                  }`}
               />
               <span className="tracking-wide">{isPaused ? "ROTATION PAUSED" : "AUTO-CYCLE • 3s"}</span>
               {isPaused ? (
@@ -410,427 +409,427 @@ export const RadialProjectsSection: React.FC<RadialProjectsSectionProps> = ({
 
           {/* MAIN DUAL-STAGE: ROTARY DIAL (LEFT) & CLEAN SHOWCASE (RIGHT) */}
           <div className="w-full h-full overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-0 relative z-10">
-              {/* ============================================================ */}
-              {/* LEFT: CONTINUOUS FLUID ROTARY SCROLLER (120FPS SILK PHYSICS) */}
-              {/* ============================================================ */}
-              <div className="lg:col-span-5 h-[260px] sm:h-[320px] lg:h-full relative overflow-hidden bg-[#080B1E]/95 flex items-center">
-                {/* SVG Background: Full-Height Curved Track & Radial Rays */}
-                <svg
-                  className="absolute inset-0 w-full h-full pointer-events-none"
-                  viewBox="0 0 440 660"
-                >
-                  {/* Radial Perspective Rays (excluding center angle 0 to remove center line) */}
-                  {[-36, -24, -12, 12, 24, 36].map((angle, idx) => {
-                    const rad = (angle * Math.PI) / 180;
-                    const x2 = arcCenter.cx + 700 * Math.cos(rad);
-                    const y2 = arcCenter.cy + 700 * Math.sin(rad);
+            {/* ============================================================ */}
+            {/* LEFT: CONTINUOUS FLUID ROTARY SCROLLER (120FPS SILK PHYSICS) */}
+            {/* ============================================================ */}
+            <div className="lg:col-span-5 h-[260px] sm:h-[320px] lg:h-full relative overflow-hidden bg-[#080B1E]/95 flex items-center">
+              {/* SVG Background: Full-Height Curved Track & Radial Rays */}
+              <svg
+                className="absolute inset-0 w-full h-full pointer-events-none"
+                viewBox="0 0 440 660"
+              >
+                {/* Radial Perspective Rays (excluding center angle 0 to remove center line) */}
+                {[-36, -24, -12, 12, 24, 36].map((angle, idx) => {
+                  const rad = (angle * Math.PI) / 180;
+                  const x2 = arcCenter.cx + 700 * Math.cos(rad);
+                  const y2 = arcCenter.cy + 700 * Math.sin(rad);
 
-                    return (
-                      <line
-                        key={idx}
-                        x1={arcCenter.cx}
-                        y1={arcCenter.cy}
-                        x2={x2}
-                        y2={y2}
-                        stroke="rgba(255, 255, 255, 0.05)"
-                        strokeWidth="1"
-                        strokeDasharray="3 5"
-                      />
-                    );
-                  })}
+                  return (
+                    <line
+                      key={idx}
+                      x1={arcCenter.cx}
+                      y1={arcCenter.cy}
+                      x2={x2}
+                      y2={y2}
+                      stroke="rgba(255, 255, 255, 0.05)"
+                      strokeWidth="1"
+                      strokeDasharray="3 5"
+                    />
+                  );
+                })}
 
-                  {/* Circular Arc Track */}
-                  <path
-                    d={`
+                {/* Circular Arc Track */}
+                <path
+                  d={`
                     M ${arcCenter.cx + arcRadius * Math.cos((-42 * Math.PI) / 180)} ${arcCenter.cy + arcRadius * Math.sin((-42 * Math.PI) / 180)
-                      }
+                    }
                     A ${arcRadius} ${arcRadius} 0 0 1 ${arcCenter.cx + arcRadius * Math.cos((42 * Math.PI) / 180)
-                      } ${arcCenter.cy + arcRadius * Math.sin((42 * Math.PI) / 180)}
+                    } ${arcCenter.cy + arcRadius * Math.sin((42 * Math.PI) / 180)}
                   `}
-                    fill="none"
-                    stroke="rgba(255, 255, 255, 0.08)"
-                    strokeWidth="24"
-                    strokeOpacity="0.12"
-                  />
-                  <path
-                    d={`
+                  fill="none"
+                  stroke="rgba(255, 255, 255, 0.08)"
+                  strokeWidth="24"
+                  strokeOpacity="0.12"
+                />
+                <path
+                  d={`
                     M ${arcCenter.cx + arcRadius * Math.cos((-42 * Math.PI) / 180)} ${arcCenter.cy + arcRadius * Math.sin((-42 * Math.PI) / 180)
-                      }
+                    }
                     A ${arcRadius} ${arcRadius} 0 0 1 ${arcCenter.cx + arcRadius * Math.cos((42 * Math.PI) / 180)
-                      } ${arcCenter.cy + arcRadius * Math.sin((42 * Math.PI) / 180)}
+                    } ${arcCenter.cy + arcRadius * Math.sin((42 * Math.PI) / 180)}
                   `}
-                    fill="none"
-                    stroke="rgba(99, 102, 241, 0.35)"
-                    strokeWidth="1.5"
-                  />
-                </svg>
+                  fill="none"
+                  stroke="rgba(99, 102, 241, 0.35)"
+                  strokeWidth="1.5"
+                />
+              </svg>
 
-                {/* BUTTERY CONTINUOUS GLIDING CARDS REEL */}
-                <div className="absolute inset-0 pointer-events-auto">
-                  {projects.map((proj, idx) => {
-                    // Continuous fractional offset from center (glides smoothly pixel by pixel)
-                    const offset = idx - progressVal;
-                    const angle = offset * stepAngle;
-                    const isVisible = angle >= -48 && angle <= 48;
-                    const dist = Math.abs(offset);
-                    const isNearest = Math.round(progressVal) === idx;
+              {/* BUTTERY CONTINUOUS GLIDING CARDS REEL */}
+              <div className="absolute inset-0 pointer-events-auto">
+                {projects.map((proj, idx) => {
+                  // Continuous fractional offset from center (glides smoothly pixel by pixel)
+                  const offset = idx - progressVal;
+                  const angle = offset * stepAngle;
+                  const isVisible = angle >= -48 && angle <= 48;
+                  const dist = Math.abs(offset);
+                  const isNearest = Math.round(progressVal) === idx;
 
-                    if (!isVisible) return null;
+                  if (!isVisible) return null;
 
-                    const rad = (angle * Math.PI) / 180;
-                    const x = arcCenter.cx + arcRadius * Math.cos(rad);
-                    const y = arcCenter.cy + arcRadius * Math.sin(rad);
+                  const rad = (angle * Math.PI) / 180;
+                  const x = arcCenter.cx + arcRadius * Math.cos(rad);
+                  const y = arcCenter.cy + arcRadius * Math.sin(rad);
 
-                    // Continuous organic scaling: substantially enlarged at center (~1.36x) and reduced off-center (~0.74x)
-                    const scale = Math.max(0.74, 1.36 - dist * 0.4);
-                    const opacity = Math.max(0.25, 1 - dist * 0.35);
+                  // Continuous organic scaling: substantially enlarged at center (~1.36x) and reduced off-center (~0.74x)
+                  const scale = Math.max(0.74, 1.36 - dist * 0.4);
+                  const opacity = Math.max(0.25, 1 - dist * 0.35);
 
-                    return (
+                  return (
+                    <div
+                      key={proj.id}
+                      onClick={() => goToProject(idx)}
+                      style={{
+                        left: `${x}px`,
+                        top: `${y}px`,
+                        transform: `translate(-50%, -50%) rotate(${angle}deg) scale(${scale})`,
+                        opacity: opacity,
+                        zIndex: isNearest ? 40 : Math.max(1, 20 - Math.round(dist)),
+                        willChange: "transform, opacity",
+                      }}
+                      className="absolute cursor-pointer"
+                    >
+                      {/* Rich Engineered Dial Cartridge */}
                       <div
-                        key={proj.id}
-                        onClick={() => goToProject(idx)}
-                        style={{
-                          left: `${x}px`,
-                          top: `${y}px`,
-                          transform: `translate(-50%, -50%) rotate(${angle}deg) scale(${scale})`,
-                          opacity: opacity,
-                          zIndex: isNearest ? 40 : Math.max(1, 20 - Math.round(dist)),
-                          willChange: "transform, opacity",
-                        }}
-                        className="absolute cursor-pointer"
+                        className={`w-[130px] h-[86px] sm:w-[146px] sm:h-[94px] rounded-2xl bg-white border relative overflow-hidden p-2.5 sm:p-3 flex flex-col justify-between shadow-2xl transition-all duration-300 ${isNearest
+                          ? "border-purple-600 ring-4 ring-purple-600/25 shadow-[0_12px_40px_rgba(147,51,234,0.35),0_4px_16px_rgba(0,0,0,0.4)]"
+                          : "border-slate-200/90 shadow-lg shadow-black/20 hover:border-slate-300"
+                          }`}
                       >
-                        {/* Rich Engineered Dial Cartridge */}
+                        {/* Top: Project Number & Short Category Badge & Active Pulse Dot */}
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-roboto-condensed text-xs font-black text-slate-900 tracking-wider">
+                              {proj.number}
+                            </span>
+                            <span className="px-1.5 py-0.2 rounded bg-purple-50 border border-purple-200/80 text-[8px] sm:text-[9px] font-roboto-condensed font-bold text-purple-700 uppercase tracking-wider">
+                              {proj.shortTag}
+                            </span>
+                          </div>
+                          <div
+                            className="w-2 h-2 rounded-full transition-colors duration-300"
+                            style={{
+                              backgroundColor: isNearest
+                                ? proj.accent || "#9333EA"
+                                : "rgba(148,163,184,0.6)",
+                            }}
+                          />
+                        </div>
+
+                        {/* Middle: Prominent Hook Metric Pill */}
+                        <div className="flex items-center gap-1 my-0.5">
+                          <span className="text-[11px] sm:text-xs font-black font-roboto-condensed text-purple-700 tracking-tight">
+                            {proj.metrics[0].value}
+                          </span>
+                          <span className="text-[8px] sm:text-[9px] font-roboto-condensed font-semibold text-slate-500 uppercase tracking-tight truncate">
+                            {proj.metrics[0].label.split(" ")[0]}
+                          </span>
+                        </div>
+
+                        {/* Bottom: Minimalist Project Identifier & Year */}
+                        <div className="flex items-center justify-between text-xs font-roboto-condensed font-bold text-slate-600 truncate uppercase tracking-wider">
+                          <span className="text-slate-800 font-extrabold truncate">{proj.title.split(" ")[0]}</span>
+                          <span className="text-[10px] text-slate-400 font-bold">{proj.year}</span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* ============================================================ */}
+            {/* RIGHT: TITLE AT TOP, SAME BLANK CARD, SOME MATTER BELOW     */}
+            {/* ============================================================ */}
+            <div className="lg:col-span-7 p-5 sm:p-7 lg:p-8 flex flex-col justify-between bg-gradient-to-br from-[#0D122B] to-[#080B1E] overflow-y-auto">
+              {/* 1. TITLE AT TOP (Smooth Crossfade) */}
+              <div className="pb-3 border-b border-white/10">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeProject.id + "-title"}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="font-roboto-condensed text-xs font-bold text-purple-400 tracking-wider uppercase">
+                        Project {activeProject.number}
+                      </span>
+                      <span className="text-xs font-roboto-condensed font-bold text-slate-400">
+                        {activeProject.year}
+                      </span>
+                    </div>
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-white font-roboto-condensed">
+                      {activeProject.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm font-roboto-condensed font-semibold text-indigo-300/80 mt-0.5 tracking-wide">
+                      {activeProject.category}
+                    </p>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* 2. DESKTOP PROJECT FRAME + TECH STACK SIDEBAR (Clean, Premium, High-End Layout) */}
+              <div className="my-3 sm:my-4 flex-1 flex flex-col md:flex-row items-stretch gap-4 min-h-0">
+                {/* A. DESKTOP PROJECT FRAME COLUMN (White Card + Centered Stepper Button Below It) */}
+                <div className="w-full md:w-[62%] flex flex-col items-center justify-between gap-3">
+                  {/* The Right Side Card (Interactive Architectural Blueprint & Live Telemetry) */}
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeProject.id + "-blueprint"}
+                      initial={{ opacity: 0, scale: 0.98 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.98 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                      className="w-full aspect-[16/10] max-h-[260px] sm:max-h-[275px] rounded-2xl bg-[#090D26]/95 border border-white/15 shadow-2xl shadow-black/60 relative overflow-hidden flex flex-col justify-between p-3 sm:p-3.5 select-none transition-all duration-300"
+                    >
+                      {/* Ambient Dynamic Accent Glow */}
+                      <div
+                        className="absolute -top-12 -right-12 w-48 h-48 rounded-full blur-3xl pointer-events-none opacity-30 transition-all duration-700"
+                        style={{ backgroundColor: activeProject.accent }}
+                      />
+
+                      {/* 1. Terminal Window Header */}
+                      <div className="flex items-center justify-between pb-2 border-b border-white/10 relative z-10 shrink-0">
+                        <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-1.5">
+                            <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80 shadow-[0_0_6px_rgba(244,63,94,0.4)]" />
+                            <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 shadow-[0_0_6px_rgba(245,158,11,0.4)]" />
+                            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 shadow-[0_0_6px_rgba(16,185,129,0.4)]" />
+                          </div>
+                          <span className="text-[10px] sm:text-[11px] font-mono text-slate-300 font-semibold tracking-tight truncate max-w-[150px] sm:max-w-[210px] pl-1">
+                            sys://{activeProject.id}.kaizensolves.mesh
+                          </span>
+                        </div>
+
+                        {/* Live Status Pill */}
+                        <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/[0.08] border border-white/15">
+                          <span
+                            className="w-1.5 h-1.5 rounded-full animate-ping"
+                            style={{ backgroundColor: activeProject.accent }}
+                          />
+                          <span className="text-[9px] sm:text-[10px] font-roboto-condensed font-bold text-slate-200 tracking-wider uppercase">
+                            LIVE BLUEPRINT
+                          </span>
+                          <span className="text-[9px] font-mono font-bold text-purple-300 pl-1 border-l border-white/15">
+                            {activeProject.architecture.latency}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* 2. Interactive 3-Node Connected Blueprint Flow */}
+                      <div className="py-2 sm:py-2.5 flex items-center justify-between gap-1.5 sm:gap-2 relative z-10 flex-1 min-h-0">
+                        {/* Node 1: Ingress Gateway */}
+                        <div className="flex-1 min-w-0 p-2 sm:p-2.5 rounded-xl bg-white/[0.04] border border-white/10 flex flex-col justify-between h-full hover:border-purple-400/40 transition-colors">
+                          <div className="flex items-center gap-1.5 text-slate-400">
+                            <Globe className="w-3 h-3 text-purple-400 shrink-0" />
+                            <span className="text-[9px] font-roboto-condensed font-bold uppercase tracking-wider text-slate-400 truncate">
+                              Ingress
+                            </span>
+                          </div>
+                          <div>
+                            <div className="text-[11px] sm:text-xs font-black font-roboto-condensed text-white truncate tracking-tight">
+                              {activeProject.architecture.ingress.name}
+                            </div>
+                            <div className="text-[9px] font-mono text-slate-400 truncate">
+                              {activeProject.architecture.ingress.tag}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Connection Track 1 with Traveling Glow Packet */}
+                        <div className="w-5 sm:w-8 h-1 bg-white/10 rounded-full relative overflow-hidden shrink-0 self-center">
+                          <motion.div
+                            animate={{ x: ["-100%", "200%"] }}
+                            transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
+                            className="w-4 h-full bg-gradient-to-r from-transparent via-purple-300 to-transparent"
+                          />
+                        </div>
+
+                        {/* Node 2: Core Processing / Neural Mesh (Prominent Node) */}
                         <div
-                          className={`w-[130px] h-[86px] sm:w-[146px] sm:h-[94px] rounded-2xl bg-white border relative overflow-hidden p-2.5 sm:p-3 flex flex-col justify-between shadow-2xl transition-all duration-300 ${isNearest
-                            ? "border-purple-600 ring-4 ring-purple-600/25 shadow-[0_12px_40px_rgba(147,51,234,0.35),0_4px_16px_rgba(0,0,0,0.4)]"
-                            : "border-slate-200/90 shadow-lg shadow-black/20 hover:border-slate-300"
-                            }`}
+                          className="flex-[1.15] min-w-0 p-2 sm:p-2.5 rounded-xl border flex flex-col justify-between h-full relative transition-all"
+                          style={{
+                            backgroundColor: "rgba(255,255,255,0.07)",
+                            borderColor: `${activeProject.accent}70`,
+                            boxShadow: `0 0 16px ${activeProject.accent}25`,
+                          }}
                         >
-                          {/* Top: Project Number & Short Category Badge & Active Pulse Dot */}
-                          <div className="flex items-center justify-between">
+                          <div className="flex items-center justify-between gap-1 text-slate-300">
                             <div className="flex items-center gap-1.5">
-                              <span className="font-roboto-condensed text-xs font-black text-slate-900 tracking-wider">
-                                {proj.number}
-                              </span>
-                              <span className="px-1.5 py-0.2 rounded bg-purple-50 border border-purple-200/80 text-[8px] sm:text-[9px] font-roboto-condensed font-bold text-purple-700 uppercase tracking-wider">
-                                {proj.shortTag}
+                              <Cpu className="w-3 h-3 shrink-0" style={{ color: activeProject.accent }} />
+                              <span className="text-[9px] font-roboto-condensed font-bold uppercase tracking-wider text-purple-300 truncate">
+                                Core Mesh
                               </span>
                             </div>
-                            <div
-                              className="w-2 h-2 rounded-full transition-colors duration-300"
-                              style={{
-                                backgroundColor: isNearest
-                                  ? proj.accent || "#9333EA"
-                                  : "rgba(148,163,184,0.6)",
-                              }}
-                            />
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                           </div>
+                          <div>
+                            <div className="text-[11px] sm:text-xs font-black font-roboto-condensed text-white truncate tracking-tight">
+                              {activeProject.architecture.engine.name}
+                            </div>
+                            <div className="text-[9px] font-mono text-purple-200 truncate font-semibold">
+                              {activeProject.architecture.engine.tag}
+                            </div>
+                          </div>
+                        </div>
 
-                          {/* Middle: Prominent Hook Metric Pill */}
-                          <div className="flex items-center gap-1 my-0.5">
-                            <span className="text-[11px] sm:text-xs font-black font-roboto-condensed text-purple-700 tracking-tight">
-                              {proj.metrics[0].value}
-                            </span>
-                            <span className="text-[8px] sm:text-[9px] font-roboto-condensed font-semibold text-slate-500 uppercase tracking-tight truncate">
-                              {proj.metrics[0].label.split(" ")[0]}
+                        {/* Connection Track 2 with Traveling Glow Packet */}
+                        <div className="w-5 sm:w-8 h-1 bg-white/10 rounded-full relative overflow-hidden shrink-0 self-center">
+                          <motion.div
+                            animate={{ x: ["-100%", "200%"] }}
+                            transition={{ repeat: Infinity, duration: 1.5, ease: "linear", delay: 0.75 }}
+                            className="w-4 h-full bg-gradient-to-r from-transparent via-purple-300 to-transparent"
+                          />
+                        </div>
+
+                        {/* Node 3: Resilient State / Storage / Delivery */}
+                        <div className="flex-1 min-w-0 p-2 sm:p-2.5 rounded-xl bg-white/[0.04] border border-white/10 flex flex-col justify-between h-full hover:border-purple-400/40 transition-colors">
+                          <div className="flex items-center gap-1.5 text-slate-400">
+                            <Database className="w-3 h-3 text-indigo-400 shrink-0" />
+                            <span className="text-[9px] font-roboto-condensed font-bold uppercase tracking-wider text-slate-400 truncate">
+                              State Store
                             </span>
                           </div>
-
-                          {/* Bottom: Minimalist Project Identifier & Year */}
-                          <div className="flex items-center justify-between text-xs font-roboto-condensed font-bold text-slate-600 truncate uppercase tracking-wider">
-                            <span className="text-slate-800 font-extrabold truncate">{proj.title.split(" ")[0]}</span>
-                            <span className="text-[10px] text-slate-400 font-bold">{proj.year}</span>
+                          <div>
+                            <div className="text-[11px] sm:text-xs font-black font-roboto-condensed text-white truncate tracking-tight">
+                              {activeProject.architecture.egress.name}
+                            </div>
+                            <div className="text-[9px] font-mono text-slate-400 truncate">
+                              {activeProject.architecture.egress.tag}
+                            </div>
                           </div>
                         </div>
                       </div>
-                    );
-                  })}
+
+                      {/* 3. Live Telemetry Metrics + Hook Banner */}
+                      <div className="pt-2 border-t border-white/10 relative z-10 shrink-0 space-y-1.5">
+                        {/* 3 Metrics Columns */}
+                        <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+                          {activeProject.metrics.map((metric, mIdx) => (
+                            <div
+                              key={mIdx}
+                              className="p-1.5 sm:p-2 rounded-lg bg-black/40 border border-white/10 flex flex-col items-center text-center"
+                            >
+                              <span className="text-xs sm:text-sm font-black font-roboto-condensed text-white tracking-tight">
+                                {metric.value}
+                              </span>
+                              <span className="text-[8px] sm:text-[9px] font-roboto-condensed font-bold text-purple-300 uppercase tracking-tight truncate w-full">
+                                {metric.label}
+                              </span>
+                              <span className="text-[7px] sm:text-[8px] font-mono text-slate-400 truncate w-full hidden sm:block">
+                                {metric.sub}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Hook Banner */}
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-purple-950/40 border border-purple-500/25 text-purple-200">
+                          <Zap className="w-3 h-3 text-purple-400 shrink-0 animate-pulse" />
+                          <span className="text-[10px] sm:text-[11px] font-roboto-condensed font-semibold tracking-wide truncate">
+                            {activeProject.hook}
+                          </span>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+
+                  {/* Centered single scroll button strictly below the white card */}
+                  <div className="flex items-center justify-center">
+                    <button
+                      onClick={handleManualScroll}
+                      className="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-white/15 text-xs font-roboto-condensed font-bold text-slate-200 hover:text-white shadow-lg backdrop-blur-md transition-all active:scale-95 cursor-pointer group"
+                      title="Scroll to Next Project (Pauses Autoplay)"
+                    >
+                      <span className="text-indigo-400 font-bold">{activeProject.number} / 08</span>
+                      <span className="text-slate-300 group-hover:text-white transition-colors tracking-wide uppercase">Scroll Project</span>
+                      <ChevronDown className="w-3.5 h-3.5 text-indigo-400 group-hover:translate-y-0.5 transition-transform" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* B. TECH STACK & SYSTEM SPECIFICATIONS SIDEBAR (Positioned Right of Project Frame) */}
+                <div className="w-full md:w-[38%] rounded-2xl bg-slate-900/70 border border-white/10 p-3.5 sm:p-4 flex flex-col justify-between backdrop-blur-xl shadow-xl shadow-black/40">
+                  <div>
+                    {/* Sidebar Header */}
+                    <div className="flex items-center justify-between pb-2 border-b border-white/10">
+                      <div className="flex items-center gap-1.5 text-indigo-400 font-roboto-condensed text-xs tracking-wider uppercase font-bold">
+                        <Layers className="w-3.5 h-3.5" />
+                        <span>Tech Stack</span>
+                      </div>
+                      <span className="text-[11px] font-roboto-condensed font-bold text-slate-400 tracking-wider">
+                        {activeProject.tags.length} MODULES
+                      </span>
+                    </div>
+
+                    {/* Word-Sized Tech Stack Badges Displayed Side-by-Side */}
+                    <div className="flex flex-wrap gap-2 pt-3">
+                      {activeProject.tags.map((tag, tIdx) => (
+                        <div
+                          key={tIdx}
+                          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.1] hover:border-indigo-400/50 transition-all duration-200 cursor-default group shadow-sm shadow-black/20"
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 group-hover:scale-125 transition-transform" />
+                          <span className="text-xs font-roboto-condensed font-bold text-slate-200 group-hover:text-white transition-colors tracking-wide">
+                            {tag}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Sidebar Bottom Metadata */}
+                  <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] font-roboto-condensed text-slate-400 mt-2 tracking-wider">
+                    <span className="font-bold">FRAMEWORK</span>
+                    <span className="text-indigo-300 font-bold uppercase truncate max-w-[120px] text-right">
+                      {activeProject.category.split(" ")[0]}
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              {/* ============================================================ */}
-              {/* RIGHT: TITLE AT TOP, SAME BLANK CARD, SOME MATTER BELOW     */}
-              {/* ============================================================ */}
-              <div className="lg:col-span-7 p-5 sm:p-7 lg:p-8 flex flex-col justify-between bg-gradient-to-br from-[#0D122B] to-[#080B1E] overflow-y-auto">
-                {/* 1. TITLE AT TOP (Smooth Crossfade) */}
-                <div className="pb-3 border-b border-white/10">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={activeProject.id + "-title"}
-                      initial={{ opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -6 }}
-                      transition={{ duration: 0.25, ease: "easeOut" }}
+              {/* 3. SOME MATTER BELOW (Smooth Crossfade) */}
+              <div className="pt-3 border-t border-white/10">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeProject.id + "-matter"}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                  >
+                    {/* Project Description Matter */}
+                    <p className="text-sm sm:text-base text-slate-300 font-roboto-condensed font-normal leading-relaxed max-w-xl">
+                      {activeProject.description}
+                    </p>
+
+                    {/* Action Trigger */}
+                    <button
+                      onClick={onContactClick}
+                      className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-950 text-xs sm:text-sm font-semibold font-roboto-condensed tracking-tight transition-all active:scale-95 shadow-xl shadow-indigo-950/40 shrink-0 cursor-pointer"
                     >
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="font-roboto-condensed text-xs font-bold text-purple-400 tracking-wider uppercase">
-                          Project {activeProject.number}
-                        </span>
-                        <span className="text-xs font-roboto-condensed font-bold text-slate-400">
-                          {activeProject.year}
-                        </span>
-                      </div>
-                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-white font-roboto-condensed">
-                        {activeProject.title}
-                      </h3>
-                      <p className="text-xs sm:text-sm font-roboto-condensed font-semibold text-indigo-300/80 mt-0.5 tracking-wide">
-                        {activeProject.category}
-                      </p>
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-
-                {/* 2. DESKTOP PROJECT FRAME + TECH STACK SIDEBAR (Clean, Premium, High-End Layout) */}
-                <div className="my-3 sm:my-4 flex-1 flex flex-col md:flex-row items-stretch gap-4 min-h-0">
-                  {/* A. DESKTOP PROJECT FRAME COLUMN (White Card + Centered Stepper Button Below It) */}
-                  <div className="w-full md:w-[62%] flex flex-col items-center justify-between gap-3">
-                    {/* The Right Side Card (Interactive Architectural Blueprint & Live Telemetry) */}
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={activeProject.id + "-blueprint"}
-                        initial={{ opacity: 0, scale: 0.98 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.98 }}
-                        transition={{ duration: 0.3, ease: "easeOut" }}
-                        className="w-full aspect-[16/10] max-h-[260px] sm:max-h-[275px] rounded-2xl bg-[#090D26]/95 border border-white/15 shadow-2xl shadow-black/60 relative overflow-hidden flex flex-col justify-between p-3 sm:p-3.5 select-none transition-all duration-300"
-                      >
-                        {/* Ambient Dynamic Accent Glow */}
-                        <div
-                          className="absolute -top-12 -right-12 w-48 h-48 rounded-full blur-3xl pointer-events-none opacity-30 transition-all duration-700"
-                          style={{ backgroundColor: activeProject.accent }}
-                        />
-
-                        {/* 1. Terminal Window Header */}
-                        <div className="flex items-center justify-between pb-2 border-b border-white/10 relative z-10 shrink-0">
-                          <div className="flex items-center gap-2">
-                            <div className="flex items-center gap-1.5">
-                              <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80 shadow-[0_0_6px_rgba(244,63,94,0.4)]" />
-                              <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 shadow-[0_0_6px_rgba(245,158,11,0.4)]" />
-                              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 shadow-[0_0_6px_rgba(16,185,129,0.4)]" />
-                            </div>
-                            <span className="text-[10px] sm:text-[11px] font-mono text-slate-300 font-semibold tracking-tight truncate max-w-[150px] sm:max-w-[210px] pl-1">
-                              sys://{activeProject.id}.kaizensolves.mesh
-                            </span>
-                          </div>
-
-                          {/* Live Status Pill */}
-                          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/[0.08] border border-white/15">
-                            <span
-                              className="w-1.5 h-1.5 rounded-full animate-ping"
-                              style={{ backgroundColor: activeProject.accent }}
-                            />
-                            <span className="text-[9px] sm:text-[10px] font-roboto-condensed font-bold text-slate-200 tracking-wider uppercase">
-                              LIVE BLUEPRINT
-                            </span>
-                            <span className="text-[9px] font-mono font-bold text-purple-300 pl-1 border-l border-white/15">
-                              {activeProject.architecture.latency}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* 2. Interactive 3-Node Connected Blueprint Flow */}
-                        <div className="py-2 sm:py-2.5 flex items-center justify-between gap-1.5 sm:gap-2 relative z-10 flex-1 min-h-0">
-                          {/* Node 1: Ingress Gateway */}
-                          <div className="flex-1 min-w-0 p-2 sm:p-2.5 rounded-xl bg-white/[0.04] border border-white/10 flex flex-col justify-between h-full hover:border-purple-400/40 transition-colors">
-                            <div className="flex items-center gap-1.5 text-slate-400">
-                              <Globe className="w-3 h-3 text-purple-400 shrink-0" />
-                              <span className="text-[9px] font-roboto-condensed font-bold uppercase tracking-wider text-slate-400 truncate">
-                                Ingress
-                              </span>
-                            </div>
-                            <div>
-                              <div className="text-[11px] sm:text-xs font-black font-roboto-condensed text-white truncate tracking-tight">
-                                {activeProject.architecture.ingress.name}
-                              </div>
-                              <div className="text-[9px] font-mono text-slate-400 truncate">
-                                {activeProject.architecture.ingress.tag}
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Connection Track 1 with Traveling Glow Packet */}
-                          <div className="w-5 sm:w-8 h-1 bg-white/10 rounded-full relative overflow-hidden shrink-0 self-center">
-                            <motion.div
-                              animate={{ x: ["-100%", "200%"] }}
-                              transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-                              className="w-4 h-full bg-gradient-to-r from-transparent via-purple-300 to-transparent"
-                            />
-                          </div>
-
-                          {/* Node 2: Core Processing / Neural Mesh (Prominent Node) */}
-                          <div
-                            className="flex-[1.15] min-w-0 p-2 sm:p-2.5 rounded-xl border flex flex-col justify-between h-full relative transition-all"
-                            style={{
-                              backgroundColor: "rgba(255,255,255,0.07)",
-                              borderColor: `${activeProject.accent}70`,
-                              boxShadow: `0 0 16px ${activeProject.accent}25`,
-                            }}
-                          >
-                            <div className="flex items-center justify-between gap-1 text-slate-300">
-                              <div className="flex items-center gap-1.5">
-                                <Cpu className="w-3 h-3 shrink-0" style={{ color: activeProject.accent }} />
-                                <span className="text-[9px] font-roboto-condensed font-bold uppercase tracking-wider text-purple-300 truncate">
-                                  Core Mesh
-                                </span>
-                              </div>
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                            </div>
-                            <div>
-                              <div className="text-[11px] sm:text-xs font-black font-roboto-condensed text-white truncate tracking-tight">
-                                {activeProject.architecture.engine.name}
-                              </div>
-                              <div className="text-[9px] font-mono text-purple-200 truncate font-semibold">
-                                {activeProject.architecture.engine.tag}
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Connection Track 2 with Traveling Glow Packet */}
-                          <div className="w-5 sm:w-8 h-1 bg-white/10 rounded-full relative overflow-hidden shrink-0 self-center">
-                            <motion.div
-                              animate={{ x: ["-100%", "200%"] }}
-                              transition={{ repeat: Infinity, duration: 1.5, ease: "linear", delay: 0.75 }}
-                              className="w-4 h-full bg-gradient-to-r from-transparent via-purple-300 to-transparent"
-                            />
-                          </div>
-
-                          {/* Node 3: Resilient State / Storage / Delivery */}
-                          <div className="flex-1 min-w-0 p-2 sm:p-2.5 rounded-xl bg-white/[0.04] border border-white/10 flex flex-col justify-between h-full hover:border-purple-400/40 transition-colors">
-                            <div className="flex items-center gap-1.5 text-slate-400">
-                              <Database className="w-3 h-3 text-indigo-400 shrink-0" />
-                              <span className="text-[9px] font-roboto-condensed font-bold uppercase tracking-wider text-slate-400 truncate">
-                                State Store
-                              </span>
-                            </div>
-                            <div>
-                              <div className="text-[11px] sm:text-xs font-black font-roboto-condensed text-white truncate tracking-tight">
-                                {activeProject.architecture.egress.name}
-                              </div>
-                              <div className="text-[9px] font-mono text-slate-400 truncate">
-                                {activeProject.architecture.egress.tag}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* 3. Live Telemetry Metrics + Hook Banner */}
-                        <div className="pt-2 border-t border-white/10 relative z-10 shrink-0 space-y-1.5">
-                          {/* 3 Metrics Columns */}
-                          <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
-                            {activeProject.metrics.map((metric, mIdx) => (
-                              <div
-                                key={mIdx}
-                                className="p-1.5 sm:p-2 rounded-lg bg-black/40 border border-white/10 flex flex-col items-center text-center"
-                              >
-                                <span className="text-xs sm:text-sm font-black font-roboto-condensed text-white tracking-tight">
-                                  {metric.value}
-                                </span>
-                                <span className="text-[8px] sm:text-[9px] font-roboto-condensed font-bold text-purple-300 uppercase tracking-tight truncate w-full">
-                                  {metric.label}
-                                </span>
-                                <span className="text-[7px] sm:text-[8px] font-mono text-slate-400 truncate w-full hidden sm:block">
-                                  {metric.sub}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-
-                          {/* Hook Banner */}
-                          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-purple-950/40 border border-purple-500/25 text-purple-200">
-                            <Zap className="w-3 h-3 text-purple-400 shrink-0 animate-pulse" />
-                            <span className="text-[10px] sm:text-[11px] font-roboto-condensed font-semibold tracking-wide truncate">
-                              {activeProject.hook}
-                            </span>
-                          </div>
-                        </div>
-                      </motion.div>
-                    </AnimatePresence>
-
-                    {/* Centered single scroll button strictly below the white card */}
-                    <div className="flex items-center justify-center">
-                      <button
-                        onClick={handleManualScroll}
-                        className="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-white/15 text-xs font-roboto-condensed font-bold text-slate-200 hover:text-white shadow-lg backdrop-blur-md transition-all active:scale-95 cursor-pointer group"
-                        title="Scroll to Next Project (Pauses Autoplay)"
-                      >
-                        <span className="text-indigo-400 font-bold">{activeProject.number} / 08</span>
-                        <span className="text-slate-300 group-hover:text-white transition-colors tracking-wide uppercase">Scroll Project</span>
-                        <ChevronDown className="w-3.5 h-3.5 text-indigo-400 group-hover:translate-y-0.5 transition-transform" />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* B. TECH STACK & SYSTEM SPECIFICATIONS SIDEBAR (Positioned Right of Project Frame) */}
-                  <div className="w-full md:w-[38%] rounded-2xl bg-slate-900/70 border border-white/10 p-3.5 sm:p-4 flex flex-col justify-between backdrop-blur-xl shadow-xl shadow-black/40">
-                    <div>
-                      {/* Sidebar Header */}
-                      <div className="flex items-center justify-between pb-2 border-b border-white/10">
-                        <div className="flex items-center gap-1.5 text-indigo-400 font-roboto-condensed text-xs tracking-wider uppercase font-bold">
-                          <Layers className="w-3.5 h-3.5" />
-                          <span>Tech Stack</span>
-                        </div>
-                        <span className="text-[11px] font-roboto-condensed font-bold text-slate-400 tracking-wider">
-                          {activeProject.tags.length} MODULES
-                        </span>
-                      </div>
-
-                      {/* Word-Sized Tech Stack Badges Displayed Side-by-Side */}
-                      <div className="flex flex-wrap gap-2 pt-3">
-                        {activeProject.tags.map((tag, tIdx) => (
-                          <div
-                            key={tIdx}
-                            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.1] hover:border-indigo-400/50 transition-all duration-200 cursor-default group shadow-sm shadow-black/20"
-                          >
-                            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 group-hover:scale-125 transition-transform" />
-                            <span className="text-xs font-roboto-condensed font-bold text-slate-200 group-hover:text-white transition-colors tracking-wide">
-                              {tag}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Sidebar Bottom Metadata */}
-                    <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] font-roboto-condensed text-slate-400 mt-2 tracking-wider">
-                      <span className="font-bold">FRAMEWORK</span>
-                      <span className="text-indigo-300 font-bold uppercase truncate max-w-[120px] text-right">
-                        {activeProject.category.split(" ")[0]}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 3. SOME MATTER BELOW (Smooth Crossfade) */}
-                <div className="pt-3 border-t border-white/10">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={activeProject.id + "-matter"}
-                      initial={{ opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -6 }}
-                      transition={{ duration: 0.25, ease: "easeOut" }}
-                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
-                    >
-                      {/* Project Description Matter */}
-                      <p className="text-sm sm:text-base text-slate-300 font-roboto-condensed font-normal leading-relaxed max-w-xl">
-                        {activeProject.description}
-                      </p>
-
-                      {/* Action Trigger */}
-                      <button
-                        onClick={onContactClick}
-                        className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-950 text-xs sm:text-sm font-semibold font-roboto-condensed tracking-tight transition-all active:scale-95 shadow-xl shadow-indigo-950/40 shrink-0 cursor-pointer"
-                      >
-                        <span>Request Details</span>
-                        <ExternalLink className="w-3.5 h-3.5" />
-                      </button>
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
+                      <span>Request Details</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </button>
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
   );
 };
