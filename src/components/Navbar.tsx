@@ -56,7 +56,7 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
           damping: 28,
           mass: 0.8,
         }}
-        className="pointer-events-auto relative px-5 sm:px-8 py-2.5 sm:py-3 rounded-full flex items-center justify-between gap-5 sm:gap-10 border border-slate-200/80 transition-colors duration-200"
+        className="pointer-events-auto relative px-5 sm:px-8 py-2.5 sm:py-3 rounded-2xl sm:rounded-[22px] flex items-center justify-between gap-5 sm:gap-10 border border-slate-200/90 transition-colors duration-200"
       >
         {/* Brand Name */}
         <Link href="/" className="flex items-center group py-0.5">

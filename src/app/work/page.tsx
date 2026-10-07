@@ -13,19 +13,24 @@ export default function WorkPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#080B22] text-white flex flex-col relative overflow-x-hidden selection:bg-purple-600 selection:text-white">
+    <main className="min-h-screen bg-[#F7F5FC] text-slate-900 flex flex-col relative overflow-x-hidden selection:bg-purple-600 selection:text-white">
       {/* Detachable Fixed Island Dock Navbar */}
       <Navbar onContactClick={scrollToContact} />
 
       {/* ============================================================ */}
-      {/* FULL-SCREEN ARCHITECTURAL BLUE/MIDNIGHT HERO SECTION          */}
-      {/* Exact replica of the reference design, full screen canvas     */}
+      {/* FULL-SCREEN ARCHITECTURAL VIOLETISH-WHITE GRID HERO SECTION  */}
+      {/* Exact replica of the reference design on a violetish-white   */}
+      {/* architectural grid canvas with zero dark gradient colors     */}
       {/* ============================================================ */}
       <section
         className="w-full min-h-screen h-screen relative flex flex-col justify-between px-6 sm:px-10 md:px-14 lg:px-20 py-6 sm:py-10 select-none overflow-hidden"
         style={{
-          background:
-            "radial-gradient(ellipse 95% 90% at 50% 0%, #151D5A 0%, #0D123D 42%, #080B22 100%)",
+          backgroundColor: "#F7F5FC",
+          backgroundImage: `
+            linear-gradient(to right, rgba(147, 51, 234, 0.06) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(147, 51, 234, 0.06) 1px, transparent 1px)
+          `,
+          backgroundSize: "64px 64px",
         }}
       >
         {/* Full-Screen Vertical Architectural Column Grid Dividers (10 Columns) */}
@@ -33,70 +38,43 @@ export default function WorkPage() {
           {Array.from({ length: 10 }).map((_, i) => (
             <div
               key={i}
-              className="h-full border-r border-white/[0.07] last:border-r-0"
+              className="h-full border-r border-[#E2DCF0]/80 last:border-r-0"
             />
           ))}
         </div>
 
-        {/* Subtle Ambient Radial Highlight */}
-        <div className="absolute -top-40 left-1/4 w-[650px] h-[450px] bg-indigo-500/15 rounded-full blur-[100px] pointer-events-none" />
-
-        {/* TOP BAR / HEADER ROW (with clearance for fixed Island Dock Navbar) */}
-        <div className="relative z-10 w-full pt-14 sm:pt-16 md:pt-18 flex items-center justify-between gap-4 text-xs">
-          <div className="flex items-center gap-4 sm:gap-6">
-            <span className="font-roboto-condensed font-black tracking-wider text-lg sm:text-2xl text-white uppercase">
+        {/* TOP ARCHITECTURAL METADATA ROW (with clearance for fixed floating Navbar) */}
+        <div className="relative z-10 w-full pt-18 sm:pt-22 md:pt-24 flex items-center justify-between gap-4 text-xs">
+          <div className="flex items-center gap-3 sm:gap-4">
+            <span className="font-roboto-condensed font-black tracking-wider text-base sm:text-xl text-slate-950 uppercase">
               KAIZEN_
             </span>
-            <span className="hidden sm:inline-block font-mono text-[11px] sm:text-xs text-indigo-200/70 uppercase tracking-widest font-semibold">
+            <span className="hidden sm:inline-block font-mono text-[10px] sm:text-[11px] text-purple-800/80 uppercase tracking-widest font-semibold px-2 py-0.5 rounded bg-purple-100/60 border border-purple-200/50">
               HI-END DEVELOPMENT
             </span>
           </div>
 
-          {/* Navigation Links (Matching reference) */}
-          <div className="hidden md:flex items-center gap-8 font-mono text-xs uppercase tracking-wider text-slate-300 font-semibold">
-            <Link href="/" className="hover:text-white transition-colors">
-              HOME
-            </Link>
-            <Link href="/#capabilities" className="hover:text-white transition-colors">
-              CAPABILITIES
-            </Link>
-            <Link href="/#architects" className="hover:text-white transition-colors">
-              ARCHITECTS
-            </Link>
-            <Link href="/#methodology" className="hover:text-white transition-colors">
-              METHODOLOGY
-            </Link>
-          </div>
-
-          {/* Right CTA Buttons */}
-          <div className="flex items-center gap-2.5 sm:gap-3">
-            <button
-              onClick={scrollToContact}
-              className="px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full font-roboto-condensed font-bold text-xs tracking-wider uppercase bg-white/10 hover:bg-white/20 border border-white/20 text-white transition-colors backdrop-blur-md cursor-pointer"
-            >
-              START PROJECT
-            </button>
-            <button
-              onClick={scrollToContact}
-              className="px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full font-roboto-condensed font-bold text-xs tracking-wider uppercase bg-[#10B981] hover:bg-[#059669] text-white transition-colors shadow-sm cursor-pointer"
-            >
-              LOGIN
-            </button>
+          {/* Right Status Specification */}
+          <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500 uppercase tracking-wider font-semibold">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
+            <span className="hidden sm:inline">INDEXED PRODUCTION ARCHIVE</span>
+            <span className="sm:hidden">ARCHIVE</span>
+            <span className="text-slate-400">// 2026</span>
           </div>
         </div>
 
         {/* MAIN HERO CONTENT AREA */}
         <div className="relative z-10 my-auto py-6 flex flex-col justify-center">
           {/* Monumental Headline */}
-          <h1 className="font-roboto-condensed font-black tracking-tight text-white text-5xl sm:text-7xl md:text-8xl lg:text-[105px] xl:text-[124px] leading-[0.92] uppercase">
+          <h1 className="font-roboto-condensed font-black tracking-tight text-slate-950 text-5xl sm:text-7xl md:text-8xl lg:text-[105px] xl:text-[124px] leading-[0.92] uppercase">
             FROM<br />
             IDEA TO FINISHED<br />
-            PRODUCT_
+            PRODUCT<span className="text-purple-600 animate-pulse">_</span>
           </h1>
 
           {/* Bottom-Right Positioned Monospace Subtext */}
           <div className="w-full flex justify-end pt-4 sm:pt-6 md:pt-8 pr-2 sm:pr-6">
-            <p className="font-mono text-xs sm:text-sm md:text-base text-indigo-100/80 leading-relaxed max-w-[290px] sm:max-w-[360px] md:max-w-[400px]">
+            <p className="font-mono text-xs sm:text-sm md:text-base text-slate-600 leading-relaxed max-w-[290px] sm:max-w-[360px] md:max-w-[400px]">
               We start work immediately and you&apos;ll have weekly check-ins.
             </p>
           </div>
@@ -104,12 +82,12 @@ export default function WorkPage() {
 
         {/* BOTTOM BAR: Crosshair & Social Handles */}
         <div className="relative z-10 w-full flex items-end justify-between pb-2 sm:pb-4">
-          <div className="flex items-center gap-6 text-indigo-200/70 font-mono text-xs sm:text-sm font-semibold">
+          <div className="flex items-center gap-6 text-slate-500 font-mono text-xs sm:text-sm font-semibold">
             <a
               href="https://linkedin.com"
               target="_blank"
               rel="noreferrer"
-              className="hover:text-white transition-colors"
+              className="hover:text-slate-950 transition-colors"
             >
               in
             </a>
@@ -117,14 +95,14 @@ export default function WorkPage() {
               href="https://facebook.com"
               target="_blank"
               rel="noreferrer"
-              className="hover:text-white transition-colors"
+              className="hover:text-slate-950 transition-colors"
             >
               f
             </a>
           </div>
 
           {/* Architectural Crosshair Marker */}
-          <div className="text-indigo-400/80">
+          <div className="text-purple-400">
             <Plus className="w-6 h-6 sm:w-8 sm:h-8 stroke-[1.5]" />
           </div>
         </div>
@@ -134,20 +112,30 @@ export default function WorkPage() {
       {/* SECTION 2: CURATED PRODUCTION PORTFOLIO ARCHIVE              */}
       {/* Real flagship projects built with this exact architectural rig */}
       {/* ============================================================ */}
-      <section className="w-full bg-[#080B22] border-t border-indigo-500/20 py-16 sm:py-24 px-4 sm:px-8 lg:px-14">
+      <section
+        className="w-full bg-[#F7F5FC] border-t border-[#E2DCF0] py-16 sm:py-24 px-4 sm:px-8 lg:px-14 relative"
+        style={{
+          backgroundColor: "#F7F5FC",
+          backgroundImage: `
+            linear-gradient(to right, rgba(147, 51, 234, 0.04) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(147, 51, 234, 0.04) 1px, transparent 1px)
+          `,
+          backgroundSize: "64px 64px",
+        }}
+      >
         <div className="max-w-7xl mx-auto space-y-12">
           {/* Header Metadata */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-indigo-500/20">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-[#E2DCF0]">
             <div>
-              <div className="font-mono text-xs uppercase tracking-widest text-indigo-400 font-bold mb-2 flex items-center gap-2">
+              <div className="font-mono text-xs uppercase tracking-widest text-purple-700 font-bold mb-2 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
                 <span>INDEXED WORKS & SYSTEMS</span>
               </div>
-              <h2 className="font-roboto-condensed font-black text-3xl sm:text-5xl tracking-tight text-white uppercase">
+              <h2 className="font-roboto-condensed font-black text-3xl sm:text-5xl tracking-tight text-slate-950 uppercase">
                 ENGINEERED FOR COMPOUNDING SCALE
               </h2>
             </div>
-            <p className="font-mono text-xs sm:text-sm text-indigo-200/70 max-w-md">
+            <p className="font-mono text-xs sm:text-sm text-slate-600 max-w-md">
               Full-stack SaaS applications, fluid interactive systems, and production platforms built for speed, resiliency, and conversion.
             </p>
           </div>
@@ -157,29 +145,29 @@ export default function WorkPage() {
             {PROJECTS.map((project, idx) => (
               <div
                 key={project.id}
-                className="group p-6 sm:p-8 rounded-2xl bg-[#0C1033] border border-indigo-500/20 hover:border-indigo-400/40 transition-all duration-300 flex flex-col justify-between space-y-6 hover:-translate-y-1"
+                className="group p-6 sm:p-8 rounded-2xl bg-white border border-[#E2DCF0] hover:border-purple-300 transition-all duration-300 flex flex-col justify-between space-y-6 hover:-translate-y-1 shadow-[0_4px_20px_rgba(124,58,237,0.03)] hover:shadow-[0_12px_32px_rgba(124,58,237,0.08)]"
               >
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between font-mono text-xs text-indigo-300/60">
+                  <div className="flex items-center justify-between font-mono text-xs text-purple-700/70">
                     <span>{`SYS_${String(idx + 1).padStart(2, "0")}`}</span>
                     <span className="text-[#10B981] font-semibold">{project.metric}</span>
                   </div>
 
-                  <h3 className="font-roboto-condensed font-black text-2xl text-white group-hover:text-indigo-300 transition-colors">
+                  <h3 className="font-roboto-condensed font-black text-2xl text-slate-900 group-hover:text-purple-700 transition-colors">
                     {project.title}
                   </h3>
 
-                  <p className="text-sm text-indigo-100/70 leading-relaxed font-roboto-condensed">
+                  <p className="text-sm text-slate-600 leading-relaxed font-roboto-condensed">
                     {project.description}
                   </p>
                 </div>
 
-                <div className="space-y-4 pt-4 border-t border-indigo-500/20">
+                <div className="space-y-4 pt-4 border-t border-slate-100">
                   <div className="flex flex-wrap gap-1.5">
                     {project.stack.map((tech) => (
                       <span
                         key={tech}
-                        className="px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-[11px] font-mono text-indigo-200"
+                        className="px-2.5 py-1 rounded-md bg-purple-50/70 border border-purple-100 text-[11px] font-mono text-purple-900 font-medium"
                       >
                         {tech}
                       </span>
@@ -187,12 +175,12 @@ export default function WorkPage() {
                   </div>
 
                   <div className="flex items-center justify-between pt-2">
-                    <span className="font-mono text-[11px] text-slate-400">
+                    <span className="font-mono text-[11px] text-slate-400 uppercase tracking-wider">
                       {project.category}
                     </span>
                     <button
                       onClick={scrollToContact}
-                      className="inline-flex items-center gap-1.5 text-xs font-bold font-roboto-condensed text-white group-hover:text-[#10B981] transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold font-roboto-condensed text-slate-900 group-hover:text-purple-700 transition-colors cursor-pointer"
                     >
                       <span>Inquire Specs</span>
                       <ArrowUpRight className="w-4 h-4" />
