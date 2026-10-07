@@ -11,6 +11,10 @@
   font-optical-sizing: auto;
 }
 
+.font-display {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
 :root {
   --hero-deep: #080B22;
   --hero-navy: #12184B;

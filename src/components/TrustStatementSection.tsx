@@ -112,48 +112,52 @@ export const TrustStatementSection = () => {
       />
 
       {/* ============================================================ */}
-      {/* GSAP-CALIBER KINETIC TYPOGRAPHY WITH SCULPTURAL VECTOR SHAPES */}
+      {/* GSAP-CALIBER KINETIC TYPOGRAPHY WITH AUTHENTIC 3D & VECTOR ART */}
       {/* ============================================================ */}
-      <div className="max-w-5xl mx-auto text-center relative z-10 px-4 py-8 flex flex-col items-center justify-center space-y-3 sm:space-y-5">
+      <div className="max-w-6xl mx-auto text-center relative z-10 px-4 py-8 flex flex-col items-center justify-center space-y-2 sm:space-y-4">
         {/* Eyebrow Micro-Badge */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-purple-900/10 border border-purple-900/15 backdrop-blur-md text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-widest text-purple-950 mb-1 sm:mb-2 shadow-xs"
+          className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-purple-900/10 border border-purple-900/15 backdrop-blur-md text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-widest text-purple-950 mb-2 shadow-xs"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-purple-600 animate-pulse" />
           <span>ENGINEERING THAT ELEVATES THE STANDARD</span>
         </motion.div>
 
-        {/* LINE 1: KAIZEN SOLVES [4-Petal Pinwheel] architects */}
-        <div className="text-3xl sm:text-5xl md:text-6xl lg:text-[76px] font-black font-roboto-condensed tracking-tight text-slate-900 leading-[1.08] flex flex-wrap justify-center items-center gap-x-3 sm:gap-x-5">
+        {/* LINE 1: KAIZEN SOLVES [Windmill] architects */}
+        <div className="text-3xl sm:text-5xl md:text-6xl lg:text-[76px] xl:text-[84px] font-black font-display tracking-tight sm:tracking-tighter text-slate-950 leading-[1.08] flex flex-wrap justify-center items-center gap-x-3 sm:gap-x-5">
           <KineticWord word="KAIZEN" progress={scrollYProgress} range={[0.36, 0.46]} />
           <KineticWord word="SOLVES" progress={scrollYProgress} range={[0.40, 0.50]} />
-          <KineticPinwheel progress={scrollYProgress} range={[0.42, 0.52]} />
+          <div className="relative inline-flex items-center mx-1 sm:mx-2 align-middle">
+            <GSAPWindmill />
+          </div>
           <KineticWord word="architects" progress={scrollYProgress} range={[0.44, 0.54]} isHighlight />
         </div>
 
-        {/* LINE 2: scalable [8-Point Asterisk Star] web apps, */}
-        <div className="text-3xl sm:text-5xl md:text-6xl lg:text-[76px] font-black font-roboto-condensed tracking-tight text-slate-900 leading-[1.08] flex flex-wrap justify-center items-center gap-x-3 sm:gap-x-5">
+        {/* LINE 2: scalable [Star] web apps, */}
+        <div className="text-3xl sm:text-5xl md:text-6xl lg:text-[76px] xl:text-[84px] font-black font-display tracking-tight sm:tracking-tighter text-slate-950 leading-[1.08] flex flex-wrap justify-center items-center gap-x-3 sm:gap-x-5">
           <KineticWord word="scalable" progress={scrollYProgress} range={[0.48, 0.58]} isHighlight />
-          <KineticAsterisk progress={scrollYProgress} range={[0.50, 0.60]} />
+          <div className="relative inline-flex items-center mx-1 sm:mx-2 align-middle">
+            <GSAPStar />
+          </div>
           <KineticWord word="web" progress={scrollYProgress} range={[0.52, 0.62]} />
           <KineticWord word="apps," progress={scrollYProgress} range={[0.54, 0.64]} />
         </div>
 
-        {/* LINE 3: fluid [Lightning Bolt] [Coiled 3D Spring] interfaces, */}
-        <div className="text-3xl sm:text-5xl md:text-6xl lg:text-[76px] font-black font-roboto-condensed tracking-tight text-slate-900 leading-[1.08] flex flex-wrap justify-center items-center gap-x-3 sm:gap-x-5">
+        {/* LINE 3: fluid [Bolt] [3D Worm] interfaces, */}
+        <div className="text-3xl sm:text-5xl md:text-6xl lg:text-[76px] xl:text-[84px] font-black font-display tracking-tight sm:tracking-tighter text-slate-950 leading-[1.08] flex flex-wrap justify-center items-center gap-x-3 sm:gap-x-5">
           <KineticWord word="fluid" progress={scrollYProgress} range={[0.58, 0.68]} isHighlight />
-          <div className="inline-flex items-center gap-1 sm:gap-2 mx-1 sm:mx-2 align-middle">
-            <KineticLightningBolt progress={scrollYProgress} range={[0.60, 0.70]} />
-            <KineticCoiledSpring progress={scrollYProgress} range={[0.62, 0.72]} />
+          <div className="relative inline-flex items-center gap-1.5 sm:gap-3 mx-1 sm:mx-3 align-middle">
+            <GSAPBolt />
+            <GSAP3DWorm />
           </div>
           <KineticWord word="interfaces," progress={scrollYProgress} range={[0.64, 0.74]} isHighlight />
         </div>
 
         {/* LINE 4: and resilient cloud systems */}
-        <div className="text-3xl sm:text-5xl md:text-6xl lg:text-[76px] font-black font-roboto-condensed tracking-tight text-slate-900 leading-[1.08] flex flex-wrap justify-center items-center gap-x-3 sm:gap-x-5">
+        <div className="text-3xl sm:text-5xl md:text-6xl lg:text-[76px] xl:text-[84px] font-black font-display tracking-tight sm:tracking-tighter text-slate-950 leading-[1.08] flex flex-wrap justify-center items-center gap-x-3 sm:gap-x-5">
           <KineticWord word="and" progress={scrollYProgress} range={[0.68, 0.78]} />
           <KineticWord word="resilient" progress={scrollYProgress} range={[0.70, 0.80]} isHighlight />
           <KineticWord word="cloud" progress={scrollYProgress} range={[0.72, 0.82]} />
@@ -161,7 +165,7 @@ export const TrustStatementSection = () => {
         </div>
 
         {/* LINE 5: that drive compounding growth. */}
-        <div className="text-3xl sm:text-5xl md:text-6xl lg:text-[76px] font-black font-roboto-condensed tracking-tight text-slate-900 leading-[1.08] flex flex-wrap justify-center items-center gap-x-3 sm:gap-x-5">
+        <div className="text-3xl sm:text-5xl md:text-6xl lg:text-[76px] xl:text-[84px] font-black font-display tracking-tight sm:tracking-tighter text-slate-950 leading-[1.08] flex flex-wrap justify-center items-center gap-x-3 sm:gap-x-5">
           <KineticWord word="that" progress={scrollYProgress} range={[0.76, 0.86]} />
           <KineticWord word="drive" progress={scrollYProgress} range={[0.78, 0.88]} />
           <KineticWord word="growth." progress={scrollYProgress} range={[0.82, 0.92]} isHighlight />
@@ -198,7 +202,7 @@ const KineticWord: React.FC<KineticWordProps> = ({
       style={{ opacity, filter, y }}
       className={`inline-flex items-center cursor-default transition-colors duration-200 ${
         isHighlight
-          ? "text-[#581C87] hover:text-[#4A044E]"
+          ? "text-[#581C87] hover:text-[#3B0764]"
           : "text-slate-950 hover:text-purple-950"
       }`}
     >
@@ -206,12 +210,13 @@ const KineticWord: React.FC<KineticWordProps> = ({
         <motion.span
           key={i}
           whileHover={{
-            y: -7,
-            scale: 1.12,
+            y: -8,
+            scale: 1.15,
             rotate: i % 2 === 0 ? -3 : 3,
+            color: isHighlight ? "#3B0764" : "#6B21A8",
             transition: { type: "spring", stiffness: 450, damping: 12 },
           }}
-          className="inline-block origin-bottom"
+          className="inline-block origin-bottom transition-colors duration-150"
         >
           {char}
         </motion.span>
@@ -221,224 +226,221 @@ const KineticWord: React.FC<KineticWordProps> = ({
 };
 
 // ============================================================
-// 2. SHAPE 1: GSAP 4-PETAL KINETIC PINWHEEL (As seen on gsap.com)
+// 2. AUTHENTIC GSAP WINDMILL (Noise Texture & Linear Gradient)
 // ============================================================
-const KineticPinwheel: React.FC<{
-  progress: MotionValue<number>;
-  range: [number, number];
-}> = ({ progress, range }) => {
-  const opacity = useTransform(progress, range, [0, 1], { clamp: true });
-  const scale = useTransform(progress, range, [0.4, 1], { clamp: true });
-  const y = useTransform(progress, range, [16, 0], { clamp: true });
-
+const GSAPWindmill: React.FC<{ size?: string; className?: string }> = ({
+  size = "w-9 h-9 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16",
+  className = "",
+}) => {
   return (
-    <motion.span
-      style={{ opacity, scale, y }}
-      className="inline-flex items-center align-middle mx-1 sm:mx-2"
+    <motion.div
+      animate={{ rotate: 360 }}
+      transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+      whileHover={{
+        scale: 1.28,
+        rotate: 720,
+        transition: { type: "spring", stiffness: 320, damping: 14 },
+      }}
+      whileTap={{ scale: 0.9 }}
+      className={`relative inline-block cursor-pointer select-none filter drop-shadow-[0_8px_18px_rgba(255,135,9,0.38)] ${size} ${className}`}
     >
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
-        whileHover={{
-          scale: 1.3,
-          rotate: 720,
-          transition: { type: "spring", stiffness: 300, damping: 15 },
-        }}
-        whileTap={{ scale: 0.9 }}
-        className="w-8 h-8 sm:w-11 sm:h-11 md:w-13 md:h-13 cursor-pointer select-none filter drop-shadow-[0_6px_14px_rgba(249,115,22,0.35)]"
+      <svg
+        viewBox="0 0 137 135"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlnsXlink="http://www.w3.org/1999/xlink"
+        className="w-full h-full"
       >
-        <svg viewBox="0 0 48 48" className="w-full h-full">
-          <defs>
-            <linearGradient id="gsapPinwheel" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#FB923C" />
-              <stop offset="50%" stopColor="#F43F5E" />
-              <stop offset="100%" stopColor="#A855F7" />
-            </linearGradient>
-          </defs>
-          {/* 4 Sculptural Teardrop Petals Meeting at Center */}
-          <path d="M24 24 C24 13, 14 7, 10 11 C6 15, 13 24, 24 24 Z" fill="url(#gsapPinwheel)" />
-          <path d="M24 24 C35 24, 41 14, 37 10 C33 6, 24 13, 24 24 Z" fill="url(#gsapPinwheel)" />
-          <path d="M24 24 C24 35, 34 41, 38 37 C42 33, 35 24, 24 24 Z" fill="url(#gsapPinwheel)" />
-          <path d="M24 24 C13 24, 7 34, 11 38 C15 42, 24 35, 24 24 Z" fill="url(#gsapPinwheel)" />
-        </svg>
-      </motion.div>
-    </motion.span>
+        <defs>
+          <linearGradient
+            id="gsapWindmillGrad"
+            x1="-76.6791"
+            y1="-15.6157"
+            x2="165.682"
+            y2="81.0082"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0.427083" stopColor="#FF8709" />
+            <stop offset="0.791667" stopColor="#F7BDF8" />
+          </linearGradient>
+          <pattern
+            id="pattern-gsap-windmill"
+            patternContentUnits="objectBoundingBox"
+            width="1"
+            height="1"
+          >
+            <image href="/noise.png" width="500" height="500" transform="scale(0.003)" />
+          </pattern>
+        </defs>
+        <path
+          d="M84.1148 67.3453H136.194C136.637 67.3453 137 67.7028 137 68.1397V134.043C137 134.484 136.633 134.845 136.186 134.841C99.0222 134.416 68.9737 104.827 68.502 68.2191V134.206C68.502 134.643 68.1392 135 67.6958 135H0.814284C0.366822 135 -2.06673e-05 134.639 0.00401052 134.198C0.439379 97.2879 30.9354 67.5042 68.498 67.5002H0.806238C0.362807 67.5002 0 67.1427 0 66.7057V0.802561C0 0.361644 0.366822 0.000171863 0.814284 0.00414409C37.9778 0.429172 68.0263 30.0183 68.498 66.6263V0.794617C68.498 0.357672 68.8608 0.000171819 69.3042 0.000171819H136.186C136.633 0.000171819 137 0.361644 136.996 0.802561C136.621 32.4969 114.079 58.94 83.9334 65.7802C83.0022 65.9907 83.1594 67.3453 84.1189 67.3453H84.1148Z"
+          fill="url(#gsapWindmillGrad)"
+        />
+        <path
+          d="M84.1148 67.3453H136.194C136.637 67.3453 137 67.7028 137 68.1397V134.043C137 134.484 136.633 134.845 136.186 134.841C99.0222 134.416 68.9737 104.827 68.502 68.2191V134.206C68.502 134.643 68.1392 135 67.6958 135H0.814284C0.366822 135 -2.06673e-05 134.639 0.00401052 134.198C0.439379 97.2879 30.9354 67.5042 68.498 67.5002H0.806238C0.362807 67.5002 0 67.1427 0 66.7057V0.802561C0 0.361644 0.366822 0.000171863 0.814284 0.00414409C37.9778 0.429172 68.0263 30.0183 68.498 66.6263V0.794617C68.498 0.357672 68.8608 0.000171819 69.3042 0.000171819H136.186C136.633 0.000171819 137 0.361644 136.996 0.802561C136.621 32.4969 114.079 58.94 83.9334 65.7802C83.0022 65.9907 83.1594 67.3453 84.1189 67.3453H84.1148Z"
+          fill="url(#pattern-gsap-windmill)"
+          fillOpacity="0.45"
+          style={{ mixBlendMode: "multiply" }}
+        />
+      </svg>
+    </motion.div>
   );
 };
 
 // ============================================================
-// 3. SHAPE 2: GSAP 8-POINT ROTATING ASTERISK STAR (As seen on gsap.com)
+// 3. AUTHENTIC GSAP 8-POINT STAR (Noise Texture & Radial Gradient)
 // ============================================================
-const KineticAsterisk: React.FC<{
-  progress: MotionValue<number>;
-  range: [number, number];
-}> = ({ progress, range }) => {
-  const opacity = useTransform(progress, range, [0, 1], { clamp: true });
-  const scale = useTransform(progress, range, [0.4, 1], { clamp: true });
-  const y = useTransform(progress, range, [16, 0], { clamp: true });
-
+const GSAPStar: React.FC<{ size?: string; className?: string }> = ({
+  size = "w-9 h-9 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16",
+  className = "",
+}) => {
   return (
-    <motion.span
-      style={{ opacity, scale, y }}
-      className="inline-flex items-center align-middle mx-1 sm:mx-2"
+    <motion.div
+      animate={{
+        rotate: [0, 45, 90],
+        scale: [1, 1.06, 1],
+      }}
+      transition={{
+        repeat: Infinity,
+        duration: 7,
+        ease: "easeInOut",
+      }}
+      whileHover={{
+        scale: 1.32,
+        rotate: 180,
+        transition: { type: "spring", stiffness: 350, damping: 14 },
+      }}
+      whileTap={{ scale: 0.9 }}
+      className={`relative inline-block cursor-pointer select-none filter drop-shadow-[0_8px_18px_rgba(255,119,75,0.4)] ${size} ${className}`}
     >
-      <motion.div
-        animate={{
-          rotate: [0, 45, 90],
-          scale: [1, 1.08, 1],
-        }}
-        transition={{
-          repeat: Infinity,
-          duration: 6,
-          ease: "easeInOut",
-        }}
-        whileHover={{
-          scale: 1.35,
-          rotate: 180,
-          transition: { type: "spring", stiffness: 350, damping: 14 },
-        }}
-        whileTap={{ scale: 0.9 }}
-        className="w-7 h-7 sm:w-10 sm:h-10 md:w-12 md:h-12 cursor-pointer select-none filter drop-shadow-[0_6px_14px_rgba(244,63,94,0.35)]"
+      <svg
+        viewBox="0 0 157 156"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlnsXlink="http://www.w3.org/1999/xlink"
+        className="w-full h-full"
       >
-        <svg viewBox="0 0 48 48" className="w-full h-full">
-          <defs>
-            <linearGradient id="gsapAsterisk" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#FB7185" />
-              <stop offset="50%" stopColor="#E11D48" />
-              <stop offset="100%" stopColor="#9333EA" />
-            </linearGradient>
-          </defs>
-          {/* 4 Overlapping Rounded Bars Form an 8-Point Star */}
-          <rect x="21" y="6" width="6" height="36" rx="3" fill="url(#gsapAsterisk)" />
-          <rect x="6" y="21" width="36" height="6" rx="3" fill="url(#gsapAsterisk)" />
-          <rect
-            x="21"
-            y="6"
-            width="6"
-            height="36"
-            rx="3"
-            fill="url(#gsapAsterisk)"
-            transform="rotate(45 24 24)"
-          />
-          <rect
-            x="21"
-            y="6"
-            width="6"
-            height="36"
-            rx="3"
-            fill="url(#gsapAsterisk)"
-            transform="rotate(-45 24 24)"
-          />
-        </svg>
-      </motion.div>
-    </motion.span>
+        <defs>
+          <radialGradient
+            id="gsapStarGrad"
+            cx="0"
+            cy="0"
+            r="1"
+            gradientUnits="userSpaceOnUse"
+            gradientTransform="translate(124.192 87.08) rotate(149.757) scale(126.034)"
+          >
+            <stop stopColor="#FFEBE7" />
+            <stop offset="0.6721" stopColor="#FF9C7C" />
+            <stop offset="0.8164" stopColor="#FF9983" />
+            <stop offset="0.9014" stopColor="#FF774B" />
+            <stop offset="1" stopColor="#E76F00" />
+          </radialGradient>
+          <pattern
+            id="pattern-gsap-star"
+            patternContentUnits="objectBoundingBox"
+            width="1"
+            height="1"
+          >
+            <image href="/noise.png" width="500" height="500" transform="scale(0.003)" />
+          </pattern>
+        </defs>
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M82.2214 104.04L105.483 143.586C108.242 148.276 114.274 149.852 118.974 147.112V147.112C123.675 144.371 125.275 138.345 122.552 133.634L99.5971 93.9091L144.009 105.424C149.276 106.79 154.656 103.639 156.042 98.3773V98.3773C157.428 93.1154 154.298 87.7233 149.042 86.317L104.72 74.4593L144.266 51.1978C148.957 48.439 150.533 42.407 147.792 37.7062V37.7062C145.052 33.0054 139.026 31.4057 134.314 34.1282L94.5898 57.0835L106.105 12.6719C107.471 7.40463 104.32 2.02469 99.058 0.638673V0.638673C93.7961 -0.747342 88.4041 2.38242 86.9977 7.63895L75.14 51.9603L51.8786 12.4142C49.1197 7.72403 43.0878 6.14763 38.387 8.8883V8.8883C33.6862 11.629 32.0865 17.6548 34.809 22.3662L57.7643 62.0908L13.3526 50.5758C8.08539 49.2101 2.70545 52.3607 1.31944 57.6226V57.6226C-0.0665745 62.8845 3.06319 68.2766 8.31971 69.6829L52.6411 81.5406L13.095 104.802C8.4048 107.561 6.8284 113.593 9.56907 118.294V118.294C12.3097 122.994 18.3356 124.594 23.0469 121.872L62.7716 98.9164L51.2566 143.328C49.8909 148.595 53.0414 153.975 58.3034 155.361V155.361C63.5653 156.747 68.9573 153.617 70.3637 148.361L82.2214 104.04Z"
+          fill="url(#gsapStarGrad)"
+        />
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M82.2214 104.04L105.483 143.586C108.242 148.276 114.274 149.852 118.974 147.112V147.112C123.675 144.371 125.275 138.345 122.552 133.634L99.5971 93.9091L144.009 105.424C149.276 106.79 154.656 103.639 156.042 98.3773V98.3773C157.428 93.1154 154.298 87.7233 149.042 86.317L104.72 74.4593L144.266 51.1978C148.957 48.439 150.533 42.407 147.792 37.7062V37.7062C145.052 33.0054 139.026 31.4057 134.314 34.1282L94.5898 57.0835L106.105 12.6719C107.471 7.40463 104.32 2.02469 99.058 0.638673V0.638673C93.7961 -0.747342 88.4041 2.38242 86.9977 7.63895L75.14 51.9603L51.8786 12.4142C49.1197 7.72403 43.0878 6.14763 38.387 8.8883V8.8883C33.6862 11.629 32.0865 17.6548 34.809 22.3662L57.7643 62.0908L13.3526 50.5758C8.08539 49.2101 2.70545 52.3607 1.31944 57.6226V57.6226C-0.0665745 62.8845 3.06319 68.2766 8.31971 69.6829L52.6411 81.5406L13.095 104.802C8.4048 107.561 6.8284 113.593 9.56907 118.294V118.294C12.3097 122.994 18.3356 124.594 23.0469 121.872L62.7716 98.9164L51.2566 143.328C49.8909 148.595 53.0414 153.975 58.3034 155.361V155.361C63.5653 156.747 68.9573 153.617 70.3637 148.361L82.2214 104.04Z"
+          fill="url(#pattern-gsap-star)"
+          fillOpacity="0.45"
+          style={{ mixBlendMode: "multiply" }}
+        />
+      </svg>
+    </motion.div>
   );
 };
 
 // ============================================================
-// 4. SHAPE 3: GSAP GEOMETRIC LIGHTNING BOLT (As seen on gsap.com)
+// 4. AUTHENTIC GSAP LIGHTNING BOLT (Emerald Neon Vector)
 // ============================================================
-const KineticLightningBolt: React.FC<{
-  progress: MotionValue<number>;
-  range: [number, number];
-}> = ({ progress, range }) => {
-  const opacity = useTransform(progress, range, [0, 1], { clamp: true });
-  const scale = useTransform(progress, range, [0.4, 1], { clamp: true });
-  const y = useTransform(progress, range, [16, 0], { clamp: true });
-
+const GSAPBolt: React.FC<{ size?: string; className?: string }> = ({
+  size = "w-6 h-10 sm:w-9 sm:h-14 md:w-11 md:h-18 lg:w-13 lg:h-20",
+  className = "",
+}) => {
   return (
-    <motion.span
-      style={{ opacity, scale, y }}
-      className="inline-flex items-center align-middle"
+    <motion.div
+      animate={{
+        y: [0, -3, 0],
+      }}
+      transition={{
+        repeat: Infinity,
+        duration: 2.2,
+        ease: "easeInOut",
+      }}
+      whileHover={{
+        scale: 1.25,
+        rotate: [-3, 4, -2],
+        filter: "drop-shadow(0 0 16px rgba(10,228,72,0.85))",
+        transition: { type: "spring", stiffness: 450, damping: 10 },
+      }}
+      whileTap={{ scale: 0.9 }}
+      className={`relative inline-block cursor-pointer select-none filter drop-shadow-[0_4px_14px_rgba(10,228,72,0.45)] ${size} ${className}`}
     >
-      <motion.div
-        animate={{
-          y: [0, -3, 0],
-        }}
-        transition={{
-          repeat: Infinity,
-          duration: 2.4,
-          ease: "easeInOut",
-        }}
-        whileHover={{
-          scale: 1.28,
-          rotate: [-4, 4, -4],
-          transition: { type: "spring", stiffness: 400, damping: 10 },
-        }}
-        whileTap={{ scale: 0.9 }}
-        className="w-6 h-8 sm:w-8 sm:h-11 md:w-9 md:h-13 cursor-pointer select-none filter drop-shadow-[0_4px_12px_rgba(16,185,129,0.45)]"
+      <svg
+        viewBox="0 0 134 229"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-full h-full"
       >
-        <svg viewBox="0 0 32 48" className="w-full h-full">
-          <defs>
-            <linearGradient id="gsapBolt" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#10B981" />
-              <stop offset="100%" stopColor="#059669" />
-            </linearGradient>
-          </defs>
-          <path
-            d="M 18 2 L 6 22 L 17 22 L 13 46 L 27 22 L 16 22 Z"
-            fill="url(#gsapBolt)"
-            stroke="#047857"
-            strokeWidth="1.5"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </motion.div>
-    </motion.span>
+        <path
+          d="M101.08 11C102.439 11 103.402 12.3264 102.982 13.6187L78.6746 88.3335C78.2542 89.6259 79.2175 90.9522 80.5765 90.9522H108.983C110.634 90.9522 111.574 92.8401 110.579 94.1577L10.2304 227L39.4408 125.708C39.8095 124.429 38.8499 123.154 37.5191 123.154H7.82733C6.44727 123.154 5.48193 121.789 5.94147 120.488L44.1353 12.334C44.4176 11.5346 45.1733 11 46.0211 11H101.08Z"
+          stroke="#0AE448"
+          strokeWidth="6"
+        />
+        <path
+          d="M102.08 10C103.439 10 104.402 11.3264 103.982 12.6187L79.6746 87.3335C79.2542 88.6259 80.2175 89.9522 81.5765 89.9522H109.983C111.634 89.9522 112.574 91.8401 111.579 93.1577L11.2304 226L40.4408 124.708C40.8095 123.429 39.8499 122.154 38.5191 122.154H8.82733C7.44727 122.154 6.48193 120.789 6.94147 119.488L45.1353 11.334C45.4176 10.5346 46.1733 10 47.0211 10H102.08Z"
+          fill="#0AE448"
+        />
+      </svg>
+    </motion.div>
   );
 };
 
 // ============================================================
-// 5. SHAPE 4: GSAP 3D WAVY COILED SPRING (As seen on gsap.com)
+// 5. AUTHENTIC 3D COILED WORM (Photorealistic 3D Render)
 // ============================================================
-const KineticCoiledSpring: React.FC<{
-  progress: MotionValue<number>;
-  range: [number, number];
-}> = ({ progress, range }) => {
-  const opacity = useTransform(progress, range, [0, 1], { clamp: true });
-  const scale = useTransform(progress, range, [0.4, 1], { clamp: true });
-  const y = useTransform(progress, range, [16, 0], { clamp: true });
-
+const GSAP3DWorm: React.FC<{ size?: string; className?: string }> = ({
+  size = "w-7 h-11 sm:w-10 sm:h-16 md:w-13 md:h-20 lg:w-15 lg:h-24",
+  className = "",
+}) => {
   return (
-    <motion.span
-      style={{ opacity, scale, y }}
-      className="inline-flex items-center align-middle"
+    <motion.div
+      animate={{
+        scaleY: [1, 1.14, 0.94, 1],
+        rotate: [24, 28, 20, 24],
+      }}
+      transition={{
+        repeat: Infinity,
+        duration: 3.2,
+        ease: "easeInOut",
+      }}
+      whileHover={{
+        scale: 1.35,
+        rotate: 35,
+        filter: "drop-shadow(0 12px 24px rgba(168,85,247,0.55))",
+        transition: { type: "spring", stiffness: 380, damping: 12 },
+      }}
+      whileTap={{ scale: 0.9 }}
+      className={`relative inline-block cursor-pointer select-none filter drop-shadow-[0_8px_18px_rgba(168,85,247,0.4)] ${size} ${className}`}
     >
-      <motion.div
-        animate={{
-          scaleY: [1, 1.16, 0.92, 1],
-        }}
-        transition={{
-          repeat: Infinity,
-          duration: 2.8,
-          ease: "easeInOut",
-        }}
-        whileHover={{
-          scale: 1.3,
-          scaleY: 1.3,
-          rotate: -8,
-          transition: { type: "spring", stiffness: 350, damping: 12 },
-        }}
-        whileTap={{ scale: 0.9 }}
-        className="w-5 h-8 sm:w-7 sm:h-11 md:w-8 md:h-13 cursor-pointer select-none filter drop-shadow-[0_4px_12px_rgba(168,85,247,0.4)]"
-      >
-        <svg viewBox="0 0 28 48" className="w-full h-full">
-          <defs>
-            <linearGradient id="gsapSpring" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#C084FC" />
-              <stop offset="50%" stopColor="#9333EA" />
-              <stop offset="100%" stopColor="#6366F1" />
-            </linearGradient>
-          </defs>
-          <path
-            d="M 14 3 C 24 3, 24 11, 14 13 C 4 15, 4 23, 14 25 C 24 27, 24 35, 14 37 C 8 39, 8 45, 14 45"
-            fill="none"
-            stroke="url(#gsapSpring)"
-            strokeWidth="5"
-            strokeLinecap="round"
-          />
-        </svg>
-      </motion.div>
-    </motion.span>
+      <img
+        src="/worm.png"
+        alt="3D Coiled Spring"
+        className="w-full h-full object-contain pointer-events-none"
+      />
+    </motion.div>
   );
 };
