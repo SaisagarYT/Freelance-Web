@@ -18,13 +18,16 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-white text-slate-900 flex flex-col">
+    <main className="min-h-screen bg-white text-slate-900 flex flex-col relative">
+      {/* Detachable Fixed Floating Island Dock Navbar */}
+      <Navbar onContactClick={scrollToContact} />
+
       {/* Outer White Frame Wrapper matching reference screenshot */}
       <div className="w-full bg-white px-2 sm:px-4 pt-2 sm:pt-3">
         {/* Section 1: Framed Hero Container with Rounded Top Corners & Seamless Flush Bottom */}
         <div className="relative rounded-t-[28px] sm:rounded-t-[36px] rounded-b-none overflow-hidden hero-aurora-bg text-white border-t border-x border-slate-100/80 border-b-0 shadow-none min-h-[calc(100vh-16px)] sm:min-h-[calc(100vh-24px)] flex flex-col justify-between">
-          {/* Notched White Island Dock */}
-          <Navbar onContactClick={scrollToContact} />
+          {/* Top spacer preserving vertical balance when navbar is docked */}
+          <div className="w-full h-12 sm:h-14 pointer-events-none" />
 
           {/* Hero Section Content */}
           <Hero onContactClick={scrollToContact} />
