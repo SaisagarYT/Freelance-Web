@@ -156,14 +156,13 @@ export const TrustStatementSection = () => {
             <KineticWord word="apps," progress={kineticProgress} range={[0.30, 0.48]} />
           </div>
 
-          {/* LINE 3: fluid [Bolt] [3D Worm] interfaces, */}
+          {/* LINE 3: fluid [3D Worm] interfaces, */}
           <div className="text-3xl sm:text-5xl md:text-6xl lg:text-[76px] xl:text-[84px] font-black font-display tracking-tight sm:tracking-tighter text-slate-950 leading-[1.08] flex flex-wrap justify-center items-center gap-x-3 sm:gap-x-5">
             <KineticWord word="fluid" progress={kineticProgress} range={[0.38, 0.56]} isHighlight />
-            <div className="relative inline-flex items-center gap-1.5 sm:gap-3 mx-1 sm:mx-3 align-middle">
-              <GSAPBolt progress={kineticProgress} range={[0.40, 0.58]} />
-              <GSAP3DWorm progress={kineticProgress} range={[0.42, 0.62]} />
+            <div className="relative inline-flex items-center mx-1 sm:mx-2 align-middle">
+              <GSAP3DWorm progress={kineticProgress} range={[0.40, 0.60]} />
             </div>
-            <KineticWord word="interfaces," progress={kineticProgress} range={[0.46, 0.64]} isHighlight />
+            <KineticWord word="interfaces," progress={kineticProgress} range={[0.44, 0.62]} isHighlight />
           </div>
 
           {/* LINE 4: and resilient cloud systems */}
@@ -277,7 +276,7 @@ const GSAPWindmill: React.FC<{
         transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
         whileHover={{
           scale: 1.28,
-          rotate: "+=360",
+          rotate: 720,
           transition: { type: "spring", stiffness: 320, damping: 14 },
         }}
         whileTap={{ scale: 0.9 }}
@@ -414,6 +413,12 @@ const GSAPStar: React.FC<{
             fillRule="evenodd"
             clipRule="evenodd"
             d="M82.2214 104.04L105.483 143.586C108.242 148.276 114.274 149.852 118.974 147.112V147.112C123.675 144.371 125.275 138.345 122.552 133.634L99.5971 93.9091L144.009 105.424C149.276 106.79 154.656 103.639 156.042 98.3773V98.3773C157.428 93.1154 154.298 87.7233 149.042 86.317L104.72 74.4593L144.266 51.1978C148.957 48.439 150.533 42.407 147.792 37.7062V37.7062C145.052 33.0054 139.026 31.4057 134.314 34.1282L94.5898 57.0835L106.105 12.6719C107.471 7.40463 104.32 2.02469 99.058 0.638673V0.638673C93.7961 -0.747342 88.4041 2.38242 86.9977 7.63895L75.14 51.9603L51.8786 12.4142C49.1197 7.72403 43.0878 6.14763 38.387 8.8883V8.8883C33.6862 11.629 32.0865 17.6548 34.809 22.3662L57.7643 62.0908L13.3526 50.5758C8.08539 49.2101 2.70545 52.3607 1.31944 57.6226V57.6226C-0.0665745 62.8845 3.06319 68.2766 8.31971 69.6829L52.6411 81.5406L13.095 104.802C8.4048 107.561 6.8284 113.593 9.56907 118.294V118.294C12.3097 122.994 18.3356 124.594 23.0469 121.872L62.7716 98.9164L51.2566 143.328C49.8909 148.595 53.0414 153.975 58.3034 155.361V155.361C63.5653 156.747 68.9573 153.617 70.3637 148.361L82.2214 104.04Z"
+            fill="url(#gsapStarGrad)"
+          />
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M82.2214 104.04L105.483 143.586C108.242 148.276 114.274 149.852 118.974 147.112V147.112C123.675 144.371 125.275 138.345 122.552 133.634L99.5971 93.9091L144.009 105.424C149.276 106.79 154.656 103.639 156.042 98.3773V98.3773C157.428 93.1154 154.298 87.7233 149.042 86.317L104.72 74.4593L144.266 51.1978C148.957 48.439 150.533 42.407 147.792 37.7062V37.7062C145.052 33.0054 139.026 31.4057 134.314 34.1282L94.5898 57.0835L106.105 12.6719C107.471 7.40463 104.32 2.02469 99.058 0.638673V0.638673C93.7961 -0.747342 88.4041 2.38242 86.9977 7.63895L75.14 51.9603L51.8786 12.4142C49.1197 7.72403 43.0878 6.14763 38.387 8.8883V8.8883C33.6862 11.629 32.0865 17.6548 34.809 22.3662L57.7643 62.0908L13.3526 50.5758C8.08539 49.2101 2.70545 52.3607 1.31944 57.6226V57.6226C-0.0665745 62.8845 3.06319 68.2766 8.31971 69.6829L52.6411 81.5406L13.095 104.802C8.4048 107.561 6.8284 113.593 9.56907 118.294V118.294C12.3097 122.994 18.3356 124.594 23.0469 121.872L62.7716 98.9164L51.2566 143.328C49.8909 148.595 53.0414 153.975 58.3034 155.361V155.361C63.5653 156.747 68.9573 153.617 70.3637 148.361L82.2214 104.04Z"
             fill="url(#pattern-gsap-star)"
             fillOpacity="0.45"
             style={{ mixBlendMode: "multiply" }}
@@ -425,73 +430,7 @@ const GSAPStar: React.FC<{
 };
 
 // ============================================================
-// 4. AUTHENTIC GSAP LIGHTNING BOLT (Scroll Vertical Strike)
-// ============================================================
-const GSAPBolt: React.FC<{
-  progress: MotionValue<number>;
-  range: [number, number];
-  size?: string;
-  className?: string;
-}> = ({
-  progress,
-  range,
-  size = "w-6 h-10 sm:w-9 sm:h-14 md:w-11 md:h-18 lg:w-13 lg:h-20",
-  className = "",
-}) => {
-  const [start, end] = range;
-  const mid = start + (end - start) * 0.72;
-
-  // Custom Lightning Bolt Scroll Animation: strikes down vertically from -60px with electric pop
-  const y = useTransform(progress, [start, mid, end], [-60, 6, 0], { clamp: true });
-  const scale = useTransform(progress, [start, mid, end], [0.2, 1.25, 1.0], { clamp: true });
-  const opacity = useTransform(progress, [start, mid], [0, 1], { clamp: true });
-
-  return (
-    <motion.div
-      style={{ y, scale, opacity }}
-      className={`relative inline-block cursor-pointer select-none filter drop-shadow-[0_4px_14px_rgba(10,228,72,0.45)] ${size} ${className}`}
-    >
-      <motion.div
-        animate={{
-          y: [0, -3, 0],
-        }}
-        transition={{
-          repeat: Infinity,
-          duration: 2.2,
-          ease: "easeInOut",
-        }}
-        whileHover={{
-          scale: 1.25,
-          rotate: [-3, 4, -2],
-          filter: "drop-shadow(0 0 16px rgba(10,228,72,0.85))",
-          transition: { type: "spring", stiffness: 450, damping: 10 },
-        }}
-        whileTap={{ scale: 0.9 }}
-        className="w-full h-full"
-      >
-        <svg
-          viewBox="0 0 134 229"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-full"
-        >
-          <path
-            d="M101.08 11C102.439 11 103.402 12.3264 102.982 13.6187L78.6746 88.3335C78.2542 89.6259 79.2175 90.9522 80.5765 90.9522H108.983C110.634 90.9522 111.574 92.8401 110.579 94.1577L10.2304 227L39.4408 125.708C39.8095 124.429 38.8499 123.154 37.5191 123.154H7.82733C6.44727 123.154 5.48193 121.789 5.94147 120.488L44.1353 12.334C44.4176 11.5346 45.1733 11 46.0211 11H101.08Z"
-            stroke="#0AE448"
-            strokeWidth="6"
-          />
-          <path
-            d="M102.08 10C103.439 10 104.402 11.3264 103.982 12.6187L79.6746 87.3335C79.2542 88.6259 80.2175 89.9522 81.5765 89.9522H109.983C111.634 89.9522 112.574 91.8401 111.579 93.1577L11.2304 226L40.4408 124.708C40.8095 123.429 39.8499 122.154 38.5191 122.154H8.82733C7.44727 122.154 6.48193 120.789 6.94147 119.488L45.1353 11.334C45.4176 10.5346 46.1733 10 47.0211 10H102.08Z"
-            fill="#0AE448"
-          />
-        </svg>
-      </motion.div>
-    </motion.div>
-  );
-};
-
-// ============================================================
-// 5. AUTHENTIC 3D COILED WORM (Scroll Spring Uncoil & Bounce)
+// 4. AUTHENTIC 3D COILED WORM (Scroll Spring Uncoil & Bounce)
 // ============================================================
 const GSAP3DWorm: React.FC<{
   progress: MotionValue<number>;
