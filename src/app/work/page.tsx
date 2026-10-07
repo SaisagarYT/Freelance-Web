@@ -1,280 +1,132 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
 import Link from "next/link";
 import { ArrowUpRight, Plus } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
 export default function WorkPage() {
-  const [activeCard, setActiveCard] = useState<"dark" | "light">("dark");
-  const [contactModalOpen, setContactModalOpen] = useState(false);
-
   const scrollToContact = () => {
     const contactElem = document.getElementById("contact");
     contactElem?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <main className="min-h-screen bg-[#07091B] text-white flex flex-col relative overflow-x-hidden selection:bg-purple-600 selection:text-white">
+    <main className="min-h-screen bg-[#080B22] text-white flex flex-col relative overflow-x-hidden selection:bg-purple-600 selection:text-white">
       {/* Detachable Fixed Island Dock Navbar */}
       <Navbar onContactClick={scrollToContact} />
 
-      {/* Top spacer for fixed navbar balance */}
-      <div className="w-full h-16 sm:h-20" />
-
       {/* ============================================================ */}
-      {/* HERO STAGE: DUAL ARCHITECTURAL OVERLAPPING SCREEN COMPOSITION */}
-      {/* Exact replica of the reference design with website CSS & fonts */}
+      {/* FULL-SCREEN ARCHITECTURAL BLUE/MIDNIGHT HERO SECTION          */}
+      {/* Exact replica of the reference design, full screen canvas     */}
       {/* ============================================================ */}
-      <section className="w-full relative px-3 sm:px-6 lg:px-10 py-6 sm:py-10 lg:py-14 flex items-center justify-center">
-        <div className="w-full max-w-[1360px] relative min-h-[580px] sm:min-h-[680px] lg:min-h-[760px] flex items-center justify-center">
-          
-          {/* ========================================================== */}
-          {/* CARD B: WHITE ARCHITECTURAL SCREEN (Upper Right Overlap)   */}
-          {/* ========================================================== */}
-          <motion.div
-            layout
-            onClick={() => setActiveCard("light")}
-            animate={{
-              zIndex: activeCard === "light" ? 30 : 10,
-              scale: activeCard === "light" ? 1.02 : 0.94,
-              opacity: activeCard === "light" ? 1 : 0.88,
-              y: activeCard === "light" ? 0 : -35,
-              x: activeCard === "light" ? 0 : 40,
-            }}
-            transition={{ type: "spring", stiffness: 280, damping: 26 }}
-            className={`absolute top-0 sm:top-2 right-0 sm:right-4 w-[92%] sm:w-[84%] lg:w-[76%] aspect-[16/10] sm:aspect-[16/9.4] rounded-2xl sm:rounded-3xl bg-white text-slate-900 border border-slate-200 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden cursor-pointer select-none flex flex-col justify-between p-5 sm:p-8 lg:p-12`}
-          >
-            {/* Vertical Architectural Column Grid Dividers (10 Columns) */}
-            <div className="absolute inset-0 grid grid-cols-8 sm:grid-cols-10 pointer-events-none">
-              {Array.from({ length: 10 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="h-full border-r border-slate-100/80 last:border-r-0"
-                />
-              ))}
-            </div>
-
-            {/* TOP BAR / HEADER ROW */}
-            <div className="relative z-10 w-full flex items-center justify-between gap-3 text-xs">
-              <div className="flex items-center gap-4 sm:gap-6">
-                <span className="font-roboto-condensed font-black tracking-wider text-base sm:text-xl text-slate-950 uppercase">
-                  KAIZEN_
-                </span>
-                <span className="hidden sm:inline-block font-mono text-[10px] text-slate-400 uppercase tracking-widest font-semibold">
-                  HI-END DEVELOPMENT
-                </span>
-              </div>
-
-              {/* Navigation Links */}
-              <div className="hidden md:flex items-center gap-6 font-mono text-xs uppercase tracking-wider text-slate-500 font-semibold">
-                <Link href="/" className="hover:text-slate-900 transition-colors">
-                  HOME
-                </Link>
-                <Link href="/#methodology" className="hover:text-slate-900 transition-colors">
-                  HOW IT WORKS
-                </Link>
-                <Link href="/#showcase" className="hover:text-slate-900 transition-colors">
-                  SUCCESS STORIES
-                </Link>
-              </div>
-
-              {/* Right CTA Buttons */}
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    scrollToContact();
-                  }}
-                  className="px-3.5 py-1.5 rounded-full font-roboto-condensed font-bold text-[11px] sm:text-xs tracking-wider uppercase border border-slate-300 hover:border-slate-400 text-slate-800 transition-colors"
-                >
-                  START PROJECT
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    scrollToContact();
-                  }}
-                  className="px-3.5 py-1.5 rounded-full font-roboto-condensed font-bold text-[11px] sm:text-xs tracking-wider uppercase bg-[#10B981] hover:bg-[#059669] text-white transition-colors shadow-xs"
-                >
-                  LOGIN
-                </button>
-              </div>
-            </div>
-
-            {/* MAIN CONTENT AREA */}
-            <div className="relative z-10 my-auto pt-6 sm:pt-10 flex flex-col md:flex-row md:items-start justify-between gap-6">
-              {/* Massive Headline */}
-              <h2 className="font-roboto-condensed font-black tracking-tight text-slate-950 text-4xl sm:text-6xl md:text-7xl lg:text-[84px] leading-[0.92] uppercase">
-                HIRE<br />
-                THE BEST<br />
-                TEAM_
-              </h2>
-
-              {/* Top-Right Subtext */}
-              <div className="max-w-[240px] md:pt-2">
-                <p className="font-mono text-xs sm:text-[13px] text-slate-500 leading-relaxed">
-                  Powerful core and flexible teams of developers all around the world.
-                </p>
-              </div>
-            </div>
-
-            {/* BOTTOM BAR: Crosshair & Social Handles */}
-            <div className="relative z-10 w-full flex items-end justify-between pt-4">
-              <div className="flex items-center gap-4 text-slate-400 font-mono text-xs font-semibold">
-                <a
-                  href="https://linkedin.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:text-slate-800 transition-colors"
-                >
-                  in
-                </a>
-                <a
-                  href="https://facebook.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:text-slate-800 transition-colors"
-                >
-                  f
-                </a>
-              </div>
-
-              {/* Architectural Crosshair Marker */}
-              <div className="text-slate-300">
-                <Plus className="w-5 h-5 stroke-[1.5]" />
-              </div>
-            </div>
-          </motion.div>
-
-          {/* ========================================================== */}
-          {/* CARD A: SIGNATURE MIDNIGHT SCREEN (Primary Foreground)     */}
-          {/* ========================================================== */}
-          <motion.div
-            layout
-            onClick={() => setActiveCard("dark")}
-            animate={{
-              zIndex: activeCard === "dark" ? 30 : 10,
-              scale: activeCard === "dark" ? 1 : 0.94,
-              opacity: activeCard === "dark" ? 1 : 0.88,
-              y: activeCard === "dark" ? 0 : 35,
-              x: activeCard === "dark" ? 0 : -35,
-            }}
-            transition={{ type: "spring", stiffness: 280, damping: 26 }}
-            className={`relative w-full lg:w-[88%] aspect-[16/10] sm:aspect-[16/9.2] rounded-2xl sm:rounded-3xl text-white border border-indigo-400/25 shadow-[0_30px_90px_-20px_rgba(41,72,255,0.35)] overflow-hidden cursor-pointer select-none flex flex-col justify-between p-5 sm:p-8 lg:p-12`}
-            style={{
-              background:
-                "radial-gradient(ellipse 95% 90% at 50% 0%, #151D5A 0%, #0D123D 40%, #080B22 100%)",
-            }}
-          >
-            {/* Vertical Architectural Column Grid Dividers (10 Columns) */}
-            <div className="absolute inset-0 grid grid-cols-8 sm:grid-cols-10 pointer-events-none">
-              {Array.from({ length: 10 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="h-full border-r border-white/[0.07] last:border-r-0"
-                />
-              ))}
-            </div>
-
-            {/* Subtle Ambient Radial Highlight */}
+      <section
+        className="w-full min-h-screen h-screen relative flex flex-col justify-between px-6 sm:px-10 md:px-14 lg:px-20 py-6 sm:py-10 select-none overflow-hidden"
+        style={{
+          background:
+            "radial-gradient(ellipse 95% 90% at 50% 0%, #151D5A 0%, #0D123D 42%, #080B22 100%)",
+        }}
+      >
+        {/* Full-Screen Vertical Architectural Column Grid Dividers (10 Columns) */}
+        <div className="absolute inset-0 grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 pointer-events-none">
+          {Array.from({ length: 10 }).map((_, i) => (
             <div
-              className="absolute -top-32 left-1/4 w-[500px] h-[350px] bg-indigo-500/15 rounded-full blur-[80px] pointer-events-none"
+              key={i}
+              className="h-full border-r border-white/[0.07] last:border-r-0"
             />
+          ))}
+        </div>
 
-            {/* TOP BAR / HEADER ROW */}
-            <div className="relative z-10 w-full flex items-center justify-between gap-3 text-xs">
-              <div className="flex items-center gap-4 sm:gap-6">
-                <span className="font-roboto-condensed font-black tracking-wider text-base sm:text-2xl text-white uppercase">
-                  KAIZEN_
-                </span>
-                <span className="hidden sm:inline-block font-mono text-[10px] text-indigo-200/70 uppercase tracking-widest font-semibold">
-                  HI-END DEVELOPMENT
-                </span>
-              </div>
+        {/* Subtle Ambient Radial Highlight */}
+        <div className="absolute -top-40 left-1/4 w-[650px] h-[450px] bg-indigo-500/15 rounded-full blur-[100px] pointer-events-none" />
 
-              {/* Navigation Links */}
-              <div className="hidden md:flex items-center gap-7 font-mono text-xs uppercase tracking-wider text-slate-300 font-semibold">
-                <Link href="/" className="hover:text-white transition-colors">
-                  HOME
-                </Link>
-                <Link href="/#capabilities" className="hover:text-white transition-colors">
-                  CAPABILITIES
-                </Link>
-                <Link href="/#architects" className="hover:text-white transition-colors">
-                  ARCHITECTS
-                </Link>
-              </div>
+        {/* TOP BAR / HEADER ROW (with clearance for fixed Island Dock Navbar) */}
+        <div className="relative z-10 w-full pt-14 sm:pt-16 md:pt-18 flex items-center justify-between gap-4 text-xs">
+          <div className="flex items-center gap-4 sm:gap-6">
+            <span className="font-roboto-condensed font-black tracking-wider text-lg sm:text-2xl text-white uppercase">
+              KAIZEN_
+            </span>
+            <span className="hidden sm:inline-block font-mono text-[11px] sm:text-xs text-indigo-200/70 uppercase tracking-widest font-semibold">
+              HI-END DEVELOPMENT
+            </span>
+          </div>
 
-              {/* Right CTA Buttons */}
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    scrollToContact();
-                  }}
-                  className="px-3.5 sm:px-4 py-1.5 rounded-full font-roboto-condensed font-bold text-[11px] sm:text-xs tracking-wider uppercase bg-white/10 hover:bg-white/20 border border-white/20 text-white transition-colors backdrop-blur-md"
-                >
-                  START PROJECT
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    scrollToContact();
-                  }}
-                  className="px-3.5 sm:px-4 py-1.5 rounded-full font-roboto-condensed font-bold text-[11px] sm:text-xs tracking-wider uppercase bg-[#10B981] hover:bg-[#059669] text-white transition-colors shadow-sm"
-                >
-                  LOGIN
-                </button>
-              </div>
-            </div>
+          {/* Navigation Links (Matching reference) */}
+          <div className="hidden md:flex items-center gap-8 font-mono text-xs uppercase tracking-wider text-slate-300 font-semibold">
+            <Link href="/" className="hover:text-white transition-colors">
+              HOME
+            </Link>
+            <Link href="/#capabilities" className="hover:text-white transition-colors">
+              CAPABILITIES
+            </Link>
+            <Link href="/#architects" className="hover:text-white transition-colors">
+              ARCHITECTS
+            </Link>
+            <Link href="/#methodology" className="hover:text-white transition-colors">
+              METHODOLOGY
+            </Link>
+          </div>
 
-            {/* MAIN CONTENT AREA */}
-            <div className="relative z-10 my-auto pt-4 sm:pt-8 flex flex-col justify-center">
-              {/* Massive Monumental Headline */}
-              <h1 className="font-roboto-condensed font-black tracking-tight text-white text-4xl sm:text-6xl md:text-7xl lg:text-[88px] xl:text-[96px] leading-[0.92] uppercase">
-                FROM<br />
-                IDEA TO FINISHED<br />
-                PRODUCT_
-              </h1>
+          {/* Right CTA Buttons */}
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <button
+              onClick={scrollToContact}
+              className="px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full font-roboto-condensed font-bold text-xs tracking-wider uppercase bg-white/10 hover:bg-white/20 border border-white/20 text-white transition-colors backdrop-blur-md cursor-pointer"
+            >
+              START PROJECT
+            </button>
+            <button
+              onClick={scrollToContact}
+              className="px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full font-roboto-condensed font-bold text-xs tracking-wider uppercase bg-[#10B981] hover:bg-[#059669] text-white transition-colors shadow-sm cursor-pointer"
+            >
+              LOGIN
+            </button>
+          </div>
+        </div>
 
-              {/* Bottom Right Positioned Monospace Subtext */}
-              <div className="w-full flex justify-end pt-3 sm:pt-5">
-                <p className="font-mono text-xs sm:text-sm text-indigo-100/80 leading-relaxed max-w-[280px] sm:max-w-[320px]">
-                  We start work immediately and you&apos;ll have weekly check-ins.
-                </p>
-              </div>
-            </div>
+        {/* MAIN HERO CONTENT AREA */}
+        <div className="relative z-10 my-auto py-6 flex flex-col justify-center">
+          {/* Monumental Headline */}
+          <h1 className="font-roboto-condensed font-black tracking-tight text-white text-5xl sm:text-7xl md:text-8xl lg:text-[105px] xl:text-[124px] leading-[0.92] uppercase">
+            FROM<br />
+            IDEA TO FINISHED<br />
+            PRODUCT_
+          </h1>
 
-            {/* BOTTOM BAR: Crosshair & Social Handles */}
-            <div className="relative z-10 w-full flex items-end justify-between pt-2">
-              <div className="flex items-center gap-5 text-indigo-200/60 font-mono text-xs font-semibold">
-                <a
-                  href="https://linkedin.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:text-white transition-colors"
-                >
-                  in
-                </a>
-                <a
-                  href="https://facebook.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:text-white transition-colors"
-                >
-                  f
-                </a>
-              </div>
+          {/* Bottom-Right Positioned Monospace Subtext */}
+          <div className="w-full flex justify-end pt-4 sm:pt-6 md:pt-8 pr-2 sm:pr-6">
+            <p className="font-mono text-xs sm:text-sm md:text-base text-indigo-100/80 leading-relaxed max-w-[290px] sm:max-w-[360px] md:max-w-[400px]">
+              We start work immediately and you&apos;ll have weekly check-ins.
+            </p>
+          </div>
+        </div>
 
-              {/* Architectural Crosshair Marker */}
-              <div className="text-indigo-400/70">
-                <Plus className="w-6 h-6 stroke-[1.5]" />
-              </div>
-            </div>
-          </motion.div>
+        {/* BOTTOM BAR: Crosshair & Social Handles */}
+        <div className="relative z-10 w-full flex items-end justify-between pb-2 sm:pb-4">
+          <div className="flex items-center gap-6 text-indigo-200/70 font-mono text-xs sm:text-sm font-semibold">
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-white transition-colors"
+            >
+              in
+            </a>
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-white transition-colors"
+            >
+              f
+            </a>
+          </div>
+
+          {/* Architectural Crosshair Marker */}
+          <div className="text-indigo-400/80">
+            <Plus className="w-6 h-6 sm:w-8 sm:h-8 stroke-[1.5]" />
+          </div>
         </div>
       </section>
 
@@ -340,7 +192,7 @@ export default function WorkPage() {
                     </span>
                     <button
                       onClick={scrollToContact}
-                      className="inline-flex items-center gap-1.5 text-xs font-bold font-roboto-condensed text-white group-hover:text-[#10B981] transition-colors"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold font-roboto-condensed text-white group-hover:text-[#10B981] transition-colors cursor-pointer"
                     >
                       <span>Inquire Specs</span>
                       <ArrowUpRight className="w-4 h-4" />
