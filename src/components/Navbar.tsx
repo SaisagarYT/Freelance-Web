@@ -14,8 +14,8 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Detach when user scrolls down beyond 20px
-      const detached = window.scrollY > 20;
+      // Elevate gently when user scrolls down beyond 15px
+      const detached = window.scrollY > 15;
       setIsDetached(detached);
     };
 
@@ -32,26 +32,23 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
   ];
 
   return (
-    <div className="fixed top-2 sm:top-3 left-0 right-0 z-50 flex justify-center pointer-events-none px-3 sm:px-4">
-      {/* Animated Island Dock: Detaches smoothly with spring physics on scroll */}
+    <div className="fixed top-3 sm:top-4 left-0 right-0 z-50 flex justify-center pointer-events-none px-3 sm:px-4">
+      {/* 
+        Ultra-Premium Floating Island Dock:
+        - Pure, symmetrical rounded-full pill contour.
+        - Frosted glass backdrop with luxury border & elevation.
+        - Cleanly floating with zero awkward side blocks or flanges.
+      */}
       <motion.nav
         layout
         initial={false}
         animate={{
-          y: isDetached ? 12 : 0,
-          borderTopLeftRadius: isDetached ? 26 : 0,
-          borderTopRightRadius: isDetached ? 26 : 0,
-          borderBottomLeftRadius: 26,
-          borderBottomRightRadius: 26,
-          backgroundColor: isDetached ? "rgba(255, 255, 255, 0.88)" : "#FFFFFF",
-          backdropFilter: isDetached ? "blur(18px)" : "blur(0px)",
-          borderTopColor: isDetached ? "rgba(255, 255, 255, 0.75)" : "transparent",
-          borderBottomColor: isDetached ? "rgba(226, 232, 240, 0.85)" : "rgba(241, 245, 249, 1)",
-          borderLeftColor: isDetached ? "rgba(226, 232, 240, 0.85)" : "rgba(241, 245, 249, 1)",
-          borderRightColor: isDetached ? "rgba(226, 232, 240, 0.85)" : "rgba(241, 245, 249, 1)",
+          y: isDetached ? 4 : 0,
+          backgroundColor: isDetached ? "rgba(255, 255, 255, 0.90)" : "rgba(255, 255, 255, 0.96)",
+          backdropFilter: "blur(20px)",
           boxShadow: isDetached
-            ? "0 20px 45px -10px rgba(15, 23, 42, 0.12), 0 4px 14px -2px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(255, 255, 255, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.95)"
-            : "0 12px 30px rgba(0, 0, 0, 0.06)",
+            ? "0 20px 45px -10px rgba(15, 23, 42, 0.14), 0 4px 14px -2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(255, 255, 255, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.95)"
+            : "0 10px 30px -5px rgba(0, 0, 0, 0.07), 0 0 0 1px rgba(226, 232, 240, 0.85)",
         }}
         transition={{
           type: "spring",
@@ -59,38 +56,8 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
           damping: 28,
           mass: 0.8,
         }}
-        className="pointer-events-auto relative px-5 sm:px-8 py-2.5 sm:py-3 flex items-center justify-between gap-5 sm:gap-10 border transition-colors duration-200"
+        className="pointer-events-auto relative px-5 sm:px-8 py-2.5 sm:py-3 rounded-full flex items-center justify-between gap-5 sm:gap-10 border border-slate-200/80 transition-colors duration-200"
       >
-        {/* Left Inverted Concave Fillet (Smoothly fades out and retracts when detached) */}
-        <motion.div
-          animate={{
-            opacity: isDetached ? 0 : 1,
-            scale: isDetached ? 0.6 : 1,
-            y: isDetached ? 6 : 0,
-          }}
-          transition={{ duration: 0.22, ease: "easeInOut" }}
-          className="absolute top-0 -left-6 w-6 h-6 pointer-events-none"
-        >
-          <svg viewBox="0 0 24 24" className="w-full h-full fill-white" preserveAspectRatio="none">
-            <path d="M0 0 L24 0 L24 24 C24 10.745 13.255 0 0 0 Z" />
-          </svg>
-        </motion.div>
-
-        {/* Right Inverted Concave Fillet (Smoothly fades out and retracts when detached) */}
-        <motion.div
-          animate={{
-            opacity: isDetached ? 0 : 1,
-            scale: isDetached ? 0.6 : 1,
-            y: isDetached ? 6 : 0,
-          }}
-          transition={{ duration: 0.22, ease: "easeInOut" }}
-          className="absolute top-0 -right-6 w-6 h-6 pointer-events-none"
-        >
-          <svg viewBox="0 0 24 24" className="w-full h-full fill-white" preserveAspectRatio="none">
-            <path d="M24 0 L0 0 L0 24 C0 10.745 10.745 0 24 0 Z" />
-          </svg>
-        </motion.div>
-
         {/* Brand Name */}
         <Link href="/" className="flex items-center group py-0.5">
           <span className="font-extrabold tracking-wider text-sm sm:text-base text-slate-900 uppercase group-hover:text-purple-600 transition-colors duration-200 font-roboto-condensed">
@@ -98,7 +65,7 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
           </span>
         </Link>
 
-        {/* Center Nav Links with Subtle Hover Interaction (Same exact size & layout) */}
+        {/* Center Nav Links with Subtle Hover Interaction */}
         <div
           className="hidden md:flex items-center gap-1 sm:gap-2"
           onMouseLeave={() => setHoveredIdx(null)}
@@ -112,10 +79,11 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
                 key={link.name}
                 href={link.href}
                 onMouseEnter={() => setHoveredIdx(idx)}
-                className={`relative px-3.5 py-1.5 text-xs sm:text-sm font-semibold tracking-tight transition-colors duration-200 ${isActive
+                className={`relative px-3.5 py-1.5 text-xs sm:text-sm font-semibold tracking-tight transition-colors duration-200 ${
+                  isActive
                     ? "text-purple-700 font-bold"
                     : "text-slate-600 hover:text-slate-900"
-                  }`}
+                }`}
               >
                 {/* Active Underline Pill */}
                 {isActive && (
@@ -131,9 +99,7 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
                   <motion.div
                     layoutId="notchedNavHover"
                     style={{
-                      backgroundColor: isDetached
-                        ? "rgba(241, 245, 249, 0.85)"
-                        : "rgba(241, 245, 249, 0.9)",
+                      backgroundColor: "rgba(241, 245, 249, 0.9)",
                     }}
                     className="absolute inset-0 rounded-full -z-10"
                     transition={{
@@ -204,10 +170,11 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
                     key={link.name}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`text-sm font-semibold py-2 px-3.5 rounded-xl transition-colors ${isActive
+                    className={`text-sm font-semibold py-2 px-3.5 rounded-xl transition-colors ${
+                      isActive
                         ? "bg-purple-50 text-purple-700 font-bold"
                         : "text-slate-800 hover:bg-slate-100"
-                      }`}
+                    }`}
                   >
                     {link.name}
                   </Link>
