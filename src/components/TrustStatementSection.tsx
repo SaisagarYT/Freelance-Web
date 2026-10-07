@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
-import { Sparkles, Zap, TrendingUp, Layers, Terminal } from "lucide-react";
+import { ArrowUpRight, Sparkles } from "lucide-react";
 
 export const TrustStatementSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -113,12 +113,12 @@ export const TrustStatementSection = () => {
       />
 
       {/* ============================================================ */}
-      {/* FULL-SCREEN CENTERED STATEMENT WITH INLINE SYMBOLS & WIDGETS */}
+      {/* FULL-SCREEN CENTERED STATEMENT (AWWWARDS EDITORIAL TYPOGRAPHY) */}
       {/* ============================================================ */}
-      <div className="max-w-5xl mx-auto text-center relative z-10 px-4 py-6 flex flex-col items-center justify-center space-y-2.5 sm:space-y-4">
-        {/* Eyebrow Micro-Capsule matching reference photo */}
+      <div className="max-w-4xl mx-auto text-center relative z-10 px-4 py-6 flex flex-col items-center justify-center space-y-3 sm:space-y-4">
+        {/* Eyebrow Micro-Pill matching laptop reference */}
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
+          initial={{ opacity: 0, y: -8 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-900/10 border border-slate-900/15 backdrop-blur-md text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-widest text-slate-800 mb-1 sm:mb-2 shadow-xs"
@@ -127,48 +127,44 @@ export const TrustStatementSection = () => {
           <span>FRONTEND SYSTEMS WITH PRODUCT TASTE</span>
         </motion.div>
 
-        {/* LINE 1: KAIZEN SOLVES [Studio Avatar Capsule] architects */}
-        <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black font-roboto-condensed tracking-tight text-slate-900 leading-none flex flex-wrap justify-center items-center gap-x-2.5 sm:gap-x-3.5 gap-y-2">
-          <WordItem word="KAIZEN" progress={scrollYProgress} range={[0.38, 0.48]} />
-          <WordItem word="SOLVES" progress={scrollYProgress} range={[0.40, 0.50]} />
-          <InlineStudioAvatar progress={scrollYProgress} range={[0.42, 0.52]} />
-          <WordItem word="architects" progress={scrollYProgress} range={[0.44, 0.54]} />
+        {/* LINE 1: KAIZEN SOLVES architects (Pure, Confident Architecture) */}
+        <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black font-roboto-condensed tracking-tight text-slate-900 leading-tight flex flex-wrap justify-center items-center gap-x-3 sm:gap-x-4">
+          <ScrubWord word="KAIZEN" progress={scrollYProgress} range={[0.36, 0.46]} />
+          <ScrubWord word="SOLVES" progress={scrollYProgress} range={[0.40, 0.50]} />
+          <ScrubWord word="architects" progress={scrollYProgress} range={[0.44, 0.54]} isEditorial />
         </div>
 
-        {/* LINE 2: scalable [0.08s Speed Widget] web apps, */}
-        <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black font-roboto-condensed tracking-tight text-slate-900 leading-none flex flex-wrap justify-center items-center gap-x-2.5 sm:gap-x-3.5 gap-y-2">
-          <WordItem word="scalable" progress={scrollYProgress} range={[0.46, 0.56]} isHighlight />
-          <InlineSpeedChip progress={scrollYProgress} range={[0.48, 0.58]} />
-          <WordItem word="web" progress={scrollYProgress} range={[0.50, 0.60]} />
-          <WordItem word="apps," progress={scrollYProgress} range={[0.52, 0.62]} isHighlight />
+        {/* LINE 2: scalable web apps, (With Dynamic Highlighted Capsule) */}
+        <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black font-roboto-condensed tracking-tight text-slate-900 leading-tight flex flex-wrap justify-center items-center gap-x-3 sm:gap-x-4">
+          <HighlightedCapsuleWord word="scalable" progress={scrollYProgress} range={[0.48, 0.58]} />
+          <ScrubWord word="web" progress={scrollYProgress} range={[0.52, 0.62]} />
+          <ScrubWord word="apps," progress={scrollYProgress} range={[0.54, 0.64]} />
         </div>
 
-        {/* LINE 3: fluid [60 FPS Badge] [Glossy Amber Pebble] interfaces, */}
-        <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black font-roboto-condensed tracking-tight text-slate-900 leading-none flex flex-wrap justify-center items-center gap-x-2.5 sm:gap-x-3.5 gap-y-2">
-          <WordItem word="fluid" progress={scrollYProgress} range={[0.54, 0.64]} />
-          <InlineFpsBadge progress={scrollYProgress} range={[0.56, 0.66]} />
-          <InlineGlossyPebble progress={scrollYProgress} range={[0.58, 0.68]} />
-          <WordItem word="interfaces," progress={scrollYProgress} range={[0.60, 0.70]} isHighlight />
+        {/* LINE 3: fluid interfaces [Glossy Organic Pebble] (Reference Sunset Pebble) */}
+        <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black font-roboto-condensed tracking-tight text-slate-900 leading-tight flex flex-wrap justify-center items-center gap-x-3 sm:gap-x-4">
+          <ScrubWord word="fluid" progress={scrollYProgress} range={[0.58, 0.68]} isEditorial />
+          <ScrubWord word="interfaces" progress={scrollYProgress} range={[0.62, 0.72]} />
+          <InlineSunsetPebble progress={scrollYProgress} range={[0.64, 0.74]} />
         </div>
 
-        {/* LINE 4: and resilient [Stacked App Preview Capsule] cloud systems */}
-        <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black font-roboto-condensed tracking-tight text-slate-900 leading-none flex flex-wrap justify-center items-center gap-x-2.5 sm:gap-x-3.5 gap-y-2">
-          <WordItem word="and" progress={scrollYProgress} range={[0.62, 0.72]} />
-          <WordItem word="resilient" progress={scrollYProgress} range={[0.64, 0.74]} isHighlight />
-          <InlineStackedAppPreview progress={scrollYProgress} range={[0.66, 0.76]} />
-          <WordItem word="cloud" progress={scrollYProgress} range={[0.68, 0.78]} />
-          <WordItem word="systems" progress={scrollYProgress} range={[0.70, 0.80]} />
+        {/* LINE 4: and resilient cloud systems (Fluid Editorial Pairing) */}
+        <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black font-roboto-condensed tracking-tight text-slate-900 leading-tight flex flex-wrap justify-center items-center gap-x-3 sm:gap-x-4">
+          <ScrubWord word="and" progress={scrollYProgress} range={[0.66, 0.76]} />
+          <ScrubWord word="resilient" progress={scrollYProgress} range={[0.70, 0.80]} isEditorial />
+          <ScrubWord word="cloud" progress={scrollYProgress} range={[0.72, 0.82]} />
+          <ScrubWord word="systems" progress={scrollYProgress} range={[0.74, 0.84]} />
         </div>
 
-        {/* LINE 5: that drive [Growth Widget] growth. */}
-        <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black font-roboto-condensed tracking-tight text-slate-900 leading-none flex flex-wrap justify-center items-center gap-x-2.5 sm:gap-x-3.5 gap-y-2">
-          <WordItem word="that" progress={scrollYProgress} range={[0.72, 0.82]} />
-          <WordItem word="drive" progress={scrollYProgress} range={[0.74, 0.84]} />
-          <InlineGrowthWidget progress={scrollYProgress} range={[0.76, 0.86]} />
-          <WordItem word="growth." progress={scrollYProgress} range={[0.78, 0.88]} isHighlight hasDottedUnderline />
+        {/* LINE 5: that drive [Curated Dual App Capsule] growth. (With Liquid Glow Underline) */}
+        <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black font-roboto-condensed tracking-tight text-slate-900 leading-tight flex flex-wrap justify-center items-center gap-x-3 sm:gap-x-4">
+          <ScrubWord word="that" progress={scrollYProgress} range={[0.76, 0.86]} />
+          <ScrubWord word="drive" progress={scrollYProgress} range={[0.78, 0.88]} />
+          <InlineAppCapsule progress={scrollYProgress} range={[0.80, 0.90]} />
+          <LiquidUnderlineWord word="growth." progress={scrollYProgress} range={[0.82, 0.92]} />
         </div>
 
-        {/* Bottom Connect Pill & Animated Scroll Ticker matching reference photo */}
+        {/* Bottom Connect Pill & Animated Scroll Ticker matching laptop reference */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -198,39 +194,32 @@ export const TrustStatementSection = () => {
 };
 
 // ============================================================
-// REUSABLE WORD ITEM WITH BLUR & POP-UP ENTRANCE
+// 1. GSAP-STYLE SCROLL SCRUB WORD (Progressive Karaoke Illumination)
 // ============================================================
-interface WordItemProps {
+interface ScrubWordProps {
   word: string;
   progress: MotionValue<number>;
   range: [number, number];
-  isHighlight?: boolean;
-  hasDottedUnderline?: boolean;
+  isEditorial?: boolean;
 }
 
-const WordItem: React.FC<WordItemProps> = ({
+const ScrubWord: React.FC<ScrubWordProps> = ({
   word,
   progress,
   range,
-  isHighlight = false,
-  hasDottedUnderline = false,
+  isEditorial = false,
 }) => {
-  const y = useTransform(progress, range, [22, 0], { clamp: true });
-  const filter = useTransform(progress, range, ["blur(10px)", "blur(0px)"], { clamp: true });
-  const opacity = useTransform(progress, range, [0.12, 1], { clamp: true });
-  const scale = useTransform(progress, range, [0.88, 1], { clamp: true });
+  const opacity = useTransform(progress, range, [0.28, 1], { clamp: true });
+  const filter = useTransform(progress, range, ["blur(3px)", "blur(0px)"], { clamp: true });
+  const y = useTransform(progress, range, [12, 0], { clamp: true });
 
   return (
     <motion.span
-      style={{ y, filter, opacity, scale }}
+      style={{ opacity, filter, y }}
       className={`inline-block transition-colors duration-150 origin-bottom ${
-        isHighlight
-          ? "font-editorial font-normal italic text-purple-700 tracking-normal px-1"
+        isEditorial
+          ? "font-editorial font-normal italic text-purple-800 tracking-normal px-1"
           : "font-roboto-condensed font-black tracking-tight text-slate-900"
-      } ${
-        hasDottedUnderline
-          ? "border-b-2 border-dotted border-purple-600/80 hover:border-solid cursor-pointer"
-          : ""
       }`}
     >
       {word}
@@ -239,179 +228,99 @@ const WordItem: React.FC<WordItemProps> = ({
 };
 
 // ============================================================
-// 1. INLINE STUDIO AVATAR / MONOGRAM CAPSULE (Matching Dukes Avatar in Photo)
+// 2. HIGHLIGHTED TEXT TYPE CAPSULE ("scalable")
 // ============================================================
-const InlineStudioAvatar: React.FC<{ progress: MotionValue<number>; range: [number, number] }> = ({
-  progress,
-  range,
-}) => {
-  const y = useTransform(progress, range, [22, 0], { clamp: true });
-  const opacity = useTransform(progress, range, [0, 1], { clamp: true });
-  const scale = useTransform(progress, range, [0.8, 1], { clamp: true });
-
-  const [hovered, setHovered] = useState(false);
+const HighlightedCapsuleWord: React.FC<{
+  word: string;
+  progress: MotionValue<number>;
+  range: [number, number];
+}> = ({ word, progress, range }) => {
+  const opacity = useTransform(progress, range, [0.35, 1], { clamp: true });
+  const y = useTransform(progress, range, [12, 0], { clamp: true });
+  const scale = useTransform(progress, range, [0.92, 1], { clamp: true });
 
   return (
     <motion.span
-      style={{ y, opacity, scale }}
-      className="inline-flex items-center align-middle mx-1 sm:mx-1.5 relative"
+      style={{ opacity, y, scale }}
+      whileHover={{ scale: 1.06 }}
+      transition={{ type: "spring", stiffness: 400, damping: 20 }}
+      className="inline-flex items-center px-3 sm:px-4 py-0.5 rounded-full bg-white/75 backdrop-blur-md border border-purple-300/80 shadow-[0_4px_16px_rgba(147,51,234,0.08)] text-purple-900 font-editorial font-normal italic cursor-pointer select-none mx-0.5"
     >
-      <motion.div
-        whileHover={{ scale: 1.18, rotate: -6 }}
-        transition={{ type: "spring", stiffness: 350, damping: 18 }}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        className="w-7 h-7 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full bg-gradient-to-tr from-purple-800 via-indigo-600 to-purple-500 border-2 border-white shadow-md shadow-purple-600/35 flex items-center justify-center cursor-pointer select-none relative group"
-      >
-        <Terminal className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-        <span className="w-2 h-2 rounded-full bg-emerald-400 absolute -top-0.5 -right-0.5 border border-white shadow-xs animate-pulse" />
-      </motion.div>
-
-      {/* Tooltip */}
-      {hovered && (
-        <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded bg-slate-900 text-white text-[9px] font-mono whitespace-nowrap shadow-md pointer-events-none z-20">
-          KAIZEN Studio
-        </span>
-      )}
+      {word}
     </motion.span>
   );
 };
 
 // ============================================================
-// 2. INLINE PERFORMANCE SPEED CHIP (0.08s Microchip Widget)
+// 3. INLINE SUNSET GLOSSY PEBBLE (Matching the Orange Blob from Photo)
 // ============================================================
-const InlineSpeedChip: React.FC<{ progress: MotionValue<number>; range: [number, number] }> = ({
-  progress,
-  range,
-}) => {
-  const y = useTransform(progress, range, [22, 0], { clamp: true });
+const InlineSunsetPebble: React.FC<{
+  progress: MotionValue<number>;
+  range: [number, number];
+}> = ({ progress, range }) => {
   const opacity = useTransform(progress, range, [0, 1], { clamp: true });
-  const scale = useTransform(progress, range, [0.8, 1], { clamp: true });
+  const scale = useTransform(progress, range, [0.6, 1], { clamp: true });
+  const y = useTransform(progress, range, [14, 0], { clamp: true });
+
+  return (
+    <motion.span
+      style={{ opacity, scale, y }}
+      className="inline-flex items-center align-middle mx-1 sm:mx-1.5"
+    >
+      <motion.div
+        animate={{ y: [0, -3.5, 0] }}
+        transition={{ repeat: Infinity, duration: 3.2, ease: "easeInOut" }}
+        whileHover={{ scale: 1.25, rotate: -6 }}
+        whileTap={{ scale: 0.95 }}
+        className="w-10 h-6 sm:w-13 sm:h-7 md:w-14 md:h-8 rounded-full bg-gradient-to-r from-[#FF5E3A] via-[#FF8A00] to-[#D946EF] shadow-[0_6px_20px_rgba(255,100,50,0.35)] relative overflow-hidden cursor-pointer select-none"
+      >
+        {/* Specular 3D glass highlight */}
+        <span className="absolute top-0.5 inset-x-2 h-1.5 rounded-full bg-white/60 blur-[0.6px]" />
+      </motion.div>
+    </motion.span>
+  );
+};
+
+// ============================================================
+// 4. INLINE CURATED DUAL APP CAPSULE (Matching Eazyul from Photo)
+// ============================================================
+const InlineAppCapsule: React.FC<{
+  progress: MotionValue<number>;
+  range: [number, number];
+}> = ({ progress, range }) => {
+  const opacity = useTransform(progress, range, [0, 1], { clamp: true });
+  const scale = useTransform(progress, range, [0.7, 1], { clamp: true });
+  const y = useTransform(progress, range, [14, 0], { clamp: true });
 
   const [hovered, setHovered] = useState(false);
 
   return (
     <motion.span
-      style={{ y, opacity, scale }}
-      className="inline-flex items-center align-middle mx-1 sm:mx-1.5 relative"
+      style={{ opacity, scale, y }}
+      className="inline-flex items-center align-middle mx-1 sm:mx-2 relative"
     >
       <motion.div
         whileHover={{ scale: 1.12, rotate: 2 }}
-        transition={{ type: "spring", stiffness: 350, damping: 20 }}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-slate-950 text-purple-200 border border-purple-400/40 shadow-sm flex items-center gap-1.5 cursor-pointer select-none font-mono text-[10px] sm:text-xs font-bold tracking-tight"
-      >
-        <Zap className="w-3 h-3 text-amber-400 animate-pulse" />
-        <span>0.08s</span>
-      </motion.div>
-
-      {hovered && (
-        <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded bg-slate-900 text-white text-[9px] font-mono whitespace-nowrap shadow-md pointer-events-none z-20">
-          Sub-100ms Query Latency
-        </span>
-      )}
-    </motion.span>
-  );
-};
-
-// ============================================================
-// 3. INLINE 60 FPS BADGE
-// ============================================================
-const InlineFpsBadge: React.FC<{ progress: MotionValue<number>; range: [number, number] }> = ({
-  progress,
-  range,
-}) => {
-  const y = useTransform(progress, range, [22, 0], { clamp: true });
-  const opacity = useTransform(progress, range, [0, 1], { clamp: true });
-  const scale = useTransform(progress, range, [0.8, 1], { clamp: true });
-
-  return (
-    <motion.span
-      style={{ y, opacity, scale }}
-      className="inline-flex items-center align-middle mx-1 sm:mx-1.5"
-    >
-      <motion.div
-        whileHover={{ scale: 1.14 }}
-        transition={{ type: "spring", stiffness: 350, damping: 18 }}
-        className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg bg-white/90 border border-purple-300 shadow-xs flex items-center gap-1 font-mono text-[10px] sm:text-xs font-black text-purple-800 cursor-pointer select-none"
-      >
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-        <span>60 FPS</span>
-      </motion.div>
-    </motion.span>
-  );
-};
-
-// ============================================================
-// 4. INLINE GLOSSY ORANGE/PURPLE PEBBLE (Matching the Orange Blob in Photo)
-// ============================================================
-const InlineGlossyPebble: React.FC<{ progress: MotionValue<number>; range: [number, number] }> = ({
-  progress,
-  range,
-}) => {
-  const y = useTransform(progress, range, [22, 0], { clamp: true });
-  const opacity = useTransform(progress, range, [0, 1], { clamp: true });
-  const scale = useTransform(progress, range, [0.8, 1], { clamp: true });
-
-  return (
-    <motion.span
-      style={{ y, opacity, scale }}
-      className="inline-flex items-center align-middle mx-1 sm:mx-1.5"
-    >
-      <motion.div
-        animate={{ y: [0, -3, 0] }}
-        transition={{ repeat: Infinity, duration: 3.2, ease: "easeInOut" }}
-        whileHover={{ scale: 1.28, rotate: -8 }}
-        className="w-9 h-5 sm:w-13 sm:h-7 md:w-14 md:h-8 rounded-full bg-gradient-to-r from-amber-400 via-orange-500 to-purple-600 shadow-md shadow-orange-500/35 relative overflow-hidden cursor-pointer select-none"
-      >
-        {/* Specular highlight for liquid glossy 3D glass look */}
-        <span className="absolute top-0.5 inset-x-2 h-1.5 rounded-full bg-white/50 blur-[0.6px]" />
-      </motion.div>
-    </motion.span>
-  );
-};
-
-// ============================================================
-// 5. INLINE STACKED APP PREVIEW CAPSULE (Matching Eazyul in Photo)
-// ============================================================
-const InlineStackedAppPreview: React.FC<{ progress: MotionValue<number>; range: [number, number] }> = ({
-  progress,
-  range,
-}) => {
-  const y = useTransform(progress, range, [22, 0], { clamp: true });
-  const opacity = useTransform(progress, range, [0, 1], { clamp: true });
-  const scale = useTransform(progress, range, [0.8, 1], { clamp: true });
-
-  const [hovered, setHovered] = useState(false);
-
-  return (
-    <motion.span
-      style={{ y, opacity, scale }}
-      className="inline-flex items-center align-middle mx-1 sm:mx-1.5 relative"
-    >
-      <motion.div
-        whileHover={{ scale: 1.15, rotate: 2 }}
         transition={{ type: "spring", stiffness: 350, damping: 18 }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="flex items-center shadow-md cursor-pointer select-none rounded-full overflow-hidden"
+        className="flex items-center shadow-[0_4px_16px_rgba(0,0,0,0.2)] cursor-pointer select-none rounded-full overflow-hidden"
       >
-        {/* Left Half: Dark pill with icon & code */}
-        <div className="bg-slate-950 text-white px-2 sm:px-2.5 py-1 sm:py-1.5 flex items-center gap-1 text-[9px] sm:text-[11px] font-mono font-bold tracking-tight border-y border-l border-white/25">
-          <Layers className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-purple-300" />
-          <span>MESH.V2</span>
+        {/* Left Half: Dark pill with micro arrow icon & code */}
+        <div className="bg-slate-950 text-white px-2.5 sm:px-3 py-1 sm:py-1.5 flex items-center gap-1.5 text-[9px] sm:text-[11px] font-mono font-bold tracking-tight border-y border-l border-white/20">
+          <ArrowUpRight className="w-3 h-3 text-purple-300" />
+          <span>SYS.01</span>
         </div>
 
-        {/* Right Half: Micro vibrant gradient thumbnail */}
-        <div className="w-6 h-6 sm:w-7 sm:h-7 bg-gradient-to-tr from-indigo-600 via-purple-600 to-amber-400 border-y border-r border-white/25 flex items-center justify-center relative overflow-hidden">
+        {/* Right Half: Miniature high-res architectural gradient canvas */}
+        <div className="w-6 h-6 sm:w-7 sm:h-7 bg-gradient-to-tr from-indigo-600 via-purple-600 to-amber-400 border-y border-r border-white/20 flex items-center justify-center relative overflow-hidden">
           <Sparkles className="w-3 h-3 text-white/90 animate-pulse" />
         </div>
       </motion.div>
 
       {hovered && (
-        <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded bg-slate-900 text-white text-[9px] font-mono whitespace-nowrap shadow-md pointer-events-none z-20">
-          Distributed Cloud Mesh
+        <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-slate-900 text-white text-[9px] font-mono whitespace-nowrap shadow-md pointer-events-none z-20">
+          Production Architecture
         </span>
       )}
     </motion.span>
@@ -419,29 +328,28 @@ const InlineStackedAppPreview: React.FC<{ progress: MotionValue<number>; range: 
 };
 
 // ============================================================
-// 6. INLINE GROWTH WIDGET (+240% Kinetic Pill)
+// 5. LIQUID GLOW UNDERLINED WORD ("growth.")
 // ============================================================
-const InlineGrowthWidget: React.FC<{ progress: MotionValue<number>; range: [number, number] }> = ({
-  progress,
-  range,
-}) => {
-  const y = useTransform(progress, range, [22, 0], { clamp: true });
-  const opacity = useTransform(progress, range, [0, 1], { clamp: true });
-  const scale = useTransform(progress, range, [0.8, 1], { clamp: true });
+const LiquidUnderlineWord: React.FC<{
+  word: string;
+  progress: MotionValue<number>;
+  range: [number, number];
+}> = ({ word, progress, range }) => {
+  const opacity = useTransform(progress, range, [0.35, 1], { clamp: true });
+  const y = useTransform(progress, range, [12, 0], { clamp: true });
+  const lineWidth = useTransform(progress, range, ["0%", "100%"], { clamp: true });
 
   return (
     <motion.span
-      style={{ y, opacity, scale }}
-      className="inline-flex items-center align-middle mx-1 sm:mx-1.5"
+      style={{ opacity, y }}
+      className="relative inline-block font-editorial font-normal italic text-purple-900 cursor-pointer px-1"
     >
-      <motion.div
-        whileHover={{ scale: 1.15, rotate: -3 }}
-        transition={{ type: "spring", stiffness: 350, damping: 18 }}
-        className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-purple-900 text-purple-100 border border-purple-400/40 shadow-sm flex items-center gap-1 font-mono text-[10px] sm:text-xs font-bold cursor-pointer select-none"
-      >
-        <TrendingUp className="w-3 h-3 text-emerald-400" />
-        <span>+240%</span>
-      </motion.div>
+      <span>{word}</span>
+      {/* Animated Liquid Accent Stroke */}
+      <motion.span
+        style={{ width: lineWidth }}
+        className="absolute -bottom-1 left-0 h-[3px] sm:h-[4px] bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 rounded-full shadow-[0_2px_8px_rgba(168,85,247,0.5)]"
+      />
     </motion.span>
   );
 };
