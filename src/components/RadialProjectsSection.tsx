@@ -6,7 +6,7 @@ import {
   animate,
   AnimatePresence,
 } from "framer-motion";
-import { ChevronDown, ExternalLink, Layers, Play, Pause, Globe, Database, Cpu, Zap } from "lucide-react";
+import { ChevronDown, ExternalLink, Layers, Play, Pause } from "lucide-react";
 
 interface ProjectMetric {
   label: string;
@@ -583,166 +583,16 @@ export const RadialProjectsSection: React.FC<RadialProjectsSectionProps> = ({
               <div className="my-3 sm:my-4 flex-1 flex flex-col md:flex-row items-stretch gap-4 min-h-0">
                 {/* A. DESKTOP PROJECT FRAME COLUMN (White Card + Centered Stepper Button Below It) */}
                 <div className="w-full md:w-[62%] flex flex-col items-center justify-between gap-3">
-                  {/* The Right Side Card (Interactive Architectural Blueprint & Live Telemetry) */}
+                  {/* The Right Side Card (Blank Card - No Content Inside) */}
                   <AnimatePresence mode="wait">
                     <motion.div
-                      key={activeProject.id + "-blueprint"}
+                      key={activeProject.id + "-blank-card"}
                       initial={{ opacity: 0, scale: 0.98 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.98 }}
-                      transition={{ duration: 0.3, ease: "easeOut" }}
-                      className="w-full aspect-[16/10] max-h-[260px] sm:max-h-[275px] rounded-2xl bg-[#090D26]/95 border border-white/15 shadow-2xl shadow-black/60 relative overflow-hidden flex flex-col justify-between p-3 sm:p-3.5 select-none transition-all duration-300"
-                    >
-                      {/* Ambient Dynamic Accent Glow */}
-                      <div
-                        className="absolute -top-12 -right-12 w-48 h-48 rounded-full blur-3xl pointer-events-none opacity-30 transition-all duration-700"
-                        style={{ backgroundColor: activeProject.accent }}
-                      />
-
-                      {/* 1. Terminal Window Header */}
-                      <div className="flex items-center justify-between pb-2 border-b border-white/10 relative z-10 shrink-0">
-                        <div className="flex items-center gap-2">
-                          <div className="flex items-center gap-1.5">
-                            <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80 shadow-[0_0_6px_rgba(244,63,94,0.4)]" />
-                            <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 shadow-[0_0_6px_rgba(245,158,11,0.4)]" />
-                            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 shadow-[0_0_6px_rgba(16,185,129,0.4)]" />
-                          </div>
-                          <span className="text-[10px] sm:text-[11px] font-mono text-slate-300 font-semibold tracking-tight truncate max-w-[150px] sm:max-w-[210px] pl-1">
-                            sys://{activeProject.id}.kaizensolves.mesh
-                          </span>
-                        </div>
-
-                        {/* Live Status Pill */}
-                        <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/[0.08] border border-white/15">
-                          <span
-                            className="w-1.5 h-1.5 rounded-full animate-ping"
-                            style={{ backgroundColor: activeProject.accent }}
-                          />
-                          <span className="text-[9px] sm:text-[10px] font-roboto-condensed font-bold text-slate-200 tracking-wider uppercase">
-                            LIVE BLUEPRINT
-                          </span>
-                          <span className="text-[9px] font-mono font-bold text-purple-300 pl-1 border-l border-white/15">
-                            {activeProject.architecture.latency}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* 2. Interactive 3-Node Connected Blueprint Flow */}
-                      <div className="py-2 sm:py-2.5 flex items-center justify-between gap-1.5 sm:gap-2 relative z-10 flex-1 min-h-0">
-                        {/* Node 1: Ingress Gateway */}
-                        <div className="flex-1 min-w-0 p-2 sm:p-2.5 rounded-xl bg-white/[0.04] border border-white/10 flex flex-col justify-between h-full hover:border-purple-400/40 transition-colors">
-                          <div className="flex items-center gap-1.5 text-slate-400">
-                            <Globe className="w-3 h-3 text-purple-400 shrink-0" />
-                            <span className="text-[9px] font-roboto-condensed font-bold uppercase tracking-wider text-slate-400 truncate">
-                              Ingress
-                            </span>
-                          </div>
-                          <div>
-                            <div className="text-[11px] sm:text-xs font-black font-roboto-condensed text-white truncate tracking-tight">
-                              {activeProject.architecture.ingress.name}
-                            </div>
-                            <div className="text-[9px] font-mono text-slate-400 truncate">
-                              {activeProject.architecture.ingress.tag}
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Connection Track 1 with Traveling Glow Packet */}
-                        <div className="w-5 sm:w-8 h-1 bg-white/10 rounded-full relative overflow-hidden shrink-0 self-center">
-                          <motion.div
-                            animate={{ x: ["-100%", "200%"] }}
-                            transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-                            className="w-4 h-full bg-gradient-to-r from-transparent via-purple-300 to-transparent"
-                          />
-                        </div>
-
-                        {/* Node 2: Core Processing / Neural Mesh (Prominent Node) */}
-                        <div
-                          className="flex-[1.15] min-w-0 p-2 sm:p-2.5 rounded-xl border flex flex-col justify-between h-full relative transition-all"
-                          style={{
-                            backgroundColor: "rgba(255,255,255,0.07)",
-                            borderColor: `${activeProject.accent}70`,
-                            boxShadow: `0 0 16px ${activeProject.accent}25`,
-                          }}
-                        >
-                          <div className="flex items-center justify-between gap-1 text-slate-300">
-                            <div className="flex items-center gap-1.5">
-                              <Cpu className="w-3 h-3 shrink-0" style={{ color: activeProject.accent }} />
-                              <span className="text-[9px] font-roboto-condensed font-bold uppercase tracking-wider text-purple-300 truncate">
-                                Core Mesh
-                              </span>
-                            </div>
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                          </div>
-                          <div>
-                            <div className="text-[11px] sm:text-xs font-black font-roboto-condensed text-white truncate tracking-tight">
-                              {activeProject.architecture.engine.name}
-                            </div>
-                            <div className="text-[9px] font-mono text-purple-200 truncate font-semibold">
-                              {activeProject.architecture.engine.tag}
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Connection Track 2 with Traveling Glow Packet */}
-                        <div className="w-5 sm:w-8 h-1 bg-white/10 rounded-full relative overflow-hidden shrink-0 self-center">
-                          <motion.div
-                            animate={{ x: ["-100%", "200%"] }}
-                            transition={{ repeat: Infinity, duration: 1.5, ease: "linear", delay: 0.75 }}
-                            className="w-4 h-full bg-gradient-to-r from-transparent via-purple-300 to-transparent"
-                          />
-                        </div>
-
-                        {/* Node 3: Resilient State / Storage / Delivery */}
-                        <div className="flex-1 min-w-0 p-2 sm:p-2.5 rounded-xl bg-white/[0.04] border border-white/10 flex flex-col justify-between h-full hover:border-purple-400/40 transition-colors">
-                          <div className="flex items-center gap-1.5 text-slate-400">
-                            <Database className="w-3 h-3 text-indigo-400 shrink-0" />
-                            <span className="text-[9px] font-roboto-condensed font-bold uppercase tracking-wider text-slate-400 truncate">
-                              State Store
-                            </span>
-                          </div>
-                          <div>
-                            <div className="text-[11px] sm:text-xs font-black font-roboto-condensed text-white truncate tracking-tight">
-                              {activeProject.architecture.egress.name}
-                            </div>
-                            <div className="text-[9px] font-mono text-slate-400 truncate">
-                              {activeProject.architecture.egress.tag}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* 3. Live Telemetry Metrics + Hook Banner */}
-                      <div className="pt-2 border-t border-white/10 relative z-10 shrink-0 space-y-1.5">
-                        {/* 3 Metrics Columns */}
-                        <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
-                          {activeProject.metrics.map((metric, mIdx) => (
-                            <div
-                              key={mIdx}
-                              className="p-1.5 sm:p-2 rounded-lg bg-black/40 border border-white/10 flex flex-col items-center text-center"
-                            >
-                              <span className="text-xs sm:text-sm font-black font-roboto-condensed text-white tracking-tight">
-                                {metric.value}
-                              </span>
-                              <span className="text-[8px] sm:text-[9px] font-roboto-condensed font-bold text-purple-300 uppercase tracking-tight truncate w-full">
-                                {metric.label}
-                              </span>
-                              <span className="text-[7px] sm:text-[8px] font-mono text-slate-400 truncate w-full hidden sm:block">
-                                {metric.sub}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-
-                        {/* Hook Banner */}
-                        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-purple-950/40 border border-purple-500/25 text-purple-200">
-                          <Zap className="w-3 h-3 text-purple-400 shrink-0 animate-pulse" />
-                          <span className="text-[10px] sm:text-[11px] font-roboto-condensed font-semibold tracking-wide truncate">
-                            {activeProject.hook}
-                          </span>
-                        </div>
-                      </div>
-                    </motion.div>
+                      transition={{ duration: 0.25, ease: "easeOut" }}
+                      className="w-full aspect-[16/10] max-h-[260px] sm:max-h-[275px] rounded-2xl bg-white border border-slate-200/90 shadow-2xl shadow-black/40 relative overflow-hidden select-none transition-all duration-300"
+                    />
                   </AnimatePresence>
 
                   {/* Centered single scroll button strictly below the white card */}
