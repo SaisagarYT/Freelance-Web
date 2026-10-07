@@ -8,6 +8,7 @@ import { TechArsenalSection } from "@/components/TechArsenalSection";
 import { RadialProjectsSection } from "@/components/RadialProjectsSection";
 import { ArchitectsSection } from "@/components/ArchitectsSection";
 import { ProcessWorkflowSection } from "@/components/ProcessWorkflowSection";
+import { CommonQuestionsSection } from "@/components/CommonQuestionsSection";
 import { Footer } from "@/components/Footer";
 
 export default function Home() {
@@ -45,7 +46,10 @@ export default function Home() {
       {/* Section 6: Overlapping Methodology & Workflow Stacking Cards */}
       <ProcessWorkflowSection onContactClick={scrollToContact} />
 
-      {/* Section 7: Brutalist Architectural Footer */}
+      {/* Section 7: Common Questions (FAQ Accordion Card) */}
+      <CommonQuestionsSection onContactClick={scrollToContact} />
+
+      {/* Section 8: Brutalist Architectural Footer */}
       <Footer onContactClick={scrollToContact} />
     </main>
   );
