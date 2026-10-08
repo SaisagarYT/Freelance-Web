@@ -6,6 +6,10 @@ import { ArrowUpRight, Plus } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { TabbedFolderProjects } from "@/components/TabbedFolderProjects";
+import { WorkImpactMetrics } from "@/components/WorkImpactMetrics";
+import { WorkClientStories } from "@/components/WorkClientStories";
+import { WorkDeliveryProcess } from "@/components/WorkDeliveryProcess";
+import { WorkKickoffCTA } from "@/components/WorkKickoffCTA";
 
 export default function WorkPage() {
   const scrollToContact = () => {
@@ -110,6 +114,12 @@ export default function WorkPage() {
       </section>
 
       {/* ============================================================ */}
+      {/* SECTION 2: QUANTIFIED SYSTEM TELEMETRY (BY THE NUMBERS)      */}
+      {/* High-impact ROI benchmarks across enterprise clients          */}
+      {/* ============================================================ */}
+      <WorkImpactMetrics />
+
+      {/* ============================================================ */}
       {/* SECTION 2: CURATED PRODUCTION PORTFOLIO ARCHIVE              */}
       {/* Real flagship projects built with this exact architectural rig */}
       {/* ============================================================ */}
@@ -130,7 +140,7 @@ export default function WorkPage() {
             <div>
               <div className="font-mono text-xs uppercase tracking-widest text-purple-700 font-bold mb-2 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
-                <span>INDEXED WORKS & SYSTEMS</span>
+                <span>02 // INDEXED WORKS & SYSTEMS</span>
               </div>
               <h2 className="font-roboto-condensed font-black text-3xl sm:text-5xl tracking-tight text-slate-950 uppercase">
                 ENGINEERED FOR COMPOUNDING SCALE
@@ -147,6 +157,24 @@ export default function WorkPage() {
           </div>
         </div>
       </section>
+
+      {/* ============================================================ */}
+      {/* SECTION 4: VERIFIED EXECUTIVE REPUTATION & CLIENT STORIES     */}
+      {/* Real testimonial metrics from VPs, Founders, and CTOs         */}
+      {/* ============================================================ */}
+      <WorkClientStories onContactClick={scrollToContact} />
+
+      {/* ============================================================ */}
+      {/* SECTION 5: DELIVERY VELOCITY & 2-WEEK SPRINT OS               */}
+      {/* Engineering SLA, direct Slack pod, 100% IP rights pledge      */}
+      {/* ============================================================ */}
+      <WorkDeliveryProcess onContactClick={scrollToContact} />
+
+      {/* ============================================================ */}
+      {/* SECTION 6: ARCHITECTURAL PROJECT KICKOFF CTA DOCK             */}
+      {/* Scope inquiry, direct inbox copy, calendar architecture call  */}
+      {/* ============================================================ */}
+      <WorkKickoffCTA onContactClick={scrollToContact} />
 
       {/* Footer */}
       <Footer onContactClick={scrollToContact} />
