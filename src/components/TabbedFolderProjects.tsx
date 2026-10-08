@@ -8,12 +8,7 @@ import {
   ChevronLeft,
   MoreHorizontal,
   Check,
-  ChevronRight,
-  Sparkles,
-  Cpu,
-  Layers,
-  Database,
-  ShieldCheck,
+  ChevronDown,
   Activity,
   Zap,
 } from "lucide-react";
@@ -44,7 +39,9 @@ interface ProjectItem {
   num: string;
   title: string;
   date: string;
+  category: string;
   tagline: string;
+  tabOffset: string; // Staggered horizontal position matching reference
   theme: {
     cardBg: string;
     border: string;
@@ -52,25 +49,20 @@ interface ProjectItem {
     dateColor: string;
     descColor: string;
     ctaColor: string;
-    tabActiveBg: string;
-    tabActiveText: string;
-    tabInactiveBg: string;
-    tabInactiveText: string;
+    tabBg: string;
+    tabText: string;
+    headerHover: string;
   };
 }
 
 export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
   onContactClick,
 }) => {
-  // Active Project Index (0 to 4 for 5 projects)
-  const [activeIdx, setActiveIdx] = useState<number>(0);
-  // Direction flag for stack animation trigger
-  const [animKey, setAnimKey] = useState<number>(0);
+  // Active/Expanded folder index (0 = Tandem initially open)
+  const [expandedIdx, setExpandedIdx] = useState<number>(0);
 
-  const selectProject = (idx: number) => {
-    if (idx === activeIdx) return;
-    setActiveIdx(idx);
-    setAnimKey((prev) => prev + 1);
+  const toggleFolder = (idx: number) => {
+    setExpandedIdx(idx);
   };
 
   const handleAction = () => {
@@ -82,25 +74,26 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
     }
   };
 
-  // 5 Curated High-End Projects
+  // 5 Staggered Architectural File Folders matching the reference design
   const projects: ProjectItem[] = [
     {
       id: "project-01",
       num: "01",
       title: "Tandem",
       date: "MAR 2, 2026",
+      category: "FINTECH & SHARED BALANCES",
       tagline: "From 'who owes who' to money that finally feels shared.",
+      tabOffset: "left-2 sm:left-4",
       theme: {
         cardBg: "#1A1816",
-        border: "border-[#2A2622]",
+        border: "border-[#2E2A26]",
         textColor: "text-white",
         dateColor: "text-slate-400",
         descColor: "text-slate-300",
         ctaColor: "text-white hover:text-blue-400 border-white hover:border-blue-400",
-        tabActiveBg: "#2563EB",
-        tabActiveText: "text-white",
-        tabInactiveBg: "#1E1B18",
-        tabInactiveText: "text-slate-400 hover:text-white",
+        tabBg: "#2563EB",
+        tabText: "text-white font-bold",
+        headerHover: "hover:bg-[#24201D]",
       },
     },
     {
@@ -108,7 +101,9 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
       num: "02",
       title: "Kinetic",
       date: "FEB 18, 2026",
+      category: "STREAM INGESTION ENGINE",
       tagline: "Sub-2ms query execution across 1.2M streaming events per second.",
+      tabOffset: "left-6 sm:left-[21%]",
       theme: {
         cardBg: "#0C1026",
         border: "border-[#1E274A]",
@@ -116,10 +111,9 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
         dateColor: "text-indigo-300/80",
         descColor: "text-slate-300",
         ctaColor: "text-white hover:text-indigo-400 border-white hover:border-indigo-400",
-        tabActiveBg: "#6366F1",
-        tabActiveText: "text-white",
-        tabInactiveBg: "#121733",
-        tabInactiveText: "text-indigo-300/70 hover:text-white",
+        tabBg: "#6366F1",
+        tabText: "text-white font-bold",
+        headerHover: "hover:bg-[#121733]",
       },
     },
     {
@@ -127,7 +121,9 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
       num: "03",
       title: "Forge",
       date: "JAN 2, 2026",
+      category: "DEVELOPER SYSTEMS PLATFORM",
       tagline: "Getting a new engineer from day one to shipping without the panic.",
+      tabOffset: "left-10 sm:left-[41%]",
       theme: {
         cardBg: "#F5B82E",
         border: "border-[#E5A820]",
@@ -135,10 +131,9 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
         dateColor: "text-slate-900/80",
         descColor: "text-slate-900/90",
         ctaColor: "text-slate-950 hover:text-slate-800 border-slate-950 hover:border-slate-800",
-        tabActiveBg: "#F5B82E",
-        tabActiveText: "text-slate-950 font-black",
-        tabInactiveBg: "#D49B20",
-        tabInactiveText: "text-slate-950/80 hover:text-slate-950",
+        tabBg: "#F5B82E",
+        tabText: "text-slate-950 font-black",
+        headerHover: "hover:bg-[#EAA822]",
       },
     },
     {
@@ -146,7 +141,9 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
       num: "04",
       title: "Aura",
       date: "DEC 14, 2025",
+      category: "HEADLESS LUXURY WEBGL",
       tagline: "Fluid 60FPS WebGL headless luxury retail engine with optimistic state sync.",
+      tabOffset: "left-14 sm:left-[61%]",
       theme: {
         cardBg: "#0D241C",
         border: "border-[#184234]",
@@ -154,10 +151,9 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
         dateColor: "text-emerald-300/80",
         descColor: "text-slate-300",
         ctaColor: "text-white hover:text-emerald-400 border-white hover:border-emerald-400",
-        tabActiveBg: "#10B981",
-        tabActiveText: "text-slate-950 font-bold",
-        tabInactiveBg: "#123026",
-        tabInactiveText: "text-emerald-300/70 hover:text-white",
+        tabBg: "#10B981",
+        tabText: "text-slate-950 font-bold",
+        headerHover: "hover:bg-[#123126]",
       },
     },
     {
@@ -165,7 +161,9 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
       num: "05",
       title: "Hyperion",
       date: "NOV 28, 2025",
+      category: "MULTI-AGENT AI NETWORK",
       tagline: "Multi-agent cognitive orchestration network streaming 12M+ tokens daily.",
+      tabOffset: "left-18 sm:left-[78%]",
       theme: {
         cardBg: "#240E17",
         border: "border-[#3D1727]",
@@ -173,15 +171,12 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
         dateColor: "text-rose-300/80",
         descColor: "text-slate-300",
         ctaColor: "text-white hover:text-rose-400 border-white hover:border-rose-400",
-        tabActiveBg: "#F43F5E",
-        tabActiveText: "text-white font-bold",
-        tabInactiveBg: "#331421",
-        tabInactiveText: "text-rose-300/70 hover:text-white",
+        tabBg: "#F43F5E",
+        tabText: "text-white font-bold",
+        headerHover: "hover:bg-[#2E121E]",
       },
     },
   ];
-
-  const currentProject = projects[activeIdx];
 
   // Visual Mockup Preview renderer
   const renderMockup = (idx: number) => {
@@ -371,7 +366,6 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
               <span>RENDER PASS: PBR</span>
             </div>
 
-            {/* Interactive Chronometer Card */}
             <div className="my-auto py-3 p-4 rounded-2xl bg-white/[0.03] border border-emerald-500/30 space-y-3">
               <div className="flex items-center justify-between">
                 <div>
@@ -416,7 +410,6 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
               <span>12M TOKENS/DAY</span>
             </div>
 
-            {/* Agent Nodes Pipeline */}
             <div className="my-auto py-2 space-y-2.5 font-mono text-xs">
               <div className="p-2.5 rounded-xl bg-white/[0.04] border border-rose-500/20 flex items-center justify-between">
                 <span className="text-slate-300">AGENT_01: ORCHESTRATOR</span>
@@ -445,157 +438,182 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
   };
 
   return (
-    <div className="w-full max-w-[1240px] mx-auto select-none space-y-0">
-      
-      {/* ============================================================== */}
-      {/* 1. HORIZONTAL 5-TAB FILING DOCK BAR                           */}
-      {/* All 5 tabs are displayed with chamfered angles across the width*/}
-      {/* ============================================================== */}
-      <div className="relative w-full overflow-x-auto no-scrollbar pb-0">
-        <div className="flex items-end h-[42px] sm:h-[46px] min-w-[700px] w-full">
-          {projects.map((proj, idx) => {
-            const isActive = activeIdx === idx;
-            return (
-              <button
-                key={proj.id}
-                onClick={() => selectProject(idx)}
-                style={{
-                  clipPath:
-                    idx === 0
-                      ? "polygon(0 0, calc(100% - 20px) 0, 100% 100%, 0 100%)"
-                      : "polygon(20px 0, calc(100% - 20px) 0, 100% 100%, 0 100%)",
-                  backgroundColor: isActive
-                    ? proj.theme.tabActiveBg
-                    : proj.theme.tabInactiveBg,
-                }}
-                className={`relative h-full flex-1 min-w-[135px] sm:min-w-[160px] flex items-center justify-center font-mono text-[11px] sm:text-xs font-bold tracking-widest uppercase cursor-pointer transition-all duration-200 ${
-                  idx > 0 ? "-ml-[18px]" : ""
-                } ${
-                  isActive
-                    ? `z-30 shadow-lg ${proj.theme.tabActiveText}`
-                    : `z-10 hover:brightness-125 ${proj.theme.tabInactiveText}`
-                }`}
-              >
-                <span className="flex items-center gap-1.5 px-3">
-                  <span className={isActive ? "scale-110" : ""}>✦</span>
-                  <span>{`PROJECT ${proj.num}`}</span>
-                </span>
-              </button>
-            );
-          })}
+    <div className="w-full max-w-[1240px] mx-auto select-none space-y-3">
+      {/* Brutalist Archival Index Header matching reference */}
+      <div className="w-full flex items-center justify-between font-mono text-[11px] text-slate-500 uppercase tracking-widest px-2 pb-1 border-b border-slate-200/80">
+        <div className="flex items-center gap-6">
+          <span>M_1 // ARCHIVE_01</span>
+          <span className="hidden sm:inline">12938 // BUILDS</span>
+        </div>
+        <div className="flex items-center gap-4">
+          <span className="text-purple-600 font-semibold">T3 3 // 2026</span>
+          <span className="hidden sm:inline text-slate-400">p.14-17</span>
         </div>
       </div>
 
       {/* ============================================================== */}
-      {/* 2. PHYSICAL 3D STACKED DECK CONTAINER                          */}
-      {/* Visual background layers peek out, creating realistic depth    */}
+      {/* 5 PHYSICAL FILE FOLDERS STACKED ONE AFTER ANOTHER              */}
+      {/* Each folder has its top part visible; active folder expands    */}
       {/* ============================================================== */}
-      <div className="relative w-full">
-        {/* Layer 3 behind (Furthest back card edge) */}
-        <div
-          style={{
-            backgroundColor: projects[(activeIdx + 2) % 5].theme.cardBg,
-          }}
-          className="absolute -top-3 sm:-top-4 inset-x-3 sm:inset-x-5 h-20 rounded-2xl opacity-40 shadow-sm border border-black/10 -z-20 transition-all duration-300"
-        />
+      <div className="w-full flex flex-col space-y-2.5 sm:space-y-3">
+        {projects.map((proj, idx) => {
+          const isExpanded = expandedIdx === idx;
 
-        {/* Layer 2 behind (Mid stack card edge) */}
-        <div
-          style={{
-            backgroundColor: projects[(activeIdx + 1) % 5].theme.cardBg,
-          }}
-          className="absolute -top-1.5 sm:-top-2 inset-x-1.5 sm:inset-x-2.5 h-20 rounded-2xl opacity-70 shadow-md border border-black/15 -z-10 transition-all duration-300"
-        />
+          return (
+            <motion.div
+              key={proj.id}
+              layout
+              transition={{
+                type: "spring",
+                stiffness: 320,
+                damping: 28,
+                mass: 0.8,
+              }}
+              style={{
+                backgroundColor: proj.theme.cardBg,
+              }}
+              className={`relative w-full rounded-2xl sm:rounded-[22px] border ${proj.theme.border} overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-shadow duration-300 ${
+                isExpanded ? "shadow-[0_24px_60px_-12px_rgba(0,0,0,0.38)] z-20" : "z-10"
+              }`}
+            >
+              {/* -------------------------------------------------------- */}
+              {/* FOLDER TOP PORTION / HEADER BAR (Always Visible)         */}
+              {/* Chamfered Tab + Horizontal Folder Bar with Title & Date  */}
+              {/* -------------------------------------------------------- */}
+              <div
+                onClick={() => toggleFolder(idx)}
+                className={`relative w-full h-[52px] sm:h-[58px] flex items-center justify-between px-4 sm:px-6 cursor-pointer select-none transition-colors ${proj.theme.headerHover}`}
+              >
+                {/* Chamfered Folder Tab (Staggered position matching reference) */}
+                <div className="flex items-center gap-3 sm:gap-5">
+                  <div
+                    style={{
+                      backgroundColor: proj.theme.tabBg,
+                      clipPath:
+                        "polygon(0 0, calc(100% - 18px) 0, 100% 100%, 0 100%)",
+                    }}
+                    className={`h-[36px] sm:h-[40px] px-3.5 sm:px-5 pr-6 sm:pr-8 flex items-center font-mono text-[11px] sm:text-xs tracking-widest uppercase shadow-sm ${proj.theme.tabText}`}
+                  >
+                    <span className="flex items-center gap-1.5">
+                      <span>✦</span>
+                      <span>{`PROJECT ${proj.num}`}</span>
+                    </span>
+                  </div>
 
-        {/* ============================================================ */}
-        {/* FRONT ACTIVE CARD (Flies up from back stack with spring)    */}
-        {/* ============================================================ */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={animKey}
-            initial={{
-              y: -55,
-              scale: 0.965,
-              opacity: 0.85,
-            }}
-            animate={{
-              y: 0,
-              scale: 1,
-              opacity: 1,
-            }}
-            exit={{
-              y: 35,
-              scale: 0.97,
-              opacity: 0,
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 340,
-              damping: 26,
-              mass: 0.75,
-            }}
-            style={{
-              backgroundColor: currentProject.theme.cardBg,
-            }}
-            className={`relative z-20 w-full ${currentProject.theme.textColor} rounded-b-2xl sm:rounded-b-[24px] p-6 sm:p-10 lg:p-12 shadow-[0_28px_60px_-15px_rgba(0,0,0,0.38)] border border-t-0 ${currentProject.theme.border}`}
-          >
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-              {/* Left Column: Metadata, Title, Description, Link */}
-              <div className="lg:col-span-5 flex flex-col justify-center space-y-6">
-                <div
-                  className={`flex items-center gap-2 font-mono text-xs sm:text-[13px] font-semibold uppercase tracking-wider ${currentProject.theme.dateColor}`}
-                >
-                  <span className="text-[10px]">●</span>
-                  <span>{currentProject.date}</span>
+                  {/* Project Name & Category Metadata */}
+                  <div className="flex items-center gap-2 sm:gap-4">
+                    <span
+                      className={`font-roboto-condensed font-black tracking-tight text-base sm:text-lg uppercase ${proj.theme.textColor}`}
+                    >
+                      {proj.title}
+                    </span>
+                    <span className="hidden md:inline-block font-mono text-[10px] sm:text-[11px] text-slate-400/90 uppercase tracking-wider font-semibold">
+                      // {proj.category}
+                    </span>
+                  </div>
                 </div>
 
-                <h3 className="text-4xl sm:text-5xl lg:text-[56px] font-bold font-sans tracking-tight leading-none">
-                  {currentProject.title}
-                </h3>
-
-                <p className={`text-base sm:text-lg font-sans leading-relaxed max-w-md ${currentProject.theme.descColor}`}>
-                  {currentProject.tagline}
-                </p>
-
-                <div className="pt-2 flex items-center gap-6">
-                  <button
-                    onClick={handleAction}
-                    className={`group inline-flex items-center gap-2 font-mono text-xs sm:text-sm font-bold uppercase tracking-widest border-b pb-0.5 transition-colors cursor-pointer ${currentProject.theme.ctaColor}`}
+                {/* Right Metadata: Date & Interactive Toggle */}
+                <div className="flex items-center gap-3 sm:gap-5">
+                  <span
+                    className={`hidden sm:inline-block font-mono text-xs font-semibold tracking-wider uppercase ${proj.theme.dateColor}`}
                   >
-                    <span>VIEW PROJECT</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </button>
+                    {proj.date}
+                  </span>
 
-                  {/* Quick Card Stepper Controls */}
-                  <div className="flex items-center gap-1.5 opacity-80">
-                    <button
-                      onClick={() => selectProject((activeIdx - 1 + 5) % 5)}
-                      aria-label="Previous Project"
-                      className="w-7 h-7 rounded-full bg-black/20 hover:bg-black/40 flex items-center justify-center transition-colors cursor-pointer"
+                  {/* Active/Expanded State Indicator */}
+                  <div
+                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-mono font-bold tracking-wider uppercase transition-transform duration-300 ${
+                      isExpanded
+                        ? "bg-white/15 text-white"
+                        : "bg-black/20 text-slate-400 group-hover:text-white"
+                    }`}
+                  >
+                    <span>{isExpanded ? "OPEN" : "VIEW"}</span>
+                    <motion.div
+                      animate={{ rotate: isExpanded ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
                     >
-                      <ChevronLeft className="w-3.5 h-3.5" />
-                    </button>
-                    <span className="font-mono text-xs px-1">
-                      {activeIdx + 1} / 5
-                    </span>
-                    <button
-                      onClick={() => selectProject((activeIdx + 1) % 5)}
-                      aria-label="Next Project"
-                      className="w-7 h-7 rounded-full bg-black/20 hover:bg-black/40 flex items-center justify-center transition-colors cursor-pointer"
-                    >
-                      <ChevronRight className="w-3.5 h-3.5" />
-                    </button>
+                      <ChevronDown className="w-3.5 h-3.5" />
+                    </motion.div>
                   </div>
                 </div>
               </div>
 
-              {/* Right Column: Framed Visual Mockup with Corner Masking Tapes */}
-              <div className="lg:col-span-7 flex justify-center">
-                {renderMockup(activeIdx)}
-              </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
+              {/* -------------------------------------------------------- */}
+              {/* FOLDER BODY CONTENT (Expands smoothly on click)          */}
+              {/* Exact reference layout: Title, Desc, Taped Visual Mockup */}
+              {/* -------------------------------------------------------- */}
+              <AnimatePresence initial={false}>
+                {isExpanded && (
+                  <motion.div
+                    key="content"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{
+                      duration: 0.35,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                    className="overflow-hidden"
+                  >
+                    <div className="w-full px-6 sm:px-10 lg:px-12 pb-8 sm:pb-12 pt-4 border-t border-white/10">
+                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                        {/* Left Column: Metadata, Title, Description, Link */}
+                        <div className="lg:col-span-5 flex flex-col justify-center space-y-6">
+                          <div
+                            className={`flex items-center gap-2 font-mono text-xs sm:text-[13px] font-semibold uppercase tracking-wider ${proj.theme.dateColor}`}
+                          >
+                            <span className="text-[10px]">●</span>
+                            <span>{proj.date}</span>
+                          </div>
+
+                          <h3
+                            className={`text-4xl sm:text-5xl lg:text-[56px] font-bold font-sans tracking-tight leading-none ${proj.theme.textColor}`}
+                          >
+                            {proj.title}
+                          </h3>
+
+                          <p
+                            className={`text-base sm:text-lg font-sans leading-relaxed max-w-md ${proj.theme.descColor}`}
+                          >
+                            {proj.tagline}
+                          </p>
+
+                          <div className="pt-2">
+                            <button
+                              onClick={handleAction}
+                              className={`group inline-flex items-center gap-2 font-mono text-xs sm:text-sm font-bold uppercase tracking-widest border-b pb-0.5 transition-colors cursor-pointer ${proj.theme.ctaColor}`}
+                            >
+                              <span>VIEW PROJECT</span>
+                              <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Right Column: Framed Visual Mockup with Corner Masking Tapes */}
+                        <div className="lg:col-span-7 flex justify-center">
+                          {renderMockup(idx)}
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Archival Exploration Footer Tag */}
+      <div className="w-full flex items-center justify-between pt-3 font-mono text-[10px] sm:text-[11px] text-slate-400 uppercase tracking-widest px-2">
+        <span>Files. Design Exploration</span>
+        <div className="flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-purple-600 animate-pulse" />
+          <span className="font-editorial italic font-normal text-xs text-slate-500">
+            (files)
+          </span>
+        </div>
       </div>
     </div>
   );
