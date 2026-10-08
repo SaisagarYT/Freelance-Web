@@ -470,30 +470,36 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
               } group transition-all duration-300`}
             >
               {/* -------------------------------------------------------- */}
-              {/* THE PROTRUDING CHAMFERED TAB (All aligned on left side)  */}
-              {/* Seamlessly welded to the top-left of each card body      */}
+              {/* SKEUOMORPHIC ROUNDED FOLDER TAB (Smooth curves all around)*/}
+              {/* Beautiful continuous curvature with zero sharp corners   */}
               {/* -------------------------------------------------------- */}
               <div
                 onClick={() => toggleFolder(idx)}
-                className={`absolute top-0 left-0 z-20 h-[33px] sm:h-[37px] flex items-stretch cursor-pointer select-none transition-all duration-200 hover:brightness-110 ${proj.theme.tabText}`}
+                className="absolute top-0 left-0 z-20 h-[34px] sm:h-[38px] w-[170px] sm:w-[195px] cursor-pointer select-none transition-all duration-200 hover:brightness-110"
               >
+                {/* Continuous-Curvature SVG Tab Silhouette */}
+                <svg
+                  viewBox="0 0 195 38"
+                  preserveAspectRatio="none"
+                  className="absolute inset-0 w-full h-full overflow-visible drop-shadow-[0_2px_4px_rgba(0,0,0,0.14)]"
+                >
+                  <path
+                    d="M 0 38 L 0 14 A 14 14 0 0 1 14 0 L 138 0 Q 152 0 159 9 L 171 24 Q 179 38 195 38 L 0 38 Z"
+                    fill={proj.theme.tabBg}
+                    stroke="rgba(255,255,255,0.22)"
+                    strokeWidth="1"
+                  />
+                </svg>
+
+                {/* Tab Label */}
                 <div
-                  style={{ backgroundColor: proj.theme.tabBg }}
-                  className="h-full px-4 sm:px-6 flex items-center font-mono text-[11px] sm:text-xs tracking-widest uppercase rounded-tl-xl sm:rounded-tl-2xl shadow-sm"
+                  className={`relative z-10 h-full flex items-center pl-4 sm:pl-5 pr-8 sm:pr-10 font-mono text-[11px] sm:text-xs tracking-widest uppercase font-bold ${proj.theme.tabText}`}
                 >
                   <span className="flex items-center gap-1.5">
                     <span>✦</span>
                     <span>{`PROJECT ${proj.num}`}</span>
                   </span>
                 </div>
-                {/* Right diagonal chamfer wedge */}
-                <div
-                  style={{
-                    backgroundColor: proj.theme.tabBg,
-                    clipPath: "polygon(0 0, 0 100%, 100% 100%)",
-                  }}
-                  className="h-full w-5 sm:w-6"
-                />
               </div>
 
               {/* -------------------------------------------------------- */}
@@ -511,14 +517,14 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
                 style={{
                   backgroundColor: proj.theme.cardBg,
                 }}
-                className={`relative w-full rounded-2xl sm:rounded-[24px] rounded-tl-none sm:rounded-tl-none border ${proj.theme.border} overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.18)] transition-all duration-300 ${
-                  isExpanded ? "shadow-[0_24px_60px_-12px_rgba(0,0,0,0.45)] ring-1 ring-white/10" : "hover:brightness-105"
+                className={`relative w-full rounded-2xl sm:rounded-[26px] rounded-tl-none sm:rounded-tl-none border ${proj.theme.border} overflow-hidden shadow-[0_12px_32px_rgba(0,0,0,0.22)] transition-all duration-300 ${
+                  isExpanded ? "shadow-[0_28px_65px_-12px_rgba(0,0,0,0.48)] ring-1 ring-white/10" : "hover:brightness-105"
                 }`}
               >
                 {/* Folder Header Bar (Title, Category, Date, View/Open toggle) */}
                 <div
                   onClick={() => toggleFolder(idx)}
-                  className={`relative w-full h-[58px] sm:h-[66px] flex items-center justify-between pl-[145px] sm:pl-[185px] pr-5 sm:pr-8 cursor-pointer select-none transition-colors ${proj.theme.headerHover}`}
+                  className={`relative w-full h-[58px] sm:h-[66px] flex items-center justify-between pl-[175px] sm:pl-[205px] pr-5 sm:pr-8 cursor-pointer select-none transition-colors ${proj.theme.headerHover}`}
                 >
                   {/* Title & Category Metadata */}
                   <div className="flex items-center gap-2 sm:gap-4">
