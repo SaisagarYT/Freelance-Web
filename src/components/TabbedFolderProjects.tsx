@@ -62,7 +62,7 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
   const [expandedIdx, setExpandedIdx] = useState<number>(0);
 
   const toggleFolder = (idx: number) => {
-    setExpandedIdx(idx);
+    setExpandedIdx((prev) => (prev === idx ? -1 : idx));
   };
 
   const handleAction = () => {
@@ -453,14 +453,22 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
 
       {/* ============================================================== */}
       {/* 5 PHYSICAL FILE FOLDERS STACKED ONE AFTER ANOTHER              */}
-      {/* Each folder has its tab protruding UPWARD and blending cleanly */}
+      {/* Seamless cascading stack with overlapping depth & no gaps      */}
       {/* ============================================================== */}
-      <div className="w-full flex flex-col space-y-1 sm:space-y-2">
+      <div className="w-full flex flex-col">
         {projects.map((proj, idx) => {
           const isExpanded = expandedIdx === idx;
 
           return (
-            <div key={proj.id} className="relative w-full pt-[32px] sm:pt-[36px] group">
+            <div
+              key={proj.id}
+              style={{ zIndex: 10 + idx }}
+              className={`relative w-full ${
+                idx === 0
+                  ? "pt-[32px] sm:pt-[36px]"
+                  : "-mt-[16px] sm:-mt-[22px] pt-[32px] sm:pt-[36px]"
+              } group transition-all duration-300`}
+            >
               {/* -------------------------------------------------------- */}
               {/* THE PROTRUDING CHAMFERED TAB (Comes UP of the component) */}
               {/* Seamlessly welded to the top edge of the card body       */}
@@ -514,21 +522,21 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
                 layout
                 transition={{
                   type: "spring",
-                  stiffness: 320,
-                  damping: 28,
+                  stiffness: 300,
+                  damping: 26,
                   mass: 0.8,
                 }}
                 style={{
                   backgroundColor: proj.theme.cardBg,
                 }}
-                className={`relative w-full rounded-2xl sm:rounded-[24px] border ${proj.theme.border} overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-shadow duration-300 ${
+                className={`relative w-full rounded-2xl sm:rounded-[24px] border ${proj.theme.border} overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.18)] transition-all duration-300 ${
                   idx === 0 ? "rounded-tl-none sm:rounded-tl-none" : ""
-                } ${isExpanded ? "shadow-[0_24px_60px_-12px_rgba(0,0,0,0.38)] z-10" : "z-0"}`}
+                } ${isExpanded ? "shadow-[0_24px_60px_-12px_rgba(0,0,0,0.45)] ring-1 ring-white/10" : "hover:brightness-105"}`}
               >
                 {/* Folder Header Bar (Title, Category, Date, View/Open toggle) */}
                 <div
                   onClick={() => toggleFolder(idx)}
-                  className={`relative w-full h-[52px] sm:h-[58px] flex items-center justify-between px-5 sm:px-8 cursor-pointer select-none transition-colors ${proj.theme.headerHover}`}
+                  className={`relative w-full h-[54px] sm:h-[62px] flex items-center justify-between px-5 sm:px-8 cursor-pointer select-none transition-colors ${proj.theme.headerHover}`}
                 >
                   {/* Title & Category Metadata */}
                   <div className="flex items-center gap-2 sm:gap-4">
