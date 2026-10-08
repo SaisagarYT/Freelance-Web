@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowUpRight, Plus } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { TabbedFolderProjects } from "@/components/TabbedFolderProjects";
 
 export default function WorkPage() {
   const scrollToContact = () => {
@@ -140,55 +141,9 @@ export default function WorkPage() {
             </p>
           </div>
 
-          {/* Project Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {PROJECTS.map((project, idx) => (
-              <div
-                key={project.id}
-                className="group p-6 sm:p-8 rounded-2xl bg-white border border-[#E2DCF0] hover:border-purple-300 transition-all duration-300 flex flex-col justify-between space-y-6 hover:-translate-y-1 shadow-[0_4px_20px_rgba(124,58,237,0.03)] hover:shadow-[0_12px_32px_rgba(124,58,237,0.08)]"
-              >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between font-mono text-xs text-purple-700/70">
-                    <span>{`SYS_${String(idx + 1).padStart(2, "0")}`}</span>
-                    <span className="text-[#10B981] font-semibold">{project.metric}</span>
-                  </div>
-
-                  <h3 className="font-roboto-condensed font-black text-2xl text-slate-900 group-hover:text-purple-700 transition-colors">
-                    {project.title}
-                  </h3>
-
-                  <p className="text-sm text-slate-600 leading-relaxed font-roboto-condensed">
-                    {project.description}
-                  </p>
-                </div>
-
-                <div className="space-y-4 pt-4 border-t border-slate-100">
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.stack.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2.5 py-1 rounded-md bg-purple-50/70 border border-purple-100 text-[11px] font-mono text-purple-900 font-medium"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="flex items-center justify-between pt-2">
-                    <span className="font-mono text-[11px] text-slate-400 uppercase tracking-wider">
-                      {project.category}
-                    </span>
-                    <button
-                      onClick={scrollToContact}
-                      className="inline-flex items-center gap-1.5 text-xs font-bold font-roboto-condensed text-slate-900 group-hover:text-purple-700 transition-colors cursor-pointer"
-                    >
-                      <span>Inquire Specs</span>
-                      <ArrowUpRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
+          {/* Skeuomorphic Tabbed Folder Projects UI matching reference design */}
+          <div className="pt-4">
+            <TabbedFolderProjects onContactClick={scrollToContact} />
           </div>
         </div>
       </section>
@@ -198,61 +153,3 @@ export default function WorkPage() {
     </main>
   );
 }
-
-// Portfolio Project Data
-const PROJECTS = [
-  {
-    id: "quantum-telemetry",
-    title: "Quantum Real-Time Telemetry",
-    category: "ENTERPRISE SAAS",
-    metric: "99.98% ACCURACY",
-    description:
-      "Engineered an event streaming telemetry platform handling 250k daily active sessions with sub-20ms query latency on multi-region edge clusters.",
-    stack: ["Next.js 16", "TypeScript", "ClickHouse", "Tailwind CSS", "Redis"],
-  },
-  {
-    id: "aura-kinetic",
-    title: "Aura Kinetic Luxury Commerce",
-    category: "HEADLESS STOREFRONT",
-    metric: "+140% CONVERSION",
-    description:
-      "A headless retail experience featuring 60FPS fluid physics, instant optimistic cart state sync, and interactive 3D WebGL asset previews.",
-    stack: ["Next.js 16", "Framer Motion", "Stripe API", "Prisma", "PostgreSQL"],
-  },
-  {
-    id: "sentinel-vault",
-    title: "Sentinel Autonomous CI/CD Vault",
-    category: "DEV TOOLS & INFRA",
-    metric: "4.2X PIPELINE VELOCITY",
-    description:
-      "Cloud management dashboard with zero-trust role-based governance, automated rollback triggers, and comprehensive pipeline visualization.",
-    stack: ["React 19", "Go Microservices", "Docker", "GraphQL", "TimescaleDB"],
-  },
-  {
-    id: "hyperion-ai",
-    title: "Hyperion Cognitive Workspace",
-    category: "AI ENGINE & WORKFLOWS",
-    metric: "12M+ TOKENS / DAY",
-    description:
-      "Multi-agent AI orchestration interface with streaming token response curves, local vector database indexing, and canvas node graphs.",
-    stack: ["Next.js 16", "Python FastAPI", "Weaviate", "Tailwind CSS", "WebSockets"],
-  },
-  {
-    id: "vortex-mesh",
-    title: "Vortex High-Frequency Exchange",
-    category: "FINTECH INFRASTRUCTURE",
-    metric: "8MS SETTLEMENT",
-    description:
-      "Algorithmic trading monitoring terminal built with custom canvas rendering for real-time order book depth charts and risk limit throttles.",
-    stack: ["TypeScript", "Rust WASM", "WebGL 2.0", "Redis Streams", "Apache Kafka"],
-  },
-  {
-    id: "prism-design-system",
-    title: "Prism Multi-Brand Design Core",
-    category: "ACCESSIBILITY & TOKENS",
-    metric: "100/100 LIGHTHOUSE",
-    description:
-      "Comprehensive design token engine and headless component architecture deployed across 14 enterprise micro-frontends with automated visual regression.",
-    stack: ["React 19", "Storybook", "Tailwind CSS", "Radix UI", "Jest"],
-  },
-];
