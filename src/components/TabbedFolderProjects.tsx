@@ -74,7 +74,7 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
     }
   };
 
-  // 5 Staggered Architectural File Folders matching the reference design
+  // 5 Staggered Architectural File Folders with cohesive file & tab colors
   const projects: ProjectItem[] = [
     {
       id: "project-01",
@@ -85,15 +85,15 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
       tagline: "From 'who owes who' to money that finally feels shared.",
       tabOffset: "left-0 sm:left-0",
       theme: {
-        cardBg: "#1A1816",
-        border: "border-[#2E2A26]",
+        cardBg: "#1D4ED8",
+        border: "border-blue-400/40",
         textColor: "text-white",
-        dateColor: "text-slate-400",
-        descColor: "text-slate-300",
-        ctaColor: "text-white hover:text-blue-400 border-white hover:border-blue-400",
-        tabBg: "#2563EB",
-        tabText: "text-white font-bold",
-        headerHover: "hover:bg-[#24201D]",
+        dateColor: "text-blue-100",
+        descColor: "text-blue-50",
+        ctaColor: "text-white hover:text-blue-200 border-white hover:border-blue-200",
+        tabBg: "#1D4ED8",
+        tabText: "text-white font-black",
+        headerHover: "hover:bg-blue-600/40",
       },
     },
     {
@@ -105,15 +105,15 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
       tagline: "Sub-2ms query execution across 1.2M streaming events per second.",
       tabOffset: "left-0 sm:left-0",
       theme: {
-        cardBg: "#0C1026",
-        border: "border-[#1E274A]",
+        cardBg: "#4F46E5",
+        border: "border-indigo-300/40",
         textColor: "text-white",
-        dateColor: "text-indigo-300/80",
-        descColor: "text-slate-300",
-        ctaColor: "text-white hover:text-indigo-400 border-white hover:border-indigo-400",
-        tabBg: "#6366F1",
-        tabText: "text-white font-bold",
-        headerHover: "hover:bg-[#121733]",
+        dateColor: "text-indigo-100",
+        descColor: "text-indigo-50",
+        ctaColor: "text-white hover:text-indigo-200 border-white hover:border-indigo-200",
+        tabBg: "#4F46E5",
+        tabText: "text-white font-black",
+        headerHover: "hover:bg-indigo-600/40",
       },
     },
     {
@@ -126,10 +126,10 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
       tabOffset: "left-0 sm:left-0",
       theme: {
         cardBg: "#F5B82E",
-        border: "border-[#E5A820]",
+        border: "border-[#D99A1C]",
         textColor: "text-slate-950",
         dateColor: "text-slate-900/80",
-        descColor: "text-slate-900/90",
+        descColor: "text-slate-950/90",
         ctaColor: "text-slate-950 hover:text-slate-800 border-slate-950 hover:border-slate-800",
         tabBg: "#F5B82E",
         tabText: "text-slate-950 font-black",
@@ -145,15 +145,15 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
       tagline: "Fluid 60FPS WebGL headless luxury retail engine with optimistic state sync.",
       tabOffset: "left-0 sm:left-0",
       theme: {
-        cardBg: "#0D241C",
-        border: "border-[#184234]",
+        cardBg: "#059669",
+        border: "border-emerald-300/40",
         textColor: "text-white",
-        dateColor: "text-emerald-300/80",
-        descColor: "text-slate-300",
-        ctaColor: "text-white hover:text-emerald-400 border-white hover:border-emerald-400",
-        tabBg: "#10B981",
-        tabText: "text-slate-950 font-bold",
-        headerHover: "hover:bg-[#123126]",
+        dateColor: "text-emerald-100",
+        descColor: "text-emerald-50",
+        ctaColor: "text-white hover:text-emerald-200 border-white hover:border-emerald-200",
+        tabBg: "#059669",
+        tabText: "text-white font-black",
+        headerHover: "hover:bg-emerald-600/40",
       },
     },
     {
@@ -165,15 +165,15 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
       tagline: "Multi-agent cognitive orchestration network streaming 12M+ tokens daily.",
       tabOffset: "left-0 sm:left-0",
       theme: {
-        cardBg: "#240E17",
-        border: "border-[#3D1727]",
+        cardBg: "#E11D48",
+        border: "border-rose-300/40",
         textColor: "text-white",
-        dateColor: "text-rose-300/80",
-        descColor: "text-slate-300",
-        ctaColor: "text-white hover:text-rose-400 border-white hover:border-rose-400",
-        tabBg: "#F43F5E",
-        tabText: "text-white font-bold",
-        headerHover: "hover:bg-[#2E121E]",
+        dateColor: "text-rose-100",
+        descColor: "text-rose-50",
+        ctaColor: "text-white hover:text-rose-200 border-white hover:border-rose-200",
+        tabBg: "#E11D48",
+        tabText: "text-white font-black",
+        headerHover: "hover:bg-rose-600/40",
       },
     },
   ];
@@ -548,10 +548,14 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
 
                     {/* Active/Expanded State Indicator */}
                     <div
-                      className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-mono font-bold tracking-wider uppercase transition-transform duration-300 ${
-                        isExpanded
-                          ? "bg-white/15 text-white"
-                          : "bg-black/20 text-slate-400 group-hover:text-white"
+                      className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-mono font-bold tracking-wider uppercase transition-all duration-300 ${
+                        proj.num === "03"
+                          ? isExpanded
+                            ? "bg-slate-950/20 text-slate-950"
+                            : "bg-slate-950/10 text-slate-900 group-hover:bg-slate-950/20"
+                          : isExpanded
+                          ? "bg-white/20 text-white"
+                          : "bg-black/25 text-white/95 group-hover:bg-black/35"
                       }`}
                     >
                       <span>{isExpanded ? "OPEN" : "VIEW"}</span>
@@ -581,7 +585,9 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
                       }}
                       className="overflow-hidden"
                     >
-                      <div className="w-full px-6 sm:px-10 lg:px-12 pb-8 sm:pb-12 pt-4 border-t border-white/10">
+                      <div className={`w-full px-6 sm:px-10 lg:px-12 pb-8 sm:pb-12 pt-4 border-t ${
+                        proj.num === "03" ? "border-slate-950/15" : "border-white/15"
+                      }`}>
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                           {/* Left Column: Metadata, Title, Description, Link */}
                           <div className="lg:col-span-5 flex flex-col justify-center space-y-6">
