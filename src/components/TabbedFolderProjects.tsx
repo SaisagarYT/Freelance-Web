@@ -103,7 +103,7 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
       date: "FEB 18, 2026",
       category: "STREAM INGESTION ENGINE",
       tagline: "Sub-2ms query execution across 1.2M streaming events per second.",
-      tabOffset: "left-4 sm:left-[20%]",
+      tabOffset: "left-0 sm:left-0",
       theme: {
         cardBg: "#0C1026",
         border: "border-[#1E274A]",
@@ -123,7 +123,7 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
       date: "JAN 2, 2026",
       category: "DEVELOPER SYSTEMS PLATFORM",
       tagline: "Getting a new engineer from day one to shipping without the panic.",
-      tabOffset: "left-8 sm:left-[40%]",
+      tabOffset: "left-0 sm:left-0",
       theme: {
         cardBg: "#F5B82E",
         border: "border-[#E5A820]",
@@ -143,7 +143,7 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
       date: "DEC 14, 2025",
       category: "HEADLESS LUXURY WEBGL",
       tagline: "Fluid 60FPS WebGL headless luxury retail engine with optimistic state sync.",
-      tabOffset: "left-12 sm:left-[60%]",
+      tabOffset: "left-0 sm:left-0",
       theme: {
         cardBg: "#0D241C",
         border: "border-[#184234]",
@@ -163,7 +163,7 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
       date: "NOV 28, 2025",
       category: "MULTI-AGENT AI NETWORK",
       tagline: "Multi-agent cognitive orchestration network streaming 12M+ tokens daily.",
-      tabOffset: "left-16 sm:left-[78%]",
+      tabOffset: "left-0 sm:left-0",
       theme: {
         cardBg: "#240E17",
         border: "border-[#3D1727]",
@@ -470,53 +470,35 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
               } group transition-all duration-300`}
             >
               {/* -------------------------------------------------------- */}
-              {/* THE PROTRUDING CHAMFERED TAB (Comes UP of the component) */}
-              {/* Seamlessly welded to the top edge of the card body       */}
+              {/* THE PROTRUDING CHAMFERED TAB (All aligned on left side)  */}
+              {/* Seamlessly welded to the top-left of each card body      */}
               {/* -------------------------------------------------------- */}
-              {idx === 0 ? (
-                // Tab 01: Rounded top-left corner, straight left edge flush with card, 45° chamfered right edge
+              <div
+                onClick={() => toggleFolder(idx)}
+                className={`absolute top-0 left-0 z-20 h-[33px] sm:h-[37px] flex items-stretch cursor-pointer select-none transition-all duration-200 hover:brightness-110 ${proj.theme.tabText}`}
+              >
                 <div
-                  onClick={() => toggleFolder(idx)}
-                  className={`absolute top-0 ${proj.tabOffset} z-20 h-[33px] sm:h-[37px] flex items-stretch cursor-pointer select-none transition-all duration-200 hover:brightness-110 ${proj.theme.tabText}`}
-                >
-                  <div
-                    style={{ backgroundColor: proj.theme.tabBg }}
-                    className="h-full px-4 sm:px-6 flex items-center font-mono text-[11px] sm:text-xs tracking-widest uppercase rounded-tl-xl sm:rounded-tl-2xl"
-                  >
-                    <span className="flex items-center gap-1.5">
-                      <span>✦</span>
-                      <span>{`PROJECT ${proj.num}`}</span>
-                    </span>
-                  </div>
-                  {/* Right diagonal chamfer wedge */}
-                  <div
-                    style={{
-                      backgroundColor: proj.theme.tabBg,
-                      clipPath: "polygon(0 0, 0 100%, 100% 100%)",
-                    }}
-                    className="h-full w-5 sm:w-6"
-                  />
-                </div>
-              ) : (
-                // Tabs 02–05: Symmetrical bilateral trapezoid tabs
-                <div
-                  onClick={() => toggleFolder(idx)}
-                  style={{
-                    backgroundColor: proj.theme.tabBg,
-                    clipPath: "polygon(18px 0, calc(100% - 18px) 0, 100% 100%, 0 100%)",
-                  }}
-                  className={`absolute top-0 ${proj.tabOffset} z-20 h-[33px] sm:h-[37px] px-5 sm:px-7 flex items-center justify-center font-mono text-[11px] sm:text-xs tracking-widest uppercase cursor-pointer select-none transition-all duration-200 hover:brightness-110 ${proj.theme.tabText}`}
+                  style={{ backgroundColor: proj.theme.tabBg }}
+                  className="h-full px-4 sm:px-6 flex items-center font-mono text-[11px] sm:text-xs tracking-widest uppercase rounded-tl-xl sm:rounded-tl-2xl shadow-sm"
                 >
                   <span className="flex items-center gap-1.5">
                     <span>✦</span>
                     <span>{`PROJECT ${proj.num}`}</span>
                   </span>
                 </div>
-              )}
+                {/* Right diagonal chamfer wedge */}
+                <div
+                  style={{
+                    backgroundColor: proj.theme.tabBg,
+                    clipPath: "polygon(0 0, 0 100%, 100% 100%)",
+                  }}
+                  className="h-full w-5 sm:w-6"
+                />
+              </div>
 
               {/* -------------------------------------------------------- */}
               {/* MAIN FOLDER CARD BODY COMPONENT                          */}
-              {/* Welded directly to the tab with zero gap or pill border  */}
+              {/* Welded directly to the tab with smooth top & bottom edges*/}
               {/* -------------------------------------------------------- */}
               <motion.div
                 layout
@@ -529,14 +511,14 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
                 style={{
                   backgroundColor: proj.theme.cardBg,
                 }}
-                className={`relative w-full rounded-2xl sm:rounded-[24px] border ${proj.theme.border} overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.18)] transition-all duration-300 ${
-                  idx === 0 ? "rounded-tl-none sm:rounded-tl-none" : ""
-                } ${isExpanded ? "shadow-[0_24px_60px_-12px_rgba(0,0,0,0.45)] ring-1 ring-white/10" : "hover:brightness-105"}`}
+                className={`relative w-full rounded-2xl sm:rounded-[24px] rounded-tl-none sm:rounded-tl-none border ${proj.theme.border} overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.18)] transition-all duration-300 ${
+                  isExpanded ? "shadow-[0_24px_60px_-12px_rgba(0,0,0,0.45)] ring-1 ring-white/10" : "hover:brightness-105"
+                }`}
               >
                 {/* Folder Header Bar (Title, Category, Date, View/Open toggle) */}
                 <div
                   onClick={() => toggleFolder(idx)}
-                  className={`relative w-full h-[64px] sm:h-[72px] flex items-start pt-3 sm:pt-3.5 justify-between px-5 sm:px-8 cursor-pointer select-none transition-colors ${proj.theme.headerHover}`}
+                  className={`relative w-full h-[58px] sm:h-[66px] flex items-center justify-between pl-[145px] sm:pl-[185px] pr-5 sm:pr-8 cursor-pointer select-none transition-colors ${proj.theme.headerHover}`}
                 >
                   {/* Title & Category Metadata */}
                   <div className="flex items-center gap-2 sm:gap-4">
