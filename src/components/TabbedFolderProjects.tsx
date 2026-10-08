@@ -466,7 +466,7 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
               className={`relative w-full ${
                 idx === 0
                   ? "pt-[32px] sm:pt-[36px]"
-                  : "-mt-[16px] sm:-mt-[22px] pt-[32px] sm:pt-[36px]"
+                  : "-mt-[33px] sm:-mt-[37px] pt-[32px] sm:pt-[36px]"
               } group transition-all duration-300`}
             >
               {/* -------------------------------------------------------- */}
@@ -536,7 +536,7 @@ export const TabbedFolderProjects: React.FC<TabbedFolderProjectsProps> = ({
                 {/* Folder Header Bar (Title, Category, Date, View/Open toggle) */}
                 <div
                   onClick={() => toggleFolder(idx)}
-                  className={`relative w-full h-[54px] sm:h-[62px] flex items-center justify-between px-5 sm:px-8 cursor-pointer select-none transition-colors ${proj.theme.headerHover}`}
+                  className={`relative w-full h-[64px] sm:h-[72px] flex items-start pt-3 sm:pt-3.5 justify-between px-5 sm:px-8 cursor-pointer select-none transition-colors ${proj.theme.headerHover}`}
                 >
                   {/* Title & Category Metadata */}
                   <div className="flex items-center gap-2 sm:gap-4">
