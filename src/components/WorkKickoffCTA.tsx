@@ -197,11 +197,10 @@ export const WorkKickoffCTA: React.FC<WorkKickoffCTAProps> = () => {
                         type="button"
                         key={type}
                         onClick={() => setSelectedType(type)}
-                        className={`px-3.5 py-2 rounded-lg font-roboto-condensed font-bold text-xs uppercase tracking-wider border transition-all ${
-                          selectedType === type
+                        className={`px-3.5 py-2 rounded-lg font-roboto-condensed font-bold text-xs uppercase tracking-wider border transition-all ${selectedType === type
                             ? "bg-purple-600 text-white border-purple-600 shadow-sm"
                             : "bg-slate-50 text-slate-700 border-slate-200 hover:border-purple-300"
-                        }`}
+                          }`}
                       >
                         {type}
                       </button>
@@ -220,11 +219,10 @@ export const WorkKickoffCTA: React.FC<WorkKickoffCTAProps> = () => {
                         type="button"
                         key={tier}
                         onClick={() => setSelectedBudget(tier)}
-                        className={`px-3.5 py-2 rounded-lg font-mono font-bold text-xs uppercase tracking-wider border transition-all ${
-                          selectedBudget === tier
+                        className={`px-3.5 py-2 rounded-lg font-mono font-bold text-xs uppercase tracking-wider border transition-all ${selectedBudget === tier
                             ? "bg-purple-600 text-white border-purple-600 shadow-sm"
                             : "bg-slate-50 text-slate-700 border-slate-200 hover:border-purple-300"
-                        }`}
+                          }`}
                       >
                         {tier}
                       </button>

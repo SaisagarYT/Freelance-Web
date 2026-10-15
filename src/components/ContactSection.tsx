@@ -173,11 +173,10 @@ export const ContactSection = () => {
                         type="button"
                         key={type}
                         onClick={() => setSelectedType(type)}
-                        className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-                          selectedType === type
+                        className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${selectedType === type
                             ? "bg-blue-600 text-white shadow-xs"
                             : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                        }`}
+                          }`}
                       >
                         {type}
                       </button>
@@ -195,11 +194,10 @@ export const ContactSection = () => {
                         type="button"
                         key={budget}
                         onClick={() => setSelectedBudget(budget)}
-                        className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-                          selectedBudget === budget
+                        className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${selectedBudget === budget
                             ? "bg-slate-900 text-white shadow-xs"
                             : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                        }`}
+                          }`}
                       >
                         {budget}
                       </button>

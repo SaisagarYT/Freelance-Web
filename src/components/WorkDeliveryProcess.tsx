@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { Plus, GitPullRequest, Gauge, Terminal, CheckCircle2, Cpu, ArrowUpRight } from "lucide-react";
+import { Plus, CheckCircle2, Cpu, ArrowUpRight } from "lucide-react";
 
 interface DeliveryPillar {
   code: string;
@@ -82,6 +82,122 @@ const DELIVERY_PILLARS: DeliveryPillar[] = [
   },
 ];
 
+/**
+ * Pixelated Wave Transition Canvas
+ * Renders a traveling wave of digital voxels sweeping from bottom-right to top-left.
+ * Once the wave passes, all voxels cleanly dissolve away, leaving a pristine solid luxury dark surface.
+ */
+const PixelatedCardBackground: React.FC<{ isHovered: boolean }> = ({ isHovered }) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animRef = useRef<number | null>(null);
+  const progressRef = useRef<number>(0);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let width = canvas.offsetWidth;
+    let height = canvas.offsetHeight;
+    const dpr = typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1;
+
+    const setupCanvas = () => {
+      if (!canvas) return;
+      width = canvas.offsetWidth;
+      height = canvas.offsetHeight;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.scale(dpr, dpr);
+    };
+
+    setupCanvas();
+
+    const resizeObserver = new ResizeObserver(() => {
+      setupCanvas();
+    });
+    resizeObserver.observe(canvas);
+
+    // Ultra-fine 5px micro-pixel matrix for high-density, luxury holographic finish
+    const PIXEL_SIZE = 5;
+
+    const render = () => {
+      const speed = isHovered ? 0.048 : 0.075;
+      if (isHovered) {
+        // Progress reaches 1.25 to guarantee the wave sweeps completely past the top-left edge
+        progressRef.current = Math.min(progressRef.current + speed, 1.25);
+      } else {
+        progressRef.current = Math.max(progressRef.current - speed * 1.5, 0);
+      }
+
+      const p = progressRef.current;
+      ctx.clearRect(0, 0, width, height);
+
+      // Only draw the wave while it is actively sweeping across
+      if (p > 0 && p < 1.2) {
+        const cols = Math.ceil(width / PIXEL_SIZE);
+        const rows = Math.ceil(height / PIXEL_SIZE);
+        const maxDist = cols + rows;
+
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            // Distance from bottom-right (cols-1, rows-1) to top-left (0, 0)
+            const dist = (cols - 1 - c) + (rows - 1 - r);
+            const normalizedDist = dist / maxDist; // 0 at bottom-right, 1 at top-left
+
+            // Deterministic jitter for fine organic micro-dissolve
+            const noise = ((Math.sin(c * 17.1 + r * 31.7) * 43758.5453) % 1) * 0.15;
+            const threshold = normalizedDist * 0.85 + noise;
+
+            const distFromWave = p - threshold;
+
+            // Active wave band: micro-pixels appear and then cleanly dissolve as the wave passes
+            if (distFromWave > 0 && distFromWave < 0.22) {
+              const x = c * PIXEL_SIZE;
+              const y = r * PIXEL_SIZE;
+
+              // Smoothly fade out voxels behind the leading edge
+              const alpha = Math.max(0, 1 - distFromWave / 0.22);
+
+              if (distFromWave < 0.07) {
+                // Front edge: bright luminous electric lavender / cyber-spark
+                ctx.fillStyle = `rgba(216, 180, 254, ${alpha * 0.95})`;
+              } else {
+                // Trailing voxels: deep purple pulse
+                ctx.fillStyle = `rgba(168, 85, 247, ${alpha * 0.65})`;
+              }
+
+              ctx.fillRect(x + 0.5, y + 0.5, PIXEL_SIZE - 0.5, PIXEL_SIZE - 0.5);
+            }
+          }
+        }
+      }
+
+      // Continue animation loop until wave exits completely
+      if (
+        (isHovered && progressRef.current < 1.25) ||
+        (!isHovered && progressRef.current > 0)
+      ) {
+        animRef.current = requestAnimationFrame(render);
+      }
+    };
+
+    animRef.current = requestAnimationFrame(render);
+
+    return () => {
+      if (animRef.current) cancelAnimationFrame(animRef.current);
+      resizeObserver.disconnect();
+    };
+  }, [isHovered]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full pointer-events-none rounded-2xl z-1"
+    />
+  );
+};
+
 interface WorkDeliveryProcessProps {
   onContactClick?: () => void;
 }
@@ -121,7 +237,7 @@ export const WorkDeliveryProcess: React.FC<WorkDeliveryProcessProps> = ({ onCont
           </div>
         </div>
 
-        {/* 4-PHASE ARCHITECTURAL SPRINT GRID */}
+        {/* 4-PHASE ARCHITECTURAL SPRINT GRID WITH BOTTOM-RIGHT TO TOP PIXELATED HOVER */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border border-[#E2DCF0] bg-white rounded-2xl overflow-hidden shadow-[0_12px_36px_rgba(15,23,42,0.04)]">
           {DELIVERY_PILLARS.map((pillar, idx) => {
             const isHovered = hoveredIdx === idx;
@@ -130,56 +246,123 @@ export const WorkDeliveryProcess: React.FC<WorkDeliveryProcessProps> = ({ onCont
                 key={pillar.code}
                 onMouseEnter={() => setHoveredIdx(idx)}
                 onMouseLeave={() => setHoveredIdx(null)}
-                className={`relative p-6 sm:p-8 flex flex-col justify-between border-b md:border-b-0 md:border-r border-[#E2DCF0] last:border-b-0 last:border-r-0 transition-colors duration-300 group ${
-                  isHovered ? "bg-purple-50/40" : "bg-white"
+                className={`relative p-6 sm:p-8 flex flex-col justify-between border-b md:border-b-0 md:border-r border-[#E2DCF0] last:border-b-0 last:border-r-0 transition-all duration-500 group cursor-pointer overflow-hidden ${
+                  isHovered
+                    ? "bg-[#0C0824] shadow-[0_20px_50px_rgba(147,51,234,0.22)]"
+                    : "bg-white"
                 }`}
               >
-                {/* Corner Crosshair Reticle */}
-                <div className="absolute top-2 right-2 text-purple-300 opacity-60 group-hover:opacity-100 transition-opacity">
-                  <Plus className="w-3.5 h-3.5 stroke-[1.5]" />
+                {/* 1. Canvas-Based Pixelated Wave (Sweeps from bottom-right to top, dissolves cleanly at finish) */}
+                <PixelatedCardBackground isHovered={isHovered} />
+
+                {/* 2. Ambient Radial Glow Overlay when Active */}
+                <div
+                  className={`absolute inset-0 pointer-events-none transition-opacity duration-500 z-0 ${
+                    isHovered ? "opacity-100" : "opacity-0"
+                  }`}
+                  style={{
+                    background:
+                      "radial-gradient(circle at 100% 100%, rgba(147, 51, 234, 0.35) 0%, rgba(124, 58, 237, 0.15) 45%, transparent 75%)",
+                  }}
+                />
+
+                {/* 3. Corner Crosshair Reticle (Rotates 90deg on Hover) */}
+                <div
+                  className={`absolute top-2.5 right-2.5 transition-all duration-300 z-10 ${
+                    isHovered
+                      ? "text-purple-400 rotate-90 opacity-100"
+                      : "text-purple-300 opacity-60 group-hover:opacity-100"
+                  }`}
+                >
+                  <Plus className="w-4 h-4 stroke-[1.5]" />
                 </div>
 
-                <div>
-                  {/* Step Code & Tag */}
+                {/* Card Content (Relative z-10 for perfect contrast) */}
+                <div className="relative z-10">
+                  {/* Step Code & Category Tag */}
                   <div className="flex items-center justify-between mb-6">
-                    <span className="font-mono text-[11px] font-bold text-slate-400 tracking-widest uppercase">
+                    <span
+                      className={`font-mono text-[11px] font-bold tracking-widest uppercase transition-colors duration-300 ${
+                        isHovered ? "text-purple-300" : "text-slate-400"
+                      }`}
+                    >
                       {pillar.code}
                     </span>
-                    <span className="font-mono text-[9px] sm:text-[10px] font-bold text-purple-700 bg-purple-100/70 px-2 py-0.5 rounded border border-purple-200 uppercase tracking-wider">
+                    <span
+                      className={`font-mono text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded border uppercase tracking-wider transition-all duration-300 ${
+                        isHovered
+                          ? "bg-purple-900/60 text-purple-200 border-purple-400/50"
+                          : "bg-purple-100/70 text-purple-700 border-purple-200"
+                      }`}
+                    >
                       {pillar.telemetryTag}
                     </span>
                   </div>
 
                   {/* Step Timeline & Phase */}
                   <div className="mb-2">
-                    <span className="font-mono text-xs font-bold text-purple-600 uppercase tracking-wider block">
+                    <span
+                      className={`font-mono text-xs font-bold uppercase tracking-wider block transition-colors duration-300 ${
+                        isHovered ? "text-purple-300" : "text-purple-600"
+                      }`}
+                    >
                       {pillar.timeline}
                     </span>
-                    <span className="font-mono text-[10px] text-slate-400 uppercase tracking-widest font-semibold block mt-0.5">
+                    <span
+                      className={`font-mono text-[10px] uppercase tracking-widest font-semibold block mt-0.5 transition-colors duration-300 ${
+                        isHovered ? "text-slate-400" : "text-slate-400"
+                      }`}
+                    >
                       {pillar.phase}
                     </span>
                   </div>
 
-                  {/* Title */}
-                  <h3 className="font-roboto-condensed font-black text-xl sm:text-2xl text-slate-950 uppercase tracking-tight mb-4 group-hover:text-purple-700 transition-colors">
+                  {/* Title (Transitions from slate-950 to crisp white) */}
+                  <h3
+                    className={`font-roboto-condensed font-black text-xl sm:text-2xl uppercase tracking-tight mb-4 transition-colors duration-300 leading-tight ${
+                      isHovered ? "text-white" : "text-slate-950"
+                    }`}
+                  >
                     {pillar.title}
                   </h3>
 
-                  {/* Description */}
-                  <p className="font-roboto-condensed font-medium text-xs sm:text-[13px] text-slate-600 leading-relaxed mb-6">
+                  {/* Description (Transitions to slate-300 on dark background) */}
+                  <p
+                    className={`font-roboto-condensed font-medium text-xs sm:text-[13.5px] leading-relaxed mb-6 transition-colors duration-300 ${
+                      isHovered ? "text-slate-300" : "text-slate-600"
+                    }`}
+                  >
                     {pillar.description}
                   </p>
                 </div>
 
-                {/* Deliverables Checklist */}
-                <div className="pt-5 border-t border-slate-100 space-y-2.5">
-                  <span className="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">
+                {/* Deliverables Checklist (Relative z-10) */}
+                <div
+                  className={`pt-5 border-t space-y-2.5 relative z-10 transition-colors duration-300 ${
+                    isHovered ? "border-purple-900/50" : "border-slate-100"
+                  }`}
+                >
+                  <span
+                    className={`font-mono text-[10px] font-bold uppercase tracking-widest block mb-1 transition-colors duration-300 ${
+                      isHovered ? "text-purple-300" : "text-slate-400"
+                    }`}
+                  >
                     KEY DELIVERABLES:
                   </span>
                   {pillar.deliverables.map((item, itemIdx) => (
-                    <div key={itemIdx} className="flex items-start gap-2 text-xs text-slate-700">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                      <span className="font-roboto-condensed font-medium leading-snug">{item}</span>
+                    <div key={itemIdx} className="flex items-start gap-2 text-xs">
+                      <CheckCircle2
+                        className={`w-3.5 h-3.5 shrink-0 mt-0.5 transition-colors duration-300 ${
+                          isHovered ? "text-emerald-400" : "text-emerald-600"
+                        }`}
+                      />
+                      <span
+                        className={`font-roboto-condensed font-medium leading-snug transition-colors duration-300 ${
+                          isHovered ? "text-slate-200" : "text-slate-700"
+                        }`}
+                      >
+                        {item}
+                      </span>
                     </div>
                   ))}
                 </div>

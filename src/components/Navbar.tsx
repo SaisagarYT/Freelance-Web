@@ -79,11 +79,10 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
                 key={link.name}
                 href={link.href}
                 onMouseEnter={() => setHoveredIdx(idx)}
-                className={`relative px-3.5 py-1.5 text-xs sm:text-sm font-semibold tracking-tight transition-colors duration-200 ${
-                  isActive
+                className={`relative px-3.5 py-1.5 text-xs sm:text-sm font-semibold tracking-tight transition-colors duration-200 ${isActive
                     ? "text-purple-700 font-bold"
                     : "text-slate-600 hover:text-slate-900"
-                }`}
+                  }`}
               >
                 {/* Active Underline Pill */}
                 {isActive && (
@@ -170,11 +169,10 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
                     key={link.name}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`text-sm font-semibold py-2 px-3.5 rounded-xl transition-colors ${
-                      isActive
+                    className={`text-sm font-semibold py-2 px-3.5 rounded-xl transition-colors ${isActive
                         ? "bg-purple-50 text-purple-700 font-bold"
                         : "text-slate-800 hover:bg-slate-100"
-                    }`}
+                      }`}
                   >
                     {link.name}
                   </Link>
