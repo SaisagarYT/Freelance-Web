@@ -223,7 +223,7 @@ export const WorkDeliveryProcess: React.FC<WorkDeliveryProcessProps> = ({ onCont
           <div>
             <div className="font-mono text-xs uppercase tracking-widest text-purple-700 font-bold mb-2 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
-              <span>04 // DELIVERY OPERATING SYSTEM</span>
+              <span>DELIVERY OPERATING SYSTEM</span>
             </div>
             <h2 className="font-roboto-condensed font-black text-3xl sm:text-4xl lg:text-5xl tracking-tight text-slate-950 uppercase">
               ENGINEERED VELOCITY WITHOUT CHAOS

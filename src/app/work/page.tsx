@@ -64,7 +64,6 @@ export default function WorkPage() {
             <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
             <span className="hidden sm:inline">INDEXED PRODUCTION ARCHIVE</span>
             <span className="sm:hidden">ARCHIVE</span>
-            <span className="text-slate-400">// 2026</span>
           </div>
         </div>
 
@@ -140,7 +139,7 @@ export default function WorkPage() {
             <div>
               <div className="font-mono text-xs uppercase tracking-widest text-purple-700 font-bold mb-2 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
-                <span>02 // INDEXED WORKS & SYSTEMS</span>
+                <span>INDEXED WORKS & SYSTEMS</span>
               </div>
               <h2 className="font-roboto-condensed font-black text-3xl sm:text-5xl tracking-tight text-slate-950 uppercase">
                 ENGINEERED FOR COMPOUNDING SCALE

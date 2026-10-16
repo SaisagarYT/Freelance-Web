@@ -213,7 +213,7 @@ export const WorkImpactMetrics: React.FC = () => {
         <div>
           <div className="font-mono text-xs uppercase tracking-widest text-purple-700 font-bold mb-2 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
-            <span>01 // QUANTIFIED SYSTEM TELEMETRY</span>
+            <span>QUANTIFIED SYSTEM TELEMETRY</span>
           </div>
           <h2 className="font-roboto-condensed font-black text-3xl sm:text-4xl lg:text-5xl tracking-tight text-slate-950 uppercase">
             MEASURED BY THE NUMBERS
@@ -223,7 +223,7 @@ export const WorkImpactMetrics: React.FC = () => {
         <div className="flex items-center gap-4 font-mono text-[11px] text-slate-500 uppercase tracking-wider">
           <span className="hidden sm:inline">VAULT LOCKER PROTOCOL</span>
           <span className="w-1.5 h-1.5 rounded-full bg-slate-300" />
-          <span>PRODUCTION AUDIT // 2026</span>
+          <span>PRODUCTION AUDIT</span>
         </div>
       </div>
 
@@ -300,7 +300,7 @@ export const WorkImpactMetrics: React.FC = () => {
           <span>METHODOLOGY: REAL PRODUCTION TELEMETRY AUDITED QUARTERLY</span>
         </div>
         <div className="text-slate-400">
-          INDEX ID: <span className="text-slate-700 font-bold">#KZ-TELEMETRY-2026</span>
+          INDEX ID: <span className="text-slate-700 font-bold">#KZ-TELEMETRY</span>
         </div>
       </div>
     </section>
