@@ -1,8 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Plus } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { TabbedFolderProjects } from "@/components/TabbedFolderProjects";
@@ -12,22 +14,141 @@ import { WorkDeliveryProcess } from "@/components/WorkDeliveryProcess";
 import { WorkKickoffCTA } from "@/components/WorkKickoffCTA";
 
 export default function WorkPage() {
+  const pageContainerRef = useRef<HTMLElement>(null);
+  const heroSectionRef = useRef<HTMLElement>(null);
+  const heroGridLinesRef = useRef<HTMLDivElement>(null);
+  const heroTitleRef = useRef<HTMLHeadingElement>(null);
+  const heroSubtextRef = useRef<HTMLDivElement>(null);
+  const heroBottomBarRef = useRef<HTMLDivElement>(null);
+
   const scrollToContact = () => {
     const contactElem = document.getElementById("contact");
     contactElem?.scrollIntoView({ behavior: "smooth" });
   };
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      // 1. Hero Entrance Timeline
+      const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      if (heroTitleRef.current) {
+        const titleLines = heroTitleRef.current.querySelectorAll(".hero-line-inner");
+        heroTl.fromTo(
+          titleLines,
+          {
+            yPercent: 110,
+            opacity: 0,
+            rotateZ: 1.5,
+          },
+          {
+            yPercent: 0,
+            opacity: 1,
+            rotateZ: 0,
+            duration: 1.1,
+            stagger: 0.12,
+            delay: 0.15,
+          }
+        );
+      }
+
+      if (heroSubtextRef.current) {
+        heroTl.fromTo(
+          heroSubtextRef.current,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.8 },
+          "-=0.6"
+        );
+      }
+
+      if (heroBottomBarRef.current) {
+        heroTl.fromTo(
+          heroBottomBarRef.current,
+          { opacity: 0, y: 15 },
+          { opacity: 1, y: 0, duration: 0.7 },
+          "-=0.5"
+        );
+      }
+
+      // 2. Hero Background Grid Columns Parallax on Scroll
+      if (heroGridLinesRef.current && heroSectionRef.current) {
+        gsap.to(heroGridLinesRef.current, {
+          yPercent: 12,
+          ease: "none",
+          scrollTrigger: {
+            trigger: heroSectionRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1.2,
+          },
+        });
+      }
+
+      // 3. Staggered Smooth Scroll Reveals for Section Headers Across the Page
+      const animatedHeaders = document.querySelectorAll(".gsap-reveal-header");
+      animatedHeaders.forEach((header) => {
+        gsap.fromTo(
+          header,
+          {
+            opacity: 0,
+            y: 35,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: header,
+              start: "top 88%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      });
+
+      // 4. Subtle Parallax Lift on Major Section Blocks
+      const parallaxSections = document.querySelectorAll(".gsap-parallax-section");
+      parallaxSections.forEach((sec) => {
+        gsap.fromTo(
+          sec,
+          {
+            opacity: 0,
+            y: 40,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1.0,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: sec,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      });
+    }, pageContainerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <main className="min-h-screen bg-[#F7F5FC] text-slate-900 flex flex-col relative overflow-x-hidden selection:bg-purple-600 selection:text-white">
+    <main
+      ref={pageContainerRef}
+      className="min-h-screen bg-[#F7F5FC] text-slate-900 flex flex-col relative overflow-x-hidden selection:bg-purple-600 selection:text-white"
+    >
       {/* Detachable Fixed Island Dock Navbar */}
       <Navbar onContactClick={scrollToContact} />
 
       {/* ============================================================ */}
       {/* FULL-SCREEN ARCHITECTURAL VIOLETISH-WHITE GRID HERO SECTION  */}
-      {/* Exact replica of the reference design on a violetish-white   */}
-      {/* architectural grid canvas with zero dark gradient colors     */}
       {/* ============================================================ */}
       <section
+        ref={heroSectionRef}
         className="w-full min-h-screen h-screen relative flex flex-col justify-between px-6 sm:px-10 md:px-14 lg:px-20 py-6 sm:py-10 select-none overflow-hidden"
         style={{
           backgroundColor: "#F7F5FC",
@@ -38,8 +159,11 @@ export default function WorkPage() {
           backgroundSize: "64px 64px",
         }}
       >
-        {/* Full-Screen Vertical Architectural Column Grid Dividers (10 Columns) */}
-        <div className="absolute inset-0 grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 pointer-events-none">
+        {/* Full-Screen Vertical Architectural Column Grid Dividers (10 Columns) with GSAP Parallax */}
+        <div
+          ref={heroGridLinesRef}
+          className="absolute inset-0 grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 pointer-events-none will-change-transform"
+        >
           {Array.from({ length: 10 }).map((_, i) => (
             <div
               key={i}
@@ -48,7 +172,7 @@ export default function WorkPage() {
           ))}
         </div>
 
-        {/* TOP ARCHITECTURAL METADATA ROW (with clearance for fixed floating Navbar) */}
+        {/* TOP ARCHITECTURAL METADATA ROW */}
         <div className="relative z-10 w-full pt-18 sm:pt-22 md:pt-24 flex items-center justify-between gap-4 text-xs">
           <div className="flex items-center gap-3 sm:gap-4">
             <span className="font-roboto-condensed font-black tracking-wider text-base sm:text-xl text-slate-950 uppercase">
@@ -59,7 +183,6 @@ export default function WorkPage() {
             </span>
           </div>
 
-          {/* Right Status Specification */}
           <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500 uppercase tracking-wider font-semibold">
             <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
             <span className="hidden sm:inline">INDEXED PRODUCTION ARCHIVE</span>
@@ -67,17 +190,29 @@ export default function WorkPage() {
           </div>
         </div>
 
-        {/* MAIN HERO CONTENT AREA */}
+        {/* MAIN HERO CONTENT AREA (Kinetic Clip Reveal) */}
         <div className="relative z-10 my-auto py-6 flex flex-col justify-center">
-          {/* Monumental Headline */}
-          <h1 className="font-roboto-condensed font-black tracking-tight text-slate-950 text-5xl sm:text-7xl md:text-8xl lg:text-[105px] xl:text-[124px] leading-[0.92] uppercase">
-            FROM<br />
-            IDEA TO FINISHED<br />
-            PRODUCT<span className="text-purple-600 animate-pulse">_</span>
+          <h1
+            ref={heroTitleRef}
+            className="font-roboto-condensed font-black tracking-tight text-slate-950 text-5xl sm:text-7xl md:text-8xl lg:text-[105px] xl:text-[124px] leading-[0.92] uppercase"
+          >
+            <span className="block overflow-hidden pb-1">
+              <span className="hero-line-inner inline-block will-change-transform">FROM</span>
+            </span>
+            <span className="block overflow-hidden pb-1">
+              <span className="hero-line-inner inline-block will-change-transform">IDEA TO FINISHED</span>
+            </span>
+            <span className="block overflow-hidden pb-1">
+              <span className="hero-line-inner inline-block will-change-transform">
+                PRODUCT<span className="text-purple-600 animate-pulse">_</span>
+              </span>
+            </span>
           </h1>
 
-          {/* Bottom-Right Positioned Monospace Subtext */}
-          <div className="w-full flex justify-end pt-4 sm:pt-6 md:pt-8 pr-2 sm:pr-6">
+          <div
+            ref={heroSubtextRef}
+            className="w-full flex justify-end pt-4 sm:pt-6 md:pt-8 pr-2 sm:pr-6"
+          >
             <p className="font-mono text-xs sm:text-sm md:text-base text-slate-600 leading-relaxed max-w-[290px] sm:max-w-[360px] md:max-w-[400px]">
               We start work immediately and you&apos;ll have weekly check-ins.
             </p>
@@ -85,7 +220,10 @@ export default function WorkPage() {
         </div>
 
         {/* BOTTOM BAR: Crosshair & Social Handles */}
-        <div className="relative z-10 w-full flex items-end justify-between pb-2 sm:pb-4">
+        <div
+          ref={heroBottomBarRef}
+          className="relative z-10 w-full flex items-end justify-between pb-2 sm:pb-4"
+        >
           <div className="flex items-center gap-6 text-slate-500 font-mono text-xs sm:text-sm font-semibold">
             <a
               href="https://linkedin.com"
@@ -105,7 +243,6 @@ export default function WorkPage() {
             </a>
           </div>
 
-          {/* Architectural Crosshair Marker */}
           <div className="text-purple-400">
             <Plus className="w-6 h-6 sm:w-8 sm:h-8 stroke-[1.5]" />
           </div>
@@ -114,13 +251,11 @@ export default function WorkPage() {
 
       {/* ============================================================ */}
       {/* SECTION 2: QUANTIFIED SYSTEM TELEMETRY (BY THE NUMBERS)      */}
-      {/* High-impact ROI benchmarks across enterprise clients          */}
       {/* ============================================================ */}
       <WorkImpactMetrics />
 
       {/* ============================================================ */}
-      {/* SECTION 2: CURATED PRODUCTION PORTFOLIO ARCHIVE              */}
-      {/* Real flagship projects built with this exact architectural rig */}
+      {/* SECTION 3: CURATED PRODUCTION PORTFOLIO ARCHIVE              */}
       {/* ============================================================ */}
       <section
         className="w-full bg-[#F7F5FC] border-t border-[#E2DCF0] py-16 sm:py-24 px-4 sm:px-8 lg:px-14 relative"
@@ -134,8 +269,8 @@ export default function WorkPage() {
         }}
       >
         <div className="max-w-7xl mx-auto space-y-12">
-          {/* Header Metadata */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-[#E2DCF0]">
+          {/* Header Metadata (GSAP Animated) */}
+          <div className="gsap-reveal-header flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-[#E2DCF0]">
             <div>
               <div className="font-mono text-xs uppercase tracking-widest text-purple-700 font-bold mb-2 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
@@ -150,8 +285,7 @@ export default function WorkPage() {
             </p>
           </div>
 
-          {/* Skeuomorphic Tabbed Folder Projects UI matching reference design */}
-          <div className="pt-4">
+          <div className="pt-4 gsap-parallax-section">
             <TabbedFolderProjects onContactClick={scrollToContact} />
           </div>
         </div>
@@ -159,19 +293,17 @@ export default function WorkPage() {
 
       {/* ============================================================ */}
       {/* SECTION 4: VERIFIED EXECUTIVE REPUTATION & CLIENT STORIES     */}
-      {/* Real testimonial metrics from VPs, Founders, and CTOs         */}
       {/* ============================================================ */}
       <WorkClientStories onContactClick={scrollToContact} />
 
       {/* ============================================================ */}
       {/* SECTION 5: DELIVERY VELOCITY & 2-WEEK SPRINT OS               */}
-      {/* Engineering SLA, direct Slack pod, 100% IP rights pledge      */}
       {/* ============================================================ */}
       <WorkDeliveryProcess onContactClick={scrollToContact} />
 
       {/* ============================================================ */}
       {/* SECTION 6: ARCHITECTURAL PROJECT KICKOFF CTA DOCK             */}
-      {/* Scope inquiry, direct inbox copy, calendar architecture call  */}
+      {/* (Maximum Width, Website Violet Theme, GSAP Animated)          */}
       {/* ============================================================ */}
       <WorkKickoffCTA onContactClick={scrollToContact} />
 
