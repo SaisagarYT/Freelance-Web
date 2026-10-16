@@ -1,21 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import {
-  Plus,
-  ChevronLeft,
-  ChevronRight,
-  ShieldCheck,
-  Star,
-  Quote,
-  ArrowUpRight,
-} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowUpRight, Quote } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-export interface ClientStory {
+export interface FounderCard {
   id: string;
-  code: string;
   name: string;
   role: string;
   company: string;
@@ -23,32 +16,11 @@ export interface ClientStory {
   quote: string;
   metricBadge: string;
   metricValue: string;
-  metricLabel: string;
-  stack: string[];
-  duration: string;
-  authId: string;
 }
 
-export const CLIENT_STORIES: ClientStory[] = [
+export const FOUNDERS: FounderCard[] = [
   {
-    id: "story-gary",
-    code: "EXEC_01",
-    name: "Gary Chen",
-    role: "VP of Engineering",
-    company: "Horizon Cloud",
-    avatar: "/images/work/client_gary.jpg",
-    quote:
-      "Kaizen didn't just build our web client; they re-architected our micro-frontend routing and brought our global P99 latency down to 14ms. The craft, typographic precision, and code cleanliness is something you rarely see outside elite Silicon Valley design studios.",
-    metricBadge: "LATENCY DROP",
-    metricValue: "-64%",
-    metricLabel: "Global P99 Edge Latency",
-    stack: ["Next.js 15", "Turbopack", "TailwindCSS", "Edge Functions"],
-    duration: "4 Weeks Delivery",
-    authId: "KZ-HZ-9281",
-  },
-  {
-    id: "story-anny",
-    code: "EXEC_02",
+    id: "founder-anny",
     name: "Anny Sterling",
     role: "Founder & CEO",
     company: "Solaria AI",
@@ -56,15 +28,21 @@ export const CLIENT_STORIES: ClientStory[] = [
     quote:
       "Investors were blown away by the fluidity of our interactive node canvas and 60FPS UI shaders. Kaizen delivered a production-grade software rig that directly helped us secure our $14M Series A within 45 days of launch.",
     metricBadge: "VENTURE IMPACT",
-    metricValue: "$14M",
-    metricLabel: "Series A Secured Post-Launch",
-    stack: ["React", "WebGL Shaders", "TypeScript", "TailwindCSS"],
-    duration: "6 Weeks Delivery",
-    authId: "KZ-SL-4019",
+    metricValue: "$14M Series A",
   },
   {
-    id: "story-betty",
-    code: "EXEC_03",
+    id: "founder-gary",
+    name: "Gary Chen",
+    role: "VP of Engineering",
+    company: "Horizon Cloud",
+    avatar: "/images/work/client_gary.jpg",
+    quote:
+      "Kaizen didn't just build our web client; they re-architected our micro-frontend routing and brought our global P99 latency down to 14ms. The craft, typographic precision, and code cleanliness is something you rarely see outside elite Silicon Valley studios.",
+    metricBadge: "LATENCY DROP",
+    metricValue: "-64% P99 Latency",
+  },
+  {
+    id: "founder-betty",
     name: "Betty Sandoval",
     role: "Head of Product",
     company: "Synapse OS",
@@ -72,15 +50,21 @@ export const CLIENT_STORIES: ClientStory[] = [
     quote:
       "The architectural design language and tactile micro-interactions turned what could have been a dry developer tool into an addictive, delightful experience. Our user activation jumped 3.4x in the very first cohort.",
     metricBadge: "ACTIVATION SURGE",
-    metricValue: "3.4x",
-    metricLabel: "User Onboarding Velocity",
-    stack: ["Next.js 15", "Framer Motion", "PostgreSQL", "Radix UI"],
-    duration: "3 Weeks Delivery",
-    authId: "KZ-SY-8832",
+    metricValue: "3.4x Onboarding Velocity",
   },
   {
-    id: "story-izzy",
-    code: "EXEC_04",
+    id: "founder-alex",
+    name: "Alex Voron",
+    role: "AI Systems Lead",
+    company: "Neural Architecture",
+    avatar: "/images/architect_alex.jpg",
+    quote:
+      "Engineers high-throughput inference pipelines, multi-agent cognitive architectures, and resilient vector index systems for enterprise deployments with sub-120ms latency SLAs.",
+    metricBadge: "SYSTEM RESILIENCE",
+    metricValue: "< 120ms P99 Edge",
+  },
+  {
+    id: "founder-izzy",
     name: "Izzy Rodriguez",
     role: "Chief Technology Officer",
     company: "Vault Flow",
@@ -88,11 +72,29 @@ export const CLIENT_STORIES: ClientStory[] = [
     quote:
       "Finding engineers who combine high-fidelity UI choreography with rigorous, zero-downtime distributed systems is almost impossible. Kaizen bridged that gap effortlessly. They operate like an elite in-house founding team.",
     metricBadge: "SYSTEM SCALE",
-    metricValue: "$85M+",
-    metricLabel: "Annual Flow Processed",
-    stack: ["Rust Core", "Next.js 15", "TailwindCSS", "Distributed Cache"],
-    duration: "5 Weeks Delivery",
-    authId: "KZ-VF-7120",
+    metricValue: "$85M+ Flow Processed",
+  },
+  {
+    id: "founder-katya",
+    name: "Katya Melnyk",
+    role: "Creative Director",
+    company: "Aura Generative",
+    avatar: "/images/architect_katya.jpg",
+    quote:
+      "Unifies generative synthetic media with high-converting interface architecture. Crafts bespoke diffusion pipelines, real-time image engines, and robust design tokens for scale.",
+    metricBadge: "ASSET FIDELITY",
+    metricValue: "99.4% Brand Score",
+  },
+  {
+    id: "founder-ivan",
+    name: "Ivan Prokopenko",
+    role: "Workflow Architect",
+    company: "Autonomous Scale",
+    avatar: "/images/architect_ivan.jpg",
+    quote:
+      "Architects autonomous business systems and deterministic tool-calling workflows. Eliminates operational friction through self-healing agent pipelines running 24/7 without manual intervention.",
+    metricBadge: "AUTOMATION RATE",
+    metricValue: "$2M+ ARR Automated",
   },
 ];
 
@@ -100,356 +102,265 @@ interface WorkClientStoriesProps {
   onContactClick?: () => void;
 }
 
-export const WorkClientStories: React.FC<WorkClientStoriesProps> = ({ onContactClick }) => {
+export const WorkClientStories: React.FC<WorkClientStoriesProps> = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const activeStory = CLIENT_STORIES[activeIndex];
+  const [isPaused, setIsPaused] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const total = FOUNDERS.length;
 
-  const handlePrev = () => {
-    setActiveIndex((prev) => (prev === 0 ? CLIENT_STORIES.length - 1 : prev - 1));
-  };
+  // Auto-advance loop scroll every 4 seconds unless hovered
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % total);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [isPaused, total]);
 
-  const handleNext = () => {
-    setActiveIndex((prev) => (prev === CLIENT_STORIES.length - 1 ? 0 : prev + 1));
-  };
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".founder-carousel-viewport",
+        {
+          opacity: 0,
+          y: 40,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.0,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  // Compute a centered window of 7 relative positions: [-3, -2, -1, 0, 1, 2, 3]
+  const offsets = [-3, -2, -1, 0, 1, 2, 3];
+  const visibleCards = offsets.map((offset) => {
+    const rawIndex = (activeIndex + offset) % total;
+    const index = rawIndex < 0 ? rawIndex + total : rawIndex;
+    return {
+      founder: FOUNDERS[index],
+      offset,
+      isCenter: offset === 0,
+      index,
+    };
+  });
 
   return (
     <section
-      className="w-full bg-[#F7F5FC] border-t border-[#E2DCF0] py-16 sm:py-24 px-6 sm:px-10 md:px-14 lg:px-20 relative select-none"
+      ref={sectionRef}
+      className="w-full bg-[#F7F5FC] border-t border-[#E2DCF0] py-20 sm:py-28 relative select-none overflow-hidden"
       style={{
-        backgroundColor: "#F7F5FC",
         backgroundImage: `
-          linear-gradient(to right, rgba(147, 51, 234, 0.05) 1px, transparent 1px),
-          linear-gradient(to bottom, rgba(147, 51, 234, 0.05) 1px, transparent 1px)
+          linear-gradient(to right, rgba(147, 51, 234, 0.04) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(147, 51, 234, 0.04) 1px, transparent 1px)
         `,
         backgroundSize: "64px 64px",
       }}
     >
-      <div className="max-w-7xl mx-auto">
-        {/* SECTION HEADER & ARCHITECTURAL METADATA (NO // OR YEARS) */}
-        <div className="mb-10 sm:mb-14 pb-6 border-b border-[#E2DCF0] flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div>
-            <div className="font-mono text-xs uppercase tracking-widest text-purple-700 font-bold mb-2 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
-              <span>VERIFIED EXECUTIVE REPUTATION</span>
-            </div>
-            <h2 className="font-roboto-condensed font-black text-3xl sm:text-4xl lg:text-5xl tracking-tight text-slate-950 uppercase">
-              WHAT FOUNDERS & LEADERS SAY
-            </h2>
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* ── SECTION HEADER ──────────────────────────────────────────────── */}
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-50 border border-purple-200/80 mb-4 shadow-xs">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="font-mono text-[11px] font-bold text-purple-700 uppercase tracking-widest">
+              VERIFIED EXECUTIVE REPUTATION
+            </span>
           </div>
 
-          {/* Quick Navigator & Live Stats */}
-          <div className="flex items-center gap-4">
-            <div className="hidden sm:flex items-center gap-2 font-mono text-[11px] text-slate-500 uppercase tracking-wider">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-              <span>100% VERIFIED PARTNERSHIPS</span>
-            </div>
+          <h2 className="font-roboto-condensed font-black text-4xl sm:text-5xl lg:text-6xl text-slate-950 tracking-tight leading-[1.08] uppercase">
+            What Founders &amp; Leaders Say
+          </h2>
 
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-xs text-slate-500 font-bold mr-1">
-                <span className="text-purple-700 font-extrabold">0{activeIndex + 1}</span> / 0{CLIENT_STORIES.length}
-              </span>
-              <button
-                onClick={handlePrev}
-                aria-label="Previous executive story"
-                className="w-9 h-9 rounded-xl bg-white border border-[#E2DCF0] text-slate-700 hover:text-purple-700 hover:border-purple-300 transition-all flex items-center justify-center shadow-xs active:scale-95 cursor-pointer"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button
-                onClick={handleNext}
-                aria-label="Next executive story"
-                className="w-9 h-9 rounded-xl bg-white border border-[#E2DCF0] text-slate-700 hover:text-purple-700 hover:border-purple-300 transition-all flex items-center justify-center shadow-xs active:scale-95 cursor-pointer"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
+          <p className="font-roboto-condensed font-medium text-slate-500 text-sm sm:text-base mt-4 max-w-xl mx-auto leading-relaxed">
+            Real feedback from technical leaders and founding executives who trusted Kaizen Solves to architect their flagship systems.
+          </p>
         </div>
 
-        {/* DESKTOP ACCORDION STRUCTURE */}
-        <div className="hidden lg:flex gap-4 h-[500px] w-full">
-          {CLIENT_STORIES.map((story, idx) => {
-            const isActive = activeIndex === idx;
-
-            return (
-              <div
-                key={story.id}
-                onClick={() => setActiveIndex(idx)}
-                onMouseEnter={() => setActiveIndex(idx)}
-                className={`relative rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] border flex flex-col justify-between ${
-                  isActive
-                    ? "flex-[3.8] bg-white border-purple-500 shadow-[0_20px_50px_rgba(147,51,234,0.08)] ring-1 ring-purple-500/20"
-                    : "flex-[0.9] bg-white/70 hover:bg-white border-[#E2DCF0] hover:border-purple-300 shadow-xs"
-                }`}
-              >
-                {/* Corner Crosshairs */}
-                <div
-                  className={`absolute top-3 right-3 transition-opacity ${
-                    isActive ? "text-purple-400 opacity-80" : "text-slate-300 opacity-40"
-                  }`}
-                >
-                  <Plus className="w-3.5 h-3.5 stroke-[1.5]" />
-                </div>
-
-                {isActive ? (
-                  <div className="h-full w-full overflow-hidden">
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.22, delay: 0.08 }}
-                      className="h-full p-8 xl:p-10 flex flex-col justify-between min-w-[560px] xl:min-w-[620px]"
-                    >
-                      {/* Top Header Row */}
-                      <div className="flex items-center justify-between pb-5 border-b border-slate-100">
-                        <div className="flex items-center gap-2.5">
-                          <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
-                            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                            <span>VERIFIED CONTRACT</span>
-                          </span>
-                          <span className="font-mono text-[10px] text-slate-400 font-bold">
-                            {story.authId}
-                          </span>
-                        </div>
-
-                        <div className="flex items-center gap-1 text-amber-400">
-                          {Array.from({ length: 5 }).map((_, i) => (
-                            <Star key={i} className="w-3.5 h-3.5 fill-amber-400 stroke-none" />
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Main Center Stage: Spacious Two-Column Presentation */}
-                      <div className="grid grid-cols-12 gap-8 my-auto py-4 items-center">
-                        {/* Left Column: Executive Identity & Audited Result */}
-                        <div className="col-span-5 space-y-4 pr-4 border-r border-slate-100">
-                          <div className="flex items-center gap-4">
-                            <div className="relative w-18 h-18 rounded-2xl overflow-hidden border-2 border-purple-200 shadow-sm shrink-0">
-                              <Image
-                                src={story.avatar}
-                                alt={story.name}
-                                fill
-                                className="object-cover"
-                                sizes="80px"
-                              />
-                            </div>
-                            <div>
-                              <h3 className="font-roboto-condensed font-black text-2xl text-slate-950 uppercase tracking-tight leading-tight">
-                                {story.name}
-                              </h3>
-                              <p className="font-mono text-xs text-purple-700 font-bold uppercase mt-0.5">
-                                {story.role}
-                              </p>
-                              <p className="font-mono text-[11px] text-slate-400 font-medium">
-                                {story.company}
-                              </p>
-                            </div>
-                          </div>
-
-                          {/* Distinct ROI Highlight Box */}
-                          <div className="p-4 rounded-xl bg-purple-50/70 border border-purple-200/80">
-                            <span className="font-mono text-[9px] font-bold text-purple-700 uppercase tracking-wider block mb-1">
-                              {story.metricBadge}
-                            </span>
-                            <span className="font-roboto-condensed font-black text-3xl text-slate-950 tracking-tight block leading-none">
-                              {story.metricValue}
-                            </span>
-                            <span className="font-roboto-condensed font-medium text-xs text-slate-600 uppercase block mt-1">
-                              {story.metricLabel}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Right Column: Breathable Editorial Quote */}
-                        <div className="col-span-7 pl-2 space-y-3">
-                          <div className="w-7 h-7 rounded-lg bg-purple-100/70 flex items-center justify-center text-purple-700">
-                            <Quote className="w-4 h-4" />
-                          </div>
-
-                          <blockquote className="font-roboto-condensed font-medium text-base lg:text-[17px] text-slate-700 leading-relaxed">
-                            &ldquo;{story.quote}&rdquo;
-                          </blockquote>
-
-                          <div className="pt-2 text-xs font-mono text-slate-400">
-                            DEPLOYMENT CADENCE: <span className="font-bold text-slate-700">{story.duration}</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Bottom Footer Row: Stack Badges & CTA */}
-                      <div className="pt-5 border-t border-slate-100 flex items-center justify-between gap-4">
-                        <div className="flex items-center gap-1.5 flex-wrap">
-                          <span className="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-widest mr-1">
-                            PRODUCTION STACK:
-                          </span>
-                          {story.stack.map((tech) => (
-                            <span
-                              key={tech}
-                              className="font-mono text-[10px] font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-
-                        <button
-                          onClick={onContactClick}
-                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-roboto-condensed font-bold text-xs uppercase tracking-wider transition-all shadow-xs active:scale-95 group shrink-0 cursor-pointer"
-                        >
-                          <span>BUILD SIMILAR</span>
-                          <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                        </button>
-                      </div>
-                    </motion.div>
-                  </div>
-                ) : (
-                  <div className="p-5 h-full flex flex-col justify-between items-center text-center">
-                    {/* Top: Avatar */}
-                    <div className="flex flex-col items-center">
-                      <div className="relative w-14 h-14 rounded-2xl overflow-hidden border border-slate-200 shadow-xs mb-2">
-                        <Image
-                          src={story.avatar}
-                          alt={story.name}
-                          fill
-                          className="object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
-                          sizes="56px"
-                        />
-                      </div>
-                      <span className="font-mono text-[9px] font-bold text-purple-700 uppercase tracking-wider">
-                        {story.code}
-                      </span>
-                    </div>
-
-                    {/* Middle: Clean Horizontal Identity */}
-                    <div className="my-auto py-2">
-                      <h4 className="font-roboto-condensed font-black text-sm text-slate-900 uppercase tracking-tight leading-snug">
-                        {story.name}
-                      </h4>
-                      <p className="font-mono text-[10px] text-slate-400 font-semibold truncate max-w-[90px] mx-auto mt-0.5">
-                        {story.company}
-                      </p>
-                    </div>
-
-                    {/* Bottom: High-Contrast ROI Pill */}
-                    <div className="w-full py-2.5 px-1.5 rounded-xl bg-purple-50/60 border border-purple-200/70 group-hover:bg-purple-100/60 transition-colors">
-                      <span className="font-roboto-condensed font-black text-base text-slate-950 block leading-none">
-                        {story.metricValue}
-                      </span>
-                      <span className="font-mono text-[8px] text-purple-700 font-bold uppercase tracking-wider block mt-1 truncate">
-                        {story.metricBadge}
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        {/* MOBILE & TABLET RESPONSIVE VIEW */}
-        <div className="lg:hidden space-y-5">
-          <div className="p-6 rounded-2xl bg-white border border-purple-500/40 shadow-sm relative overflow-hidden">
-            <div className="flex items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-100">
-              <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>VERIFIED CONTRACT</span>
-              </span>
-              <span className="font-mono text-[10px] text-slate-400 font-bold">
-                {activeStory.authId}
-              </span>
-            </div>
-
-            <div className="flex items-center gap-3.5 mb-5">
-              <div className="relative w-14 h-14 rounded-xl overflow-hidden border border-purple-200 shrink-0">
-                <Image
-                  src={activeStory.avatar}
-                  alt={activeStory.name}
-                  fill
-                  className="object-cover"
-                  sizes="56px"
-                />
-              </div>
+        {/* Mobile Active Details (visible only on mobile < sm) */}
+        <div className="sm:hidden max-w-sm mx-auto mb-6 px-4">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`mobile-details-${FOUNDERS[activeIndex].id}`}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.25 }}
+              className="p-4 rounded-2xl bg-white border border-purple-200/80 shadow-xs text-left space-y-2"
+            >
               <div>
-                <h3 className="font-roboto-condensed font-black text-xl text-slate-950 uppercase tracking-tight">
-                  {activeStory.name}
+                <h3 className="font-roboto-condensed font-black text-lg text-slate-950 uppercase tracking-tight">
+                  {FOUNDERS[activeIndex].name}
                 </h3>
-                <p className="font-mono text-xs text-purple-700 font-bold uppercase">
-                  {activeStory.role} · {activeStory.company}
+                <p className="font-mono text-[10px] text-purple-700 font-bold uppercase">
+                  {FOUNDERS[activeIndex].role} · {FOUNDERS[activeIndex].company}
                 </p>
               </div>
-            </div>
+              <p className="font-roboto-condensed text-xs text-slate-600 leading-relaxed italic">
+                &ldquo;{FOUNDERS[activeIndex].quote}&rdquo;
+              </p>
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
-            <blockquote className="font-roboto-condensed font-medium text-sm text-slate-700 leading-relaxed mb-5">
-              &ldquo;{activeStory.quote}&rdquo;
-            </blockquote>
+        {/* ── AUTOMATIC CENTER-EXPANDING CAROUSEL (NO BOTTOM CARD) ─────────── */}
+        <div
+          className="relative w-full overflow-hidden py-6 founder-carousel-viewport"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {/* Left Feather Fade Mask */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-32 z-20 bg-gradient-to-r from-[#F7F5FC] via-[#F7F5FC]/90 to-transparent"
+          />
 
-            <div className="p-3.5 rounded-xl bg-purple-50/70 border border-purple-200 mb-5 flex items-center justify-between">
-              <div>
-                <span className="font-mono text-[9px] font-bold text-purple-700 uppercase">
-                  {activeStory.metricBadge}
-                </span>
-                <span className="font-roboto-condensed font-black text-2xl text-slate-950 block leading-tight">
-                  {activeStory.metricValue}
-                </span>
-              </div>
-              <span className="font-roboto-condensed text-xs text-slate-600 uppercase font-medium text-right max-w-[140px]">
-                {activeStory.metricLabel}
-              </span>
-            </div>
+          {/* Right Feather Fade Mask */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-32 z-20 bg-gradient-to-l from-[#F7F5FC] via-[#F7F5FC]/90 to-transparent"
+          />
 
-            <div className="pt-3 border-t border-slate-100 flex flex-wrap gap-1.5 mb-5">
-              {activeStory.stack.map((t) => (
-                <span
-                  key={t}
-                  className="font-mono text-[10px] font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200"
+          {/* Centered Track: All cards in continuous sequence with small gap, aligned at bottom */}
+          <div className="flex items-end justify-center gap-3 sm:gap-4 md:gap-5 min-h-[380px] sm:min-h-[430px] md:min-h-[460px] w-full px-4 overflow-visible">
+            {visibleCards.map(({ founder, isCenter, offset, index }) => {
+              if (isCenter) {
+                /* ════════════════════════════════════════════════════════════ */
+                /* CENTER CARD: DOUBLED HEIGHT IMAGE + TOP-RIGHT OUTSIDE TEXT   */
+                /* (Cards remain in tight sequence; text floats in top space)   */
+                /* ════════════════════════════════════════════════════════════ */
+                return (
+                  <div
+                    key={`center-wrapper-${founder.id}`}
+                    className="relative shrink-0 z-10"
+                  >
+                    {/* The Center Image Card: FULL width & FULL height image */}
+                    <motion.div
+                      layout
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{
+                        layout: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+                        duration: 0.4,
+                      }}
+                      className="relative w-[150px] sm:w-[220px] md:w-[250px] lg:w-[270px] h-[260px] sm:h-[350px] md:h-[390px] lg:h-[415px] rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-purple-500 shadow-[0_20px_60px_rgba(147,51,234,0.18)] ring-4 ring-purple-500/15 shrink-0 bg-slate-950 cursor-default"
+                    >
+                      <Image
+                        src={founder.avatar}
+                        alt={founder.name}
+                        fill
+                        className="object-cover object-top w-full h-full"
+                        sizes="(max-width: 640px) 180px, (max-width: 768px) 250px, 320px"
+                        priority
+                      />
+
+                      {/* Corner Active Wedge */}
+                      <div
+                        aria-hidden="true"
+                        className="absolute top-0 left-0 w-5 h-5 sm:w-6 sm:h-6 bg-purple-700 z-20"
+                        style={{ clipPath: "polygon(0 0, 100% 0, 0 100%)" }}
+                      />
+
+                      {/* Subtle gradient vignette at bottom */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/35 via-transparent to-transparent pointer-events-none" />
+                    </motion.div>
+
+                    {/* OUTSIDE DETAILS AT RIGHT SIDE IN TOP PART (DOES NOT PUSH RIGHT PHOTO AWAY) */}
+                    <div className="hidden sm:block absolute left-[calc(100%+14px)] md:left-[calc(100%+18px)] lg:left-[calc(100%+20px)] top-0 w-[290px] md:w-[380px] lg:w-[440px] text-left z-30 pointer-events-auto">
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={`details-${founder.id}`}
+                          initial={{ opacity: 0, y: -6 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 6 }}
+                          transition={{ duration: 0.3, ease: "easeOut" }}
+                          className="space-y-2 sm:space-y-2.5"
+                        >
+                          {/* Founder Name & Role */}
+                          <div>
+                            <h3 className="font-roboto-condensed font-black text-xl sm:text-2xl md:text-3xl text-slate-950 uppercase tracking-tight leading-tight">
+                              {founder.name}
+                            </h3>
+                            <p className="font-mono text-[10px] sm:text-xs text-purple-700 font-bold uppercase mt-0.5">
+                              {founder.role} · <span className="text-slate-600 font-medium">{founder.company}</span>
+                            </p>
+                          </div>
+
+                          {/* Editorial Quote */}
+                          <div className="relative pl-2.5 sm:pl-3 border-l-2 border-purple-400/80 pt-0.5">
+                            <Quote className="w-3.5 h-3.5 text-purple-400 mb-1" />
+                            <blockquote className="font-roboto-condensed font-medium text-xs sm:text-[13px] md:text-sm text-slate-700 leading-relaxed line-clamp-3 md:line-clamp-4">
+                              &ldquo;{founder.quote}&rdquo;
+                            </blockquote>
+                          </div>
+                        </motion.div>
+                      </AnimatePresence>
+                    </div>
+                  </div>
+                );
+              }
+
+              /* ══════════════════════════════════════════════════════════════ */
+              /* INACTIVE CARDS: COMPACT PORTRAITS ALIGNED AT THE BOTTOM        */
+              /* ══════════════════════════════════════════════════════════════ */
+              const distance = Math.abs(offset);
+              const opacity = distance === 1 ? 0.85 : distance === 2 ? 0.6 : 0.35;
+              const scale = distance === 1 ? 0.98 : distance === 2 ? 0.92 : 0.85;
+
+              return (
+                <motion.div
+                  key={`inactive-${founder.id}-${offset}`}
+                  layout
+                  onClick={() => setActiveIndex(index)}
+                  style={{ opacity }}
+                  className="shrink-0 w-[120px] sm:w-[135px] md:w-[145px] cursor-pointer group select-none transition-transform duration-300 hover:opacity-100"
                 >
-                  {t}
-                </span>
-              ))}
-            </div>
-
-            <button
-              onClick={onContactClick}
-              className="w-full py-2.5 rounded-xl bg-purple-600 text-white font-roboto-condensed font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer"
-            >
-              <span>BUILD SIMILAR</span>
-              <ArrowUpRight className="w-4 h-4" />
-            </button>
-          </div>
-
-          {/* 4-Leader Selector Pills */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            {CLIENT_STORIES.map((story, i) => (
-              <button
-                key={story.id}
-                onClick={() => setActiveIndex(i)}
-                className={`p-2.5 rounded-xl border text-left flex items-center gap-2 transition-all cursor-pointer ${
-                  i === activeIndex
-                    ? "bg-white border-purple-600 shadow-xs ring-1 ring-purple-600/10"
-                    : "bg-white/60 border-[#E2DCF0] hover:bg-white"
-                }`}
-              >
-                <div className="relative w-8 h-8 rounded-lg overflow-hidden shrink-0 border border-slate-200">
-                  <Image
-                    src={story.avatar}
-                    alt={story.name}
-                    fill
-                    className="object-cover"
-                    sizes="32px"
-                  />
-                </div>
-                <div className="min-w-0">
-                  <div className="font-roboto-condensed font-bold text-xs text-slate-950 truncate uppercase leading-tight">
-                    {story.name}
+                  {/* Photo Box */}
+                  <div className="relative aspect-[4/5] rounded-xl overflow-hidden border border-[#E2DCF0] bg-[#F1EBFB] hover:border-purple-300 shadow-xs transition-all duration-300 group-hover:scale-105">
+                    <div className="absolute inset-0 bg-[#F1EBFB] flex items-end justify-center">
+                      <Image
+                        src={founder.avatar}
+                        alt={founder.name}
+                        fill
+                        className="object-cover object-top grayscale opacity-85 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                        sizes="160px"
+                      />
+                      <div className="absolute inset-0 bg-[#7C3AED]/20 mix-blend-multiply group-hover:opacity-0 transition-opacity" />
+                    </div>
                   </div>
-                  <div className="font-mono text-[9px] text-purple-700 font-bold truncate">
-                    {story.metricValue}
+
+                  {/* Info Row Below Image */}
+                  <div className="pt-2 pb-0.5">
+                    <div className="flex items-center justify-between gap-1">
+                      <h4 className="font-roboto-condensed font-black text-[11px] sm:text-xs text-slate-900 group-hover:text-purple-700 tracking-tight truncate transition-colors">
+                        {founder.name}
+                      </h4>
+                      <ArrowUpRight className="w-2.5 h-2.5 shrink-0 text-slate-400 group-hover:text-purple-700 transition-colors" />
+                    </div>
+
+                    <p className="font-roboto-condensed font-medium text-[10px] text-slate-500 truncate mt-0.5">
+                      {founder.role}
+                    </p>
                   </div>
-                </div>
-              </button>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </div>
     </section>
   );
 };
+
+export default WorkClientStories;
